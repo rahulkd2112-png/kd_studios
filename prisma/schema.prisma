@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum RequestStatus {
+  PENDING
+  REVIEWING
+  QUOTED
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id            String            @id @default(cuid())
+  name          String
+  email         String            @unique
+  phone         String?
+  passwordHash  String
+  role          Role              @default(USER)
+  isBlocked     Boolean           @default(false)
+  blockedReason String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  requests      ProjectRequest[]
+  sessions      Session[]
+  adminOtps     AdminOtp[]
+  passwordOtps  PasswordResetOtp[]
+  notifications Notification[]
+  actorLogs     AuditLog[]        @relation("AuditActor")
+  targetLogs    AuditLog[]        @relation("AuditTarget")
+}
+
+model ProjectRequest {
+  id            String         @id @default(cuid())
+  projectType   String
+  budget        String?
+  timeline      String?
+  details       String
+  status        RequestStatus  @default(PENDING)
+  quoteAmount   String?
+  adminNotes    String?
+  repliedAt     DateTime?
+  lastReplyById String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenId   String   @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AdminOtp {
+  id          String   @id @default(cuid())
+  codeHash    String
+  expiresAt   DateTime
+  consumedAt  DateTime?
+  attempts    Int      @default(0)
+  createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetOtp {
+  id         String   @id @default(cuid())
+  codeHash   String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  attempts   Int      @default(0)
+  createdAt  DateTime @default(now())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model RegistrationOtp {
+  id         String   @id @default(cuid())
+  email      String
+  codeHash   String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  attempts   Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+}
+
+
+model Notification {
+  id          String          @id @default(cuid())
+  type        String
+  title       String
+  message     String
+  isRead      Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  userId      String?
+  requestId   String?
+  user        User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectRequest ProjectRequest? @relation(fields: [requestId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  action       String
+  entityType   String
+  entityId     String?
+  description  String
+  metadataJson String?
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+  actorId      String?
+  targetUserId String?
+  actor        User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  targetUser   User?    @relation("AuditTarget", fields: [targetUserId], references: [id], onDelete: SetNull)
+}

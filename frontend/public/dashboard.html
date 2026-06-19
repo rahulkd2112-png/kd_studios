@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="site-shell">
+      <div class="sky-mesh"></div>
+      <div class="light-column left"></div>
+      <div class="light-column right"></div>
+      <div class="noise-layer"></div>
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">
+            <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          </span>
+          <span class="brand-text">
+            <strong>KD Studios</strong>
+            <small>Apps | Games | Websites</small>
+          </span>
+        </a>
+        <nav class="nav">
+          <a href="/index.html">Home</a>
+          <a href="/work.html">Work</a>
+          <a href="/services.html">Services</a>
+          <a class="active" href="/dashboard.html">Dashboard</a>
+          <a href="/request.html">Request</a>
+          <a href="/contact-support.html">Support</a>
+        </nav>
+          <div class="header-actions">
+          <a class="btn btn-secondary header-btn" href="/login.html">Login</a>
+          <a class="btn btn-primary header-btn" href="/register.html">Register</a>
+          <button class="btn btn-secondary header-btn hidden" id="logoutHeaderButton" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="section inner-hero">
+          <div class="section-heading reveal dashboard-heading-row">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2>Unified client dashboard for requests, notifications, and admin operations.</h2>
+              <p>Review activity, monitor project requests, and manage operations in a professional workspace.</p>
+            </div>
+            <button class="btn btn-secondary" id="dashboardHomeButton" type="button">Home</button>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="control-stack reveal">
+              <article class="glass-card panel-block session-panel">
+                <div class="panel-header">
+                  <div>
+                    <span class="chip">Session</span>
+                    <h3 id="accountTitle">Not logged in</h3>
+                  </div>
+                  <span class="socket-pill" id="socketStatus">Socket standby</span>
+                </div>
+                <p id="accountDescription" class="panel-note">
+                  Login or register to submit project requests and track your briefs.
+                </p>
+                <div class="hero-actions compact">
+                  <a class="btn btn-secondary" href="/login.html">Login</a>
+                  <a class="btn btn-secondary" href="/register.html">Register</a>
+                  <button class="btn btn-secondary hidden" id="logoutButton" type="button">Logout</button>
+                </div>
+              </article>
+
+              <article class="glass-card panel-block">
+                <div class="panel-header">
+                  <div>
+                    <span class="chip">Notifications</span>
+                    <h3>Live account updates</h3>
+                  </div>
+                </div>
+                <div class="notification-list" id="notificationList">
+                  <p class="empty-state">Login to see your notifications.</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="workspace-stack reveal">
+              <article class="glass-card panel-block client-panel">
+                <div class="panel-header">
+                  <div>
+                    <span class="chip">Client Area</span>
+                    <h3>My requests and project history</h3>
+                  </div>
+                </div>
+                <div id="myRequests" class="card-list">
+                  <p class="empty-state">Login to view your submitted requests.</p>
+                </div>
+              </article>
+
+              <article class="glass-card panel-block hidden" id="adminPanel">
+                <div class="panel-header">
+                  <div>
+                    <span class="chip">Admin Panel</span>
+                    <h3>Owner-only operations dashboard</h3>
+                  </div>
+                </div>
+
+                <p id="adminContactInfo" class="panel-note">
+                  Verified administrative contact details will appear here after secure admin access.
+                </p>
+
+                <div class="admin-stats" id="adminStats">
+                  <p class="empty-state">Login as admin to load dashboard stats.</p>
+                </div>
+
+                <form class="auth-form compact-form" id="adminPasswordForm">
+                  <label>
+                    <span>Current admin password</span>
+                    <input type="password" name="currentPassword" autocomplete="current-password" maxlength="128" placeholder="Enter current admin password" required />
+                  </label>
+                  <label>
+                    <span>New admin password</span>
+                    <input type="password" name="newPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Minimum 12 characters" required />
+                  </label>
+                  <button class="btn btn-primary full-width" type="submit">Change Admin Password</button>
+                  <p class="form-message" id="adminPasswordMessage"></p>
+                </form>
+
+                <div class="admin-columns">
+                  <div class="admin-panel-card">
+                    <div class="panel-header slim">
+                      <h4>Client Requests</h4>
+                    </div>
+                    <div class="card-list" id="adminRequests">
+                      <p class="empty-state">Admin requests will appear here after login.</p>
+                    </div>
+                  </div>
+
+                  <div class="admin-panel-card">
+                    <div class="panel-header slim">
+                      <h4>Users</h4>
+                    </div>
+                    <div class="card-list" id="adminUsers">
+                      <p class="empty-state">Admin users list will appear here after login.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="admin-panel-card">
+                  <div class="panel-header slim">
+                    <h4>Activity & notifications</h4>
+                  </div>
+                  <div class="split-feed">
+                    <div class="card-list" id="auditLogList">
+                      <p class="empty-state">Recent audit logs will appear here.</p>
+                    </div>
+                    <div class="card-list" id="adminNotificationList">
+                      <p class="empty-state">Recent admin notifications will appear here.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <strong>KD Studios</strong>
+            <p>Dashboard access for clients and owner-level admin operations.</p>
+          </div>
+          <div class="footer-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-conditions.html">Terms & Conditions</a>
+            <a href="/contact-support.html">Contact Support</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
+

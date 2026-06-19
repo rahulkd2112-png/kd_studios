@@ -1,0 +1,27 @@
+{
+  "name": "kd-studios-site",
+  "version": "1.0.0",
+  "description": "KD Studios frontend and backend apps",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "node frontend/server.js",
+    "start": "node backend/server.js",
+    "start:production": "prisma migrate deploy && node backend/server.js",
+    "dev:frontend": "node frontend/server.js",
+    "dev:backend": "node backend/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:push": "prisma db push",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^9.0.1",
+    "prisma": "^6.19.3",
+    "ws": "^8.19.0"
+  }
+}

@@ -1,0 +1,13 @@
+ALTER TABLE "User" ADD COLUMN "phone" TEXT;
+ALTER TABLE "User" ADD COLUMN "isBlocked" BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE "User" ADD COLUMN "blockedReason" TEXT;
+
+CREATE TABLE "AdminOtp" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "codeHash" TEXT NOT NULL,
+    "expiresAt" DATETIME NOT NULL,
+    "consumedAt" DATETIME,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "AdminOtp_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);

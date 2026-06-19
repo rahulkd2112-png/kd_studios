@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios | Project Request</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="request">
+    <div class="site-shell">
+      <div class="sky-mesh"></div>
+      <div class="light-column left"></div>
+      <div class="light-column right"></div>
+      <div class="noise-layer"></div>
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">
+            <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          </span>
+          <span class="brand-text">
+            <strong>KD Studios</strong>
+            <small>Apps | Games | Websites</small>
+          </span>
+        </a>
+        <nav class="nav">
+          <a href="/index.html">Home</a>
+          <a href="/work.html">Work</a>
+          <a href="/services.html">Services</a>
+          <a href="/dashboard.html">Dashboard</a>
+          <a class="active" href="/request.html">Request</a>
+          <a href="/contact-support.html">Support</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-secondary header-btn" href="/login.html">Login</a>
+          <a class="btn btn-primary header-btn" href="/register.html">Register</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="section inner-hero">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Quote Request</p>
+            <h2>Let clients send app, game, or website ideas directly to KD Studios.</h2>
+            <p>A focused enquiry page helps clients share serious project requirements in a clear and professional format.</p>
+          </div>
+
+          <div class="request-layout">
+            <form class="request-form reveal" id="requestForm">
+              <label>
+                <span>Project type</span>
+                <select name="projectType" required>
+                  <option value="">Choose project type</option>
+                  <option>Business Website</option>
+                  <option>E-commerce Website</option>
+                  <option>Portfolio Website</option>
+                  <option>Web App</option>
+                  <option>Photo Editing App</option>
+                  <option>Game App</option>
+                  <option>Mobile App UI</option>
+                  <option>Custom Software</option>
+                </select>
+              </label>
+              <label>
+                <span>Budget range</span>
+                <input type="text" name="budget" placeholder="Example: 20k - 50k" />
+              </label>
+              <label>
+                <span>Timeline</span>
+                <input type="text" name="timeline" placeholder="Example: 2 weeks" />
+              </label>
+              <label class="full-width">
+                <span>Idea / requirements</span>
+                <textarea
+                  name="details"
+                  rows="6"
+                  placeholder="Describe your app, game, or website idea, pages, features, references, and goals"
+                  required
+                ></textarea>
+              </label>
+
+              <button class="btn btn-primary full-width" type="submit">Submit Project Request</button>
+              <p class="form-message" id="formMessage"></p>
+            </form>
+
+            <aside class="quote-panel reveal">
+              <div class="quote-card">
+                <span class="chip">Why It Works</span>
+                <h3>Designed to support serious enquiries and professional communication.</h3>
+                <ul>
+                  <li>Clients can share structured project briefs with budget, timeline, and requirements.</li>
+                  <li>Admins can review requests, send responses, and manage account activity efficiently.</li>
+                  <li>The interface maintains a polished visual standard that reflects a premium studio brand.</li>
+                </ul>
+              </div>
+
+              <div class="quote-card">
+                <span class="chip">Client Journey</span>
+                <h3>Login enables smoother request tracking</h3>
+                <p>Once signed in, clients can review submitted requests and follow updates directly from the dashboard.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <strong>KD Studios</strong>
+            <p>Share your idea and get a premium digital product plan back.</p>
+          </div>
+          <div class="footer-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-conditions.html">Terms & Conditions</a>
+            <a href="/contact-support.html">Contact Support</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
+
+

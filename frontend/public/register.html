@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios | Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="register">
+    <div class="site-shell">
+      <div class="sky-mesh"></div>
+      <div class="light-column left"></div>
+      <div class="light-column right"></div>
+      <div class="noise-layer"></div>
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">
+            <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          </span>
+          <span class="brand-text">
+            <strong>KD Studios</strong>
+            <small>Apps | Games | Websites</small>
+          </span>
+        </a>
+        <nav class="nav">
+          <a href="/index.html">Home</a>
+          <a href="/work.html">Work</a>
+          <a href="/services.html">Services</a>
+          <a href="/dashboard.html">Dashboard</a>
+          <a href="/request.html">Request</a>
+          <a href="/contact-support.html">Support</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-secondary header-btn" href="/login.html">Login</a>
+          <a class="btn btn-primary header-btn active-header-btn" href="/register.html">Register</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="section auth-page-section">
+          <article class="glass-card panel-block auth-page-card reveal visible">
+            <div class="panel-header">
+              <div>
+                <span class="chip">New Account</span>
+                <h3>Create your KD Studios client account</h3>
+              </div>
+              <a class="btn btn-secondary" href="/login.html">Already have an account?</a>
+            </div>
+
+            <form class="auth-form" id="registerForm">
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Enter your name" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" maxlength="160" placeholder="Enter your email" required />
+              </label>
+              <label>
+                <span>Mobile number</span>
+                <input type="text" name="phone" placeholder="Enter mobile number" />
+              </label>
+              <label>
+                <span>Password</span>
+                <input type="password" name="password" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Minimum 12 characters" required />
+              </label>
+              <button class="btn btn-primary full-width" type="submit">Send OTP to Email</button>
+            </form>
+
+            <form class="auth-form hidden" id="registerOtpForm">
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" maxlength="160" placeholder="Your email" required />
+              </label>
+              <label>
+                <span>OTP</span>
+                <input type="text" name="otp" placeholder="Enter OTP" required />
+              </label>
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Your name" required />
+              </label>
+              <label>
+                <span>Password</span>
+                <input type="password" name="password" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Minimum 12 characters" required />
+              </label>
+              <label>
+                <span>Mobile number</span>
+                <input type="text" name="phone" placeholder="Enter mobile number" />
+              </label>
+              <button class="btn btn-primary full-width" type="submit">Verify OTP & Create Account</button>
+              <button class="btn btn-secondary full-width" type="button" id="backToRegisterBtn">Back</button>
+            </form>
+
+            <p class="form-message" id="authMessage"></p>
+            <div class="auth-inline-links">
+              <a href="/login.html">Login instead</a>
+              <a href="/terms-conditions.html">Read terms</a>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <strong>KD Studios</strong>
+            <p>Register once and manage requests from your private dashboard.</p>
+          </div>
+          <div class="footer-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-conditions.html">Terms & Conditions</a>
+            <a href="/contact-support.html">Contact Support</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
+

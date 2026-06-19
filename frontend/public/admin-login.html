@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios | Admin Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="admin-login">
+    <div class="site-shell">
+      <div class="sky-mesh"></div>
+      <div class="light-column left"></div>
+      <div class="light-column right"></div>
+      <div class="noise-layer"></div>
+
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">
+            <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          </span>
+          <span class="brand-text">
+            <strong>KD Studios</strong>
+            <small>Apps | Games | Websites</small>
+          </span>
+        </a>
+        <nav class="nav">
+          <a href="/index.html">Home</a>
+          <a href="/work.html">Work</a>
+          <a href="/services.html">Services</a>
+          <a href="/dashboard.html">Dashboard</a>
+          <a href="/request.html">Request</a>
+          <a href="/contact-support.html">Support</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-secondary header-btn" href="/login.html">Login</a>
+          <a class="btn btn-secondary header-btn" href="/register.html">Register</a>
+          <a class="btn btn-primary header-btn active-header-btn" href="/admin-login.html">Admin</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="section auth-page-section">
+          <article class="glass-card panel-block auth-page-card reveal visible">
+            <div class="panel-header">
+              <div>
+                <span class="chip">Admin Access</span>
+                <h3>Login to the KD Studios admin dashboard</h3>
+              </div>
+              <a class="btn btn-secondary" href="/login.html">User Login</a>
+            </div>
+
+            <form class="auth-form" id="adminLoginForm">
+              <label>
+                <span>Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  autocomplete="username"
+                  maxlength="160"
+                  placeholder="Enter your admin email"
+                  required
+                />
+              </label>
+
+              <label>
+                <span>Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  autocomplete="current-password"
+                  maxlength="128"
+                  placeholder="Enter your admin password"
+                  required
+                />
+              </label>
+
+              <button class="btn btn-primary full-width" type="submit">Send Admin Code</button>
+            </form>
+
+            <form class="auth-form hidden" id="adminOtpForm">
+              <input type="hidden" name="email" />
+              <input type="hidden" name="password" />
+              <label>
+                <span>Admin verification code</span>
+                <input
+                  type="text"
+                  name="otp"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  placeholder="Enter emailed code"
+                  required
+                />
+              </label>
+              <button class="btn btn-primary full-width" type="submit">Verify Code & Login</button>
+            </form>
+
+            <p class="form-message" id="authMessage"></p>
+            <div class="auth-inline-links">
+              <a href="/login.html">User Login</a>
+              <a href="/register.html">Register</a>
+              <a href="/reset-password.html">Forgot password?</a>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <strong>KD Studios</strong>
+            <p>Admin access for managing requests, notifications, and user accounts.</p>
+          </div>
+          <div class="footer-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-conditions.html">Terms & Conditions</a>
+            <a href="/contact-support.html">Contact Support</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/config.js"></script>
+    <script src="/admin-login.js"></script>
+  </body>
+</html>
+
+
+
+
