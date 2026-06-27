@@ -96,12 +96,33 @@ async function requestAdminOtp(payload) {
     throw new Error("Invalid admin password.");
   }
 
+  const now = new Date();
   const code = generateOtpCode();
-  const expiresAt = new Date(Date.now() + config.otpTtlMinutes * 60 * 1000);
+  const expiresAt = new Date(now.getTime() + config.otpTtlMinutes * 60 * 1000);
+
+  // Resend rate limit: prevent spamming OTP emails.
+  // Allow at most 1 fresh admin OTP per user within ADMIN_OTP_RESEND_COOLDOWN_MINUTES.
+  const resendCooldownMin = Number(process.env.ADMIN_OTP_RESEND_COOLDOWN_MINUTES || 2);
+  const cooldownMs = Number.isFinite(resendCooldownMin) ? resendCooldownMin * 60 * 1000 : 2 * 60 * 1000;
+  const recentExists = await prisma.adminOtp.findFirst({
+    where: {
+      userId: user.id,
+      createdAt: { gt: new Date(now.getTime() - cooldownMs) },
+      consumedAt: null
+    },
+    orderBy: { createdAt: "desc" }
+  });
+
+  if (recentExists) {
+    throw new Error("OTP already sent recently. Please wait and try again.");
+  }
+
+  // Invalidate existing unconsumed OTPs and rotate the code.
   await prisma.adminOtp.updateMany({
     where: { userId: user.id, consumedAt: null },
-    data: { consumedAt: new Date() }
+    data: { consumedAt: now }
   });
+
   const record = await prisma.adminOtp.create({
     data: {
       userId: user.id,
