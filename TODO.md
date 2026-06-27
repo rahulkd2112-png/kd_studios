@@ -1,9 +1,20 @@
-# TODO
-- [x] Add “Admin Login” option on `frontend/public/login.html` at the same place where User login is shown.
-- [x] Verify admin link works (navigates to `/admin-login.html`).
+# KD Studios Labs Futuristic Website — Build Plan (UI-first)
 
+## Completed
+- Added cinematic loader + animated space background + custom cursor on homepage.
+  - `frontend/public/experience.js`
+  - `frontend/public/index.html`
+  - `frontend/public/styles.css`
 
-- [x] Check login/admin standalone pages are not impacted by shared `frontend/public/app.js`.
-- [x] If any blank persists, test specific page load paths and server static routing (done: /login.html, /admin-login.html, /styles.css return 200).
-
+## Next (to make it closer to the prompt)
+1. Replace placeholder crystal logo in `experience.js` with real KD crystal-glass 3D logo.
+   - Prefer: Three.js + custom glass shader + bloom.
+2. Upgrade homepage hero to a true 3D scene (Three.js) with:
+   - refraction/reflection
+   - volumetric glow / bloom
+   - energy waves
+   - cursor interaction affecting lighting.
+3. Add scroll storytelling with GSAP ScrollTrigger (layered parallax + holographic cards).
+4. Implement sections (Who We Are, Product Ecosystem, Food Scan AI, Tech Stack orbit, AI Lab, Portfolio, Stats, Contact) matching the spec.
+5. Performance hardening for Lighthouse 95+: lazy loading + reduced-motion fallback.
 

@@ -13,6 +13,14 @@ npm.cmd run dev:frontend
 
 Open `http://localhost:3000`
 
+If port `3000` is already in use, start the frontend on `8000` instead:
+
+```powershell
+npm.cmd run dev:frontend:8000
+```
+
+Open `http://localhost:8000`
+
 ## Run backend
 
 ```powershell

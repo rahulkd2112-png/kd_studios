@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="dashboard">
     <div class="site-shell">
@@ -19,9 +19,9 @@
       <div class="light-column right"></div>
       <div class="noise-layer"></div>
       <header class="topbar">
-        <a class="brand" href="/index.html">
+        <a class="brand" href="./index.html">
           <span class="brand-mark">
-            <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+            <img src="./logo/kd_logo.png" alt="KD Studios logo" />
           </span>
           <span class="brand-text">
             <strong>KD Studios</strong>
@@ -29,16 +29,16 @@
           </span>
         </a>
         <nav class="nav">
-          <a href="/index.html">Home</a>
-          <a href="/work.html">Work</a>
-          <a href="/services.html">Services</a>
-          <a class="active" href="/dashboard.html">Dashboard</a>
-          <a href="/request.html">Request</a>
-          <a href="/contact-support.html">Support</a>
+          <a href="./index.html">Home</a>
+          <a href="./work.html">Work</a>
+          <a href="./services.html">Services</a>
+          <a class="active" href="./dashboard.html">Dashboard</a>
+          <a href="./request.html">Request</a>
+          <a href="./contact-support.html">Support</a>
         </nav>
           <div class="header-actions">
-          <a class="btn btn-secondary header-btn" href="/login.html">Login</a>
-          <a class="btn btn-primary header-btn" href="/register.html">Register</a>
+          <a class="btn btn-secondary header-btn" href="./login.html">Login</a>
+          <a class="btn btn-primary header-btn" href="./register.html">Register</a>
           <button class="btn btn-secondary header-btn hidden" id="logoutHeaderButton" type="button">Logout</button>
         </div>
       </header>
@@ -68,8 +68,8 @@
                   Login or register to submit project requests and track your briefs.
                 </p>
                 <div class="hero-actions compact">
-                  <a class="btn btn-secondary" href="/login.html">Login</a>
-                  <a class="btn btn-secondary" href="/register.html">Register</a>
+                  <a class="btn btn-secondary" href="./login.html">Login</a>
+                  <a class="btn btn-secondary" href="./register.html">Register</a>
                   <button class="btn btn-secondary hidden" id="logoutButton" type="button">Logout</button>
                 </div>
               </article>
@@ -101,38 +101,68 @@
               </article>
 
               <article class="glass-card panel-block hidden" id="adminPanel">
-                <div class="panel-header">
+                <div class="panel-header admin-panel-header">
                   <div>
-                    <span class="chip">Admin Panel</span>
-                    <h3>Owner-only operations dashboard</h3>
+                    <span class="chip">Admin Control Center</span>
+                    <h3>Manage users, review requests, reply to clients, and monitor activity from one secure workspace.</h3>
+                  </div>
+                  <div class="admin-panel-actions">
+                    <button class="btn btn-secondary" id="adminRefreshButton" type="button">Refresh panel</button>
+                    <span class="chip chip-success">Admin access verified</span>
                   </div>
                 </div>
 
-                <p id="adminContactInfo" class="panel-note">
-                  Verified administrative contact details will appear here after secure admin access.
-                </p>
+                <div class="admin-summary-grid">
+                  <div class="admin-panel-card admin-info-card">
+                    <div class="panel-header slim">
+                      <h4>Admin overview</h4>
+                    </div>
+                    <p id="adminContactInfo" class="panel-note">
+                      Verified administrative contact details will appear here after secure admin login.
+                    </p>
+                    <div class="admin-stats" id="adminStats">
+                      <p class="empty-state">Login as admin to load dashboard stats.</p>
+                    </div>
+                  </div>
 
-                <div class="admin-stats" id="adminStats">
-                  <p class="empty-state">Login as admin to load dashboard stats.</p>
+                  <div class="admin-panel-card admin-password-card">
+                    <div class="panel-header slim">
+                      <h4>Secure tools</h4>
+                    </div>
+                    <form class="auth-form compact-form" id="adminPasswordForm">
+                      <label>
+                        <span>Current admin password</span>
+                        <input type="password" name="currentPassword" autocomplete="current-password" maxlength="128" placeholder="Current admin password" required />
+                      </label>
+                      <label>
+                        <span>New admin password</span>
+                        <input type="password" name="newPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="New admin password" required />
+                      </label>
+                      <button class="btn btn-primary full-width" type="submit">Change admin password</button>
+                      <p class="form-message" id="adminPasswordMessage"></p>
+                    </form>
+                  </div>
                 </div>
 
-                <form class="auth-form compact-form" id="adminPasswordForm">
-                  <label>
-                    <span>Current admin password</span>
-                    <input type="password" name="currentPassword" autocomplete="current-password" maxlength="128" placeholder="Enter current admin password" required />
-                  </label>
-                  <label>
-                    <span>New admin password</span>
-                    <input type="password" name="newPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Minimum 12 characters" required />
-                  </label>
-                  <button class="btn btn-primary full-width" type="submit">Change Admin Password</button>
-                  <p class="form-message" id="adminPasswordMessage"></p>
-                </form>
+                <div class="admin-panel-search-grid">
+                  <div class="admin-search-card">
+                    <div class="panel-header slim">
+                      <h4>Filter requests</h4>
+                    </div>
+                    <input id="adminRequestSearch" type="search" placeholder="Search by project, email, status, or notes" />
+                  </div>
+                  <div class="admin-search-card">
+                    <div class="panel-header slim">
+                      <h4>Filter users</h4>
+                    </div>
+                    <input id="adminUserSearch" type="search" placeholder="Search by name, email, phone, or status" />
+                  </div>
+                </div>
 
-                <div class="admin-columns">
+                <div class="admin-columns admin-panel-grid">
                   <div class="admin-panel-card">
                     <div class="panel-header slim">
-                      <h4>Client Requests</h4>
+                      <h4>Client request queue</h4>
                     </div>
                     <div class="card-list" id="adminRequests">
                       <p class="empty-state">Admin requests will appear here after login.</p>
@@ -141,7 +171,7 @@
 
                   <div class="admin-panel-card">
                     <div class="panel-header slim">
-                      <h4>Users</h4>
+                      <h4>User directory</h4>
                     </div>
                     <div class="card-list" id="adminUsers">
                       <p class="empty-state">Admin users list will appear here after login.</p>
@@ -175,15 +205,16 @@
             <p>Dashboard access for clients and owner-level admin operations.</p>
           </div>
           <div class="footer-links">
-            <a href="/privacy-policy.html">Privacy Policy</a>
-            <a href="/terms-conditions.html">Terms & Conditions</a>
-            <a href="/contact-support.html">Contact Support</a>
+            <a href="./privacy-policy.html">Privacy Policy</a>
+            <a href="./terms-conditions.html">Terms & Conditions</a>
+            <a href="./contact-support.html">Contact Support</a>
           </div>
         </div>
       </footer>
     </div>
-    <script src="/config.js"></script>
-    <script src="/app.js"></script>
+    <script src="./config.js"></script>
+    <script src="./motion.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
 

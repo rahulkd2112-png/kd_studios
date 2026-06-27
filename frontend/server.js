@@ -27,12 +27,23 @@ function getSecurityHeaders() {
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Content-Security-Policy":
-      "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: wss: http://localhost:4000 ws://localhost:4000; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+      "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: wss: http://localhost:4000 ws://localhost:4000; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
   };
 }
 
 function serveFile(req, res) {
-  const requestPath = new URL(req.url, "http://localhost").pathname;
+  let requestPath;
+  try {
+    requestPath = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+  } catch {
+    res.writeHead(400, {
+      ...getSecurityHeaders(),
+      "Content-Type": "application/json; charset=utf-8"
+    });
+    res.end(JSON.stringify({ error: "Invalid request path." }));
+    return;
+  }
+
   const pagePath = requestPath === "/" ? "/index.html" : requestPath;
   const safePath = path.normalize(pagePath).replace(/^(\.\.[\/\\])+/, "");
   const isLogoAsset = safePath.startsWith("\\logo\\") || safePath.startsWith("/logo/");
@@ -83,9 +94,10 @@ function serveFile(req, res) {
     }
 
     const extension = path.extname(filePath).toLowerCase();
+    const noCacheExtensions = new Set([".html", ".js", ".css", ".json"]);
     res.writeHead(200, {
       ...getSecurityHeaders(),
-      "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=3600",
+      "Cache-Control": noCacheExtensions.has(extension) ? "no-cache" : "public, max-age=3600",
       "Content-Type": MIME_TYPES[extension] || "application/octet-stream"
     });
     res.end(content);

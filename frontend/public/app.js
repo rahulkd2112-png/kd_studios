@@ -54,17 +54,20 @@ const apiBaseUrl = (config.apiBaseUrl || "http://localhost:4000").replace(/\/$/,
 const socketUrl = apiBaseUrl.replace(/^http/, "ws") + "/ws";
 const storageKey = "kd_studios_auth";
 
+document.body?.classList.add("js-enabled");
 
 const projectGrid = document.getElementById("projectGrid");
 const requestForm = document.getElementById("requestForm");
 const formMessage = document.getElementById("formMessage");
 const loginForm = document.getElementById("loginForm");
+const adminLoginForm = document.getElementById("adminLoginForm");
 const adminOtpForm = document.getElementById("adminOtpForm");
 const registerForm = document.getElementById("registerForm");
 const registerOtpForm = document.getElementById("registerOtpForm");
 const backToRegisterBtn = document.getElementById("backToRegisterBtn");
 const passwordResetRequestForm = document.getElementById("passwordResetRequestForm");
 const passwordResetConfirmForm = document.getElementById("passwordResetConfirmForm");
+const passwordResetBackButton = document.getElementById("passwordResetBackBtn");
 const authMessage = document.getElementById("authMessage");
 const logoutButton = document.getElementById("logoutButton");
 const logoutHeaderButton = document.getElementById("logoutHeaderButton");
@@ -80,6 +83,9 @@ const adminUsers = document.getElementById("adminUsers");
 const adminPasswordForm = document.getElementById("adminPasswordForm");
 const adminPasswordMessage = document.getElementById("adminPasswordMessage");
 const adminContactInfo = document.getElementById("adminContactInfo");
+const adminRequestSearch = document.getElementById("adminRequestSearch");
+const adminUserSearch = document.getElementById("adminUserSearch");
+const adminRefreshButton = document.getElementById("adminRefreshButton");
 const notificationList = document.getElementById("notificationList");
 const adminNotificationList = document.getElementById("adminNotificationList");
 const auditLogList = document.getElementById("auditLogList");
@@ -670,6 +676,62 @@ async function loadAdminPanel() {
   }
 }
 
+function debounce(fn, delay) {
+  let timerId;
+  return (...args) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => fn(...args), delay);
+  };
+}
+
+async function handleAdminSearch() {
+  const requestQuery = adminRequestSearch?.value?.trim().toLowerCase() || "";
+  const userQuery = adminUserSearch?.value?.trim().toLowerCase() || "";
+
+  const [dashboard, requests, users] = await Promise.all([
+    apiFetch("/api/admin/dashboard", { method: "GET" }),
+    apiFetch("/api/admin/requests", { method: "GET" }),
+    apiFetch("/api/admin/users", { method: "GET" })
+  ]);
+
+  const filteredRequests = (requests.requests || []).filter((request) => {
+    const text = [
+      request.projectType,
+      request.budget,
+      request.timeline,
+      request.status,
+      request.adminNotes,
+      request.user?.name,
+      request.user?.email,
+      request.user?.phone,
+      request.details
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return requestQuery ? text.includes(requestQuery) : true;
+  });
+
+  const filteredUsers = (users.users || []).filter((user) => {
+    const text = [user.name, user.email, user.phone, user.role, user.blockedReason]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return userQuery ? text.includes(userQuery) : true;
+  });
+
+  renderAdminStats(dashboard);
+  renderAdminRequests(filteredRequests);
+  renderAdminUsers(filteredUsers);
+  renderAuditLogs(dashboard.auditLogs || []);
+  renderNotifications(dashboard.recentNotifications || [], adminNotificationList);
+}
+
+async function handleAdminRefresh(event) {
+  event.preventDefault();
+  await loadAdminPanel();
+}
+
 async function refreshCurrentUser() {
   if (!state.auth?.token) {
     renderAuthState();
@@ -877,11 +939,33 @@ async function handlePasswordResetRequest(event) {
 
     if (passwordResetConfirmForm) {
       passwordResetConfirmForm.email.value = payload.email || "";
+      passwordResetConfirmForm.classList.remove("hidden");
     }
+    if (passwordResetRequestForm) {
+      passwordResetRequestForm.classList.add("hidden");
+    }
+    if (passwordResetBackButton) {
+      passwordResetBackButton.classList.remove("hidden");
+    }
+
     setMessage(authMessage, `${result.message} Please use the reset code shared for your account to continue.`, "success");
   } catch (error) {
     setMessage(authMessage, error.message, "error");
   }
+}
+
+function handlePasswordResetBack() {
+  if (passwordResetRequestForm) {
+    passwordResetRequestForm.classList.remove("hidden");
+  }
+  if (passwordResetConfirmForm) {
+    passwordResetConfirmForm.classList.add("hidden");
+    passwordResetConfirmForm.reset();
+  }
+  if (passwordResetBackButton) {
+    passwordResetBackButton.classList.add("hidden");
+  }
+  setMessage(authMessage, "Enter your email to request a reset code.");
 }
 
 async function handlePasswordResetConfirm(event) {
@@ -1052,11 +1136,23 @@ function bindEvents() {
   if (passwordResetConfirmForm) {
     passwordResetConfirmForm.addEventListener("submit", handlePasswordResetConfirm);
   }
+  if (passwordResetBackButton) {
+    passwordResetBackButton.addEventListener("click", handlePasswordResetBack);
+  }
   if (logoutButton) {
     logoutButton.addEventListener("click", handleLogout);
   }
   if (adminPasswordForm) {
     adminPasswordForm.addEventListener("submit", handleAdminPasswordChange);
+  }
+  if (adminRequestSearch) {
+    adminRequestSearch.addEventListener("input", debounce(handleAdminSearch, 250));
+  }
+  if (adminUserSearch) {
+    adminUserSearch.addEventListener("input", debounce(handleAdminSearch, 250));
+  }
+  if (adminRefreshButton) {
+    adminRefreshButton.addEventListener("click", handleAdminRefresh);
   }
   if (adminPanel) {
     adminPanel.addEventListener("click", (event) => {
@@ -1076,33 +1172,49 @@ function bindEvents() {
   }
 }
 
-// Prevent this shared app script from affecting standalone auth pages (admin-login/login/register etc.)
-// where only specific JS should run.
+// Prevent this shared app script from affecting standalone auth pages
+// where only specific auth forms should be visible.
+// NOTE: admin-login.html loads BOTH app.js and admin-login.js.
+// To avoid competing handlers, app.js should NOT bind events for admin-login page.
 const page = document.body?.dataset?.page;
-if (page === "admin-login" || page === "login" || page === "register" || page === "reset-password") {
-  // Shared app.js standalone auth pages par effect na kare.
-  // Lekin auth forms par agar kahin bhi `.hidden` laga hua ho to remove kar do.
-  document
-    .querySelectorAll("#loginForm, #adminLoginForm, #registerForm, #registerOtpForm, #passwordResetRequestForm, #passwordResetConfirmForm")
-    .forEach((el) => {
-      el.classList.remove("hidden");
-    });
+if (page === "admin-login") {
+  // Leave admin-login.js responsible for admin auth.
+  // Only ensure correct visibility.
+  if (adminLoginForm) adminLoginForm.classList.remove("hidden");
+  if (adminOtpForm) adminOtpForm.classList.add("hidden");
+} else if (page === "login" || page === "register" || page === "reset-password") {
+  const authForms = [
+    loginForm,
+    adminLoginForm,
+    adminOtpForm,
+    registerForm,
+    registerOtpForm,
+    passwordResetRequestForm,
+    passwordResetConfirmForm
+  ];
 
-  if (page !== "register") {
-    const registerOtpFormEl = document.getElementById("registerOtpForm");
-    if (registerOtpFormEl) registerOtpFormEl.classList.add("hidden");
+  authForms.forEach((form) => {
+    if (form) form.classList.add("hidden");
+  });
+
+  if (page === "login") {
+    loginForm?.classList.remove("hidden");
+  } else if (page === "register") {
+    registerForm?.classList.remove("hidden");
+    registerOtpForm?.classList.add("hidden");
+  } else if (page === "reset-password") {
+    passwordResetRequestForm?.classList.remove("hidden");
+    passwordResetConfirmForm?.classList.add("hidden");
+    passwordResetBackButton?.classList.add("hidden");
   }
+
+  bindEvents();
 } else {
-
-
-
   renderProjects();
-  setupMobileNav();
   setupRevealAnimations();
-  renderAuthState();
-  refreshCurrentUser();
-  connectSocket();
+  setupMobileNav();
   bindEvents();
 }
+
 
 
