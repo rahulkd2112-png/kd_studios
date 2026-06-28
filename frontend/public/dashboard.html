@@ -13,53 +13,70 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="dashboard">
-    <div class="site-shell">
-      <div class="sky-mesh"></div>
-      <div class="light-column left"></div>
-      <div class="light-column right"></div>
-      <div class="noise-layer"></div>
-      <header class="topbar">
-        <a class="brand" href="./index.html">
-          <span class="brand-mark">
-            <img src="./logo/kd_logo.png" alt="KD Studios logo" />
-          </span>
-          <span class="brand-text">
+    <div class="museum-shell">
+      <!-- Marble wall background -->
+      <div class="museum-wall"></div>
+
+      <!-- Navbar -->
+      <header class="museum-navbar" aria-label="Primary navigation">
+        <a class="museum-brand" href="./index.html">
+          <img src="./logo/kd_logo.png" alt="KD Studios logo" />
+          <span>
             <strong>KD Studios</strong>
-            <small>Apps | Games | Websites</small>
+            <small>Apps · Games · Websites</small>
           </span>
         </a>
-        <nav class="nav">
-          <a href="./index.html">Home</a>
-          <a href="./work.html">Work</a>
-          <a href="./services.html">Services</a>
-          <a class="active" href="./dashboard.html">Dashboard</a>
-          <a href="./request.html">Request</a>
-          <a href="./contact-support.html">Support</a>
-        </nav>
-          <div class="header-actions">
-          <a class="btn btn-secondary header-btn" href="./login.html">Login</a>
-          <a class="btn btn-primary header-btn" href="./register.html">Register</a>
-          <button class="btn btn-secondary header-btn hidden" id="logoutHeaderButton" type="button">Logout</button>
+
+        <!-- 3-dot menu -->
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="./index.html">🏛️ Home Gallery</a>
+            <a href="./work.html">🎨 Our Work</a>
+            <a href="./services.html">📋 Services</a>
+            <a href="./dashboard.html">📊 Dashboard</a>
+            <a href="./request.html">✍️ Request</a>
+            <a href="./contact-support.html">📞 Support</a>
+            <div class="dropdown-divider"></div>
+            <a href="./privacy-policy.html">Privacy</a>
+            <a href="./terms-conditions.html">Terms</a>
+          </nav>
+        </div>
+
+        <!-- Auth actions -->
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="./login.html">Login</a>
+          <a class="museum-btn museum-btn-primary" href="./register.html">Register</a>
+          <button class="museum-btn museum-btn-outline hidden" id="logoutHeaderButton" type="button">Logout</button>
         </div>
       </header>
 
       <main>
-        <section class="section inner-hero">
-          <div class="section-heading reveal dashboard-heading-row">
+        <!-- Dashboard hero heading -->
+        <div class="museum-page-hero reveal">
+          <div class="dashboard-heading-row">
             <div>
               <p class="eyebrow">Dashboard</p>
               <h2>Unified client dashboard for requests, notifications, and admin operations.</h2>
               <p>Review activity, monitor project requests, and manage operations in a professional workspace.</p>
             </div>
-            <button class="btn btn-secondary" id="dashboardHomeButton" type="button">Home</button>
+            <button class="museum-btn museum-btn-outline" id="dashboardHomeButton" type="button">Home</button>
           </div>
+        </div>
 
+        <!-- Dashboard grid layout -->
+        <div class="museum-content-grid">
           <div class="dashboard-grid">
+            <!-- Left column: session + notifications -->
             <section class="control-stack reveal">
-              <article class="glass-card panel-block session-panel">
+              <article class="museum-card panel-block session-panel">
                 <div class="panel-header">
                   <div>
-                    <span class="chip">Session</span>
+                    <span class="section-chip">Session</span>
                     <h3 id="accountTitle">Not logged in</h3>
                   </div>
                   <span class="socket-pill" id="socketStatus">Socket standby</span>
@@ -68,16 +85,16 @@
                   Login or register to submit project requests and track your briefs.
                 </p>
                 <div class="hero-actions compact">
-                  <a class="btn btn-secondary" href="./login.html">Login</a>
-                  <a class="btn btn-secondary" href="./register.html">Register</a>
-                  <button class="btn btn-secondary hidden" id="logoutButton" type="button">Logout</button>
+                  <a class="museum-btn museum-btn-outline" href="./login.html">Login</a>
+                  <a class="museum-btn museum-btn-outline" href="./register.html">Register</a>
+                  <button class="museum-btn museum-btn-outline hidden" id="logoutButton" type="button">Logout</button>
                 </div>
               </article>
 
-              <article class="glass-card panel-block">
+              <article class="museum-card panel-block">
                 <div class="panel-header">
                   <div>
-                    <span class="chip">Notifications</span>
+                    <span class="section-chip">Notifications</span>
                     <h3>Live account updates</h3>
                   </div>
                 </div>
@@ -87,11 +104,12 @@
               </article>
             </section>
 
+            <!-- Right column: client area + admin panel -->
             <section class="workspace-stack reveal">
-              <article class="glass-card panel-block client-panel">
+              <article class="museum-card panel-block client-panel">
                 <div class="panel-header">
                   <div>
-                    <span class="chip">Client Area</span>
+                    <span class="section-chip">Client Area</span>
                     <h3>My requests and project history</h3>
                   </div>
                 </div>
@@ -100,15 +118,16 @@
                 </div>
               </article>
 
-              <article class="glass-card panel-block hidden" id="adminPanel">
+              <!-- Admin panel (hidden by default) -->
+              <article class="museum-card panel-block hidden" id="adminPanel">
                 <div class="panel-header admin-panel-header">
                   <div>
-                    <span class="chip">Admin Control Center</span>
+                    <span class="section-chip">Admin Control Center</span>
                     <h3>Manage users, review requests, reply to clients, and monitor activity from one secure workspace.</h3>
                   </div>
                   <div class="admin-panel-actions">
-                    <button class="btn btn-secondary" id="adminRefreshButton" type="button">Refresh panel</button>
-                    <span class="chip chip-success">Admin access verified</span>
+                    <button class="museum-btn museum-btn-outline" id="adminRefreshButton" type="button">Refresh panel</button>
+                    <span class="section-chip chip-success">Admin access verified</span>
                   </div>
                 </div>
 
@@ -129,7 +148,7 @@
                     <div class="panel-header slim">
                       <h4>Secure tools</h4>
                     </div>
-                    <form class="auth-form compact-form" id="adminPasswordForm">
+                    <form class="museum-form compact-form" id="adminPasswordForm">
                       <label>
                         <span>Current admin password</span>
                         <input type="password" name="currentPassword" autocomplete="current-password" maxlength="128" placeholder="Current admin password" required />
@@ -138,7 +157,7 @@
                         <span>New admin password</span>
                         <input type="password" name="newPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="New admin password" required />
                       </label>
-                      <button class="btn btn-primary full-width" type="submit">Change admin password</button>
+                      <button class="museum-btn museum-btn-primary full-width" type="submit">Change admin password</button>
                       <p class="form-message" id="adminPasswordMessage"></p>
                     </form>
                   </div>
@@ -195,26 +214,21 @@
               </article>
             </section>
           </div>
-        </section>
+        </div>
       </main>
 
-      <footer class="site-footer">
-        <div class="footer-grid">
-          <div>
-            <strong>KD Studios</strong>
-            <p>Dashboard access for clients and owner-level admin operations.</p>
-          </div>
-          <div class="footer-links">
-            <a href="./privacy-policy.html">Privacy Policy</a>
-            <a href="./terms-conditions.html">Terms & Conditions</a>
-            <a href="./contact-support.html">Contact Support</a>
-          </div>
+      <footer class="museum-footer">
+        <span>© 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="./privacy-policy.html">Privacy</a>
+          <a href="./terms-conditions.html">Terms</a>
+          <a href="./contact-support.html">Support</a>
         </div>
       </footer>
     </div>
+
     <script src="./config.js"></script>
     <script src="./motion.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
-

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KD Studios | Apps, Games, Websites & Client Dashboard</title>
+    <title>KD Studios | App Gallery — Museum Collection</title>
     <meta
       name="description"
       content="KD Studios builds polished mobile apps, games, business websites, and secure client dashboards."
@@ -14,206 +14,128 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=1719602462" />
   </head>
   <body data-page="home">
-    <div class="kd-shell">
-      <div class="kd-background-grid"></div>
-      <div class="kd-ambient-glow"></div>
-      <div class="kd-starfield"></div>
+    <div class="museum-shell">
+      <!-- Marble wall background -->
+      <div class="museum-wall"></div>
 
-      <header class="kd-navbar" aria-label="Primary navigation">
-        <a class="kd-brand" href="./index.html">
+      <!-- Navbar -->
+      <header class="museum-navbar" aria-label="Primary navigation">
+        <a class="museum-brand" href="./index.html">
           <img src="./logo/kd_logo.png" alt="KD Studios logo" />
           <span>
             <strong>KD Studios</strong>
-            <small>Apps | Games | Websites</small>
+            <small>Apps · Games · Websites</small>
           </span>
         </a>
-        <nav class="kd-nav">
-          <a href="#apps">Apps</a>
-          <a href="./work.html">Work</a>
-          <a href="./services.html">Services</a>
-          <a href="./dashboard.html">Dashboard</a>
-          <a href="./contact-support.html">Support</a>
-        </nav>
-        <div class="kd-header-actions">
-          <a class="kd-btn kd-btn-secondary" href="./login.html">Login</a>
-          <a class="kd-btn kd-btn-primary" href="./register.html">Register</a>
+
+        <!-- 3-dot menu -->
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="./index.html">🏛️ Home Gallery</a>
+            <a href="./work.html">🎨 Our Work</a>
+            <a href="./services.html">📋 Services</a>
+            <a href="./dashboard.html">📊 Dashboard</a>
+            <a href="./request.html">✍️ Request</a>
+            <a href="./contact-support.html">📞 Support</a>
+            <div class="dropdown-divider"></div>
+            <a href="./privacy-policy.html">Privacy</a>
+            <a href="./terms-conditions.html">Terms</a>
+          </nav>
+        </div>
+
+        <!-- Auth actions -->
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="./login.html">Sign In</a>
+          <a class="museum-btn museum-btn-primary" href="./register.html">Sign Up</a>
         </div>
       </header>
 
       <main>
-        <section class="kd-hero" id="hero">
-          <div class="kd-hero-copy">
-            <span class="kd-eyebrow">Professional digital product studio</span>
-            <h1>Professional apps by KD Studios.</h1>
-            <p class="kd-hero-text">
-              Mobile apps, games, business websites, admin panels, and client dashboards built with focused product thinking, polished UI, and practical workflows.
-            </p>
-            <div class="kd-hero-actions">
-              <a class="kd-btn kd-btn-primary" href="#apps">View Apps</a>
-              <a class="kd-btn kd-btn-secondary" href="./request.html">Start a Project</a>
-            </div>
-            <div class="kd-hero-meta" aria-label="KD Studios capabilities">
-              <span>Android Apps</span>
-              <span>Game Apps</span>
-              <span>Business Websites</span>
-              <span>Client Dashboards</span>
-            </div>
-          </div>
+        <!-- Hero -->
+        <section class="museum-hero reveal">
+          <span class="museum-hero-eyebrow">KD Studios Collection</span>
+          <h1>Our <em>App Gallery</em> — curated for you.</h1>
+          <p>Browse our live apps displayed on pedestals, just like a museum exhibition. Click any app to view details and get it from the Play Store.</p>
+        </section>
 
-          <div class="kd-hero-stage" aria-label="KD Studios product preview">
-            <canvas id="kd-three-canvas" aria-hidden="true"></canvas>
-            <div class="kd-hero-glow"></div>
-            <div class="kd-hero-particles"></div>
-            <div class="kd-device-preview">
-              <div class="kd-device-topline">
-                <span>KD Studios</span>
-                <strong>Live Apps</strong>
-              </div>
-              <div class="kd-device-app-list">
-                <span><img src="./logo/facefixai.png" alt="" />FaceFix AI</span>
-                <span><img src="./logo/ScanPro.png" alt="" />ScanPro</span>
-                <span><img src="./logo/Stack%20Tower.png" alt="" />Stack Tower</span>
-              </div>
-            </div>
+        <!-- Gallery (3D replaces the old 2D grid) -->
+        <section class="museum-gallery" id="apps">
+          <div class="museum-3d-wrap">
+            <canvas id="museumCanvas" aria-label="3D museum canvas" role="img"></canvas>
           </div>
         </section>
 
-        <section class="kd-section kd-home-apps" id="apps">
-          <div class="kd-section-head reveal">
-            <span class="kd-chip">Apps</span>
-            <h2>Live KD Studios apps</h2>
-            <p>Real products with direct store links, clear descriptions, and no placeholder cards.</p>
-          </div>
 
-          <div class="kd-home-app-grid reveal">
-            <article class="kd-home-app-card" data-magnetic>
-              <div class="kd-home-app-media">
-                <img src="./logo/facefixai.png" alt="FaceFix AI app logo" />
-              </div>
-              <div class="kd-home-app-body">
-                <span class="status-pill live">Live</span>
-                <h3>FaceFix AI</h3>
-                <p>AI-powered photo enhancement for clearer portraits, restored facial details, and cleaner old photos.</p>
-                <div class="tag-row">
-                  <span class="tag">AI Enhancement</span>
-                  <span class="tag">Photo Editing</span>
-                  <span class="tag">Android</span>
-                </div>
-                <a class="kd-btn kd-btn-primary" href="https://play.google.com/store/apps/details?id=com.kdstudios.facefixai" target="_blank" rel="noreferrer">Open App</a>
-              </div>
+        <!-- Service Summary -->
+        <section class="museum-section reveal">
+          <div class="museum-section-head">
+            <span class="section-chip">Beyond Apps</span>
+            <h2>What we build</h2>
+            <p>Mobile apps, games, business websites, admin panels, and client dashboards — all crafted with focused product thinking.</p>
+          </div>
+          <div class="museum-content-grid">
+            <article class="museum-card">
+              <h3>📱 Mobile Apps</h3>
+              <p>Android apps with clean UI, real utility, and Play Store listing. FaceFix AI and ScanPro are live examples.</p>
             </article>
-
-            <article class="kd-home-app-card" data-magnetic>
-              <div class="kd-home-app-media">
-                <img src="./logo/ScanPro.png" alt="ScanPro app logo" />
-              </div>
-              <div class="kd-home-app-body">
-                <span class="status-pill live">Live</span>
-                <h3>ScanPro</h3>
-                <p>Document scanning for quick captures, cleaner pages, PDF export, and everyday productivity.</p>
-                <div class="tag-row">
-                  <span class="tag">Scanner</span>
-                  <span class="tag">PDF Tools</span>
-                  <span class="tag">Productivity</span>
-                </div>
-                <a class="kd-btn kd-btn-primary" href="https://play.google.com/store/apps/details?id=com.kdstudios.scanpro" target="_blank" rel="noreferrer">Open App</a>
-              </div>
+            <article class="museum-card">
+              <h3>🎮 Games</h3>
+              <p>Arcade experiences built for replayability. Stack Tower is our latest release with stacking gameplay.</p>
             </article>
-
-            <article class="kd-home-app-card" data-magnetic>
-              <div class="kd-home-app-media">
-                <img src="./logo/Stack%20Tower.png" alt="Stack Tower game app logo" />
-              </div>
-              <div class="kd-home-app-body">
-                <span class="status-pill live">Live</span>
-                <h3>Stack Tower</h3>
-                <p>Arcade stacking gameplay with simple controls, precise timing, and replay-focused progression.</p>
-                <div class="tag-row">
-                  <span class="tag">Game App</span>
-                  <span class="tag">Arcade</span>
-                  <span class="tag">Android</span>
-                </div>
-                <a class="kd-btn kd-btn-primary" href="https://play.google.com/store/apps/details?id=com.kdstudios.stacktower" target="_blank" rel="noreferrer">Open App</a>
-              </div>
+            <article class="museum-card">
+              <h3>🌐 Websites & Dashboards</h3>
+              <p>Business websites, client portals, admin panels, — full-stack systems with request workflows and secure access.</p>
             </article>
-          </div>
-        </section>
-
-        <section class="kd-section kd-section-split kd-who" id="services">
-          <div class="kd-panel reveal">
-            <span class="kd-chip">Services</span>
-            <h2>Build services for serious client work</h2>
-            <p>KD Studios handles mobile apps, websites, game concepts, admin panels, dashboards, and request-based client workflows.</p>
-            <div class="kd-pill-list">
-              <span>Mobile App Development</span>
-              <span>Business Websites</span>
-              <span>Game Development</span>
-              <span>Admin Dashboards</span>
-              <span>Client Portals</span>
-              <span>Support Workflows</span>
-            </div>
-          </div>
-          <div class="kd-panel glass-lens reveal">
-            <div class="kd-stat-card">
-              <strong>Client access is built in</strong>
-              <p>Visitors can register, login, submit project requests, and track updates through the KD Studios dashboard.</p>
-            </div>
-            <div class="kd-story-flow">
-              <article>
-                <h3>Request</h3>
-                <p>Clients share project type, budget, timeline, and details.</p>
-              </article>
-              <article>
-                <h3>Review</h3>
-                <p>Admin can manage users, requests, status, quotes, and replies.</p>
-              </article>
-              <article>
-                <h3>Track</h3>
-                <p>Clients can return to the dashboard for updates and notifications.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="kd-section kd-contact" id="contact">
-          <div class="kd-section-head reveal">
-            <span class="kd-chip">Get Started</span>
-            <h2>Start from the right place</h2>
-            <p>Use the client account flow for project work, or contact support for help with access and onboarding.</p>
-          </div>
-          <div class="kd-action-grid reveal">
-            <a class="kd-action-card" href="./register.html">
-              <span>New Client</span>
-              <strong>Create an account</strong>
-              <p>Register to submit project requests and track updates.</p>
-            </a>
-            <a class="kd-action-card" href="./login.html">
-              <span>Existing Client</span>
-              <strong>Login to dashboard</strong>
-              <p>Continue with requests, notifications, and replies.</p>
-            </a>
-            <a class="kd-action-card" href="./contact-support.html">
-              <span>Support</span>
-              <strong>Contact KD Studios</strong>
-              <p>Get help with onboarding, access, or project details.</p>
-            </a>
           </div>
         </section>
       </main>
 
-      <footer class="kd-footer">
-        <p>KD Studios | Apps | Games | Websites | Dashboards</p>
-        <p>© 2026 KD Studios. Built for polished digital product delivery.</p>
+      <footer class="museum-footer">
+        <span>© 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="./privacy-policy.html">Privacy</a>
+          <a href="./terms-conditions.html">Terms</a>
+          <a href="./contact-support.html">Support</a>
+        </div>
       </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-    <script src="./motion.js"></script>
-    <script src="./experience.js"></script>
+    <!-- App detail overlay -->
+    <div class="museum-overlay" id="appOverlay">
+      <div class="museum-expanded-card">
+        <button class="close-btn" id="overlayCloseBtn" aria-label="Close details">✕</button>
+        <img class="expanded-icon" id="overlayIcon" src="" alt="" />
+        <h2 class="expanded-title" id="overlayTitle"></h2>
+        <div class="expanded-tags" id="overlayTags"></div>
+        <p class="expanded-desc" id="overlayDesc"></p>
+        <a class="expanded-play-btn" id="overlayPlayBtn" href="#" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M3 2l18 10L3 22V2z"/></svg>
+          View on Play Store
+        </a>
+      </div>
+    </div>
+
+    <script src="./config.js?v=1719602462"></script>
+    <script src="./motion.js?v=1719602462"></script>
+    <script src="./app.js?v=1719602462"></script>
+    <script src="./museum-3d.js?v=1719602462"></script>
+
+    <script src="./museum-app-data.js?v=1719602462"></script>
+
+    <!-- Ensure museum overlay opens with glassy content styling -->
+    <script>
+      window.__KD_MUSEUM_OPEN_OVERLAY__ = true;
+    </script>
+
   </body>
 </html>
+
+

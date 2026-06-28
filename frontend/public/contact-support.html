@@ -13,84 +13,89 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="contact-support">
-    <div class="site-shell">
-      <div class="sky-mesh"></div>
-      <div class="light-column left"></div>
-      <div class="light-column right"></div>
-      <div class="noise-layer"></div>
-      <header class="topbar">
-        <a class="brand" href="./index.html">
-          <span class="brand-mark">
-            <img src="./logo/kd_logo.png" alt="KD Studios logo" />
-          </span>
-          <span class="brand-text">
+    <div class="museum-shell">
+      <!-- Marble wall background -->
+      <div class="museum-wall"></div>
+
+      <!-- Navbar -->
+      <header class="museum-navbar" aria-label="Primary navigation">
+        <a class="museum-brand" href="./index.html">
+          <img src="./logo/kd_logo.png" alt="KD Studios logo" />
+          <span>
             <strong>KD Studios</strong>
-            <small>Apps | Games | Websites</small>
+            <small>Apps · Games · Websites</small>
           </span>
         </a>
-        <nav class="nav">
-          <a href="./index.html">Home</a>
-          <a href="./work.html">Work</a>
-          <a href="./services.html">Services</a>
-          <a href="./dashboard.html">Dashboard</a>
-          <a href="./request.html">Request</a>
-          <a class="active" href="./contact-support.html">Support</a>
-        </nav>
-        <div class="header-actions">
-          <a class="btn btn-secondary header-btn" href="./login.html">Login</a>
-          <a class="btn btn-primary header-btn" href="./register.html">Register</a>
+
+        <!-- 3-dot menu -->
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="./index.html">🏛️ Home Gallery</a>
+            <a href="./work.html">🎨 Our Work</a>
+            <a href="./services.html">📋 Services</a>
+            <a href="./dashboard.html">📊 Dashboard</a>
+            <a href="./request.html">✍️ Request</a>
+            <a href="./contact-support.html">📞 Support</a>
+            <div class="dropdown-divider"></div>
+            <a href="./privacy-policy.html">Privacy</a>
+            <a href="./terms-conditions.html">Terms</a>
+          </nav>
+        </div>
+
+        <!-- Auth actions -->
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="./login.html">Sign In</a>
+          <a class="museum-btn museum-btn-primary" href="./register.html">Sign Up</a>
         </div>
       </header>
 
       <main>
-        <section class="section legal-section">
-          <article class="glass-card legal-card reveal">
-            <span class="chip">Contact Support</span>
-            <h1>Contact KD Studios for support, project enquiries, or account assistance</h1>
-            <div class="support-grid">
-              <div class="support-card">
-                <h3>Email Support</h3>
-                <p>rahulkd2112@gmail.com</p>
-              </div>
-              <div class="support-card">
-                <h3>Phone / WhatsApp</h3>
-                <p>8340510698</p>
-              </div>
-              <div class="support-card">
-                <h3>Best For</h3>
-                <p>Login issues, request help, pricing discussion, and project updates.</p>
-              </div>
-              <div class="support-card">
-                <h3>Response Window</h3>
-                <p>Standard support queries are handled during business hours, with priority responses for active projects.</p>
-              </div>
-            </div>
-          </article>
+        <!-- Page Hero -->
+        <section class="museum-page-hero reveal">
+          <span class="section-chip">Contact Support</span>
+          <h1>Contact KD Studios for support, project enquiries, or account assistance</h1>
+        </section>
+
+        <!-- Support Cards -->
+        <section class="museum-section reveal">
+          <div class="museum-content-grid">
+            <article class="museum-card">
+              <h3>Email Support</h3>
+              <p>rahulkd2112@gmail.com</p>
+            </article>
+            <article class="museum-card">
+              <h3>Phone / WhatsApp</h3>
+              <p>8340510698</p>
+            </article>
+            <article class="museum-card">
+              <h3>Best For</h3>
+              <p>Login issues, request help, pricing discussion, and project updates.</p>
+            </article>
+            <article class="museum-card">
+              <h3>Response Window</h3>
+              <p>Standard support queries are handled during business hours, with priority responses for active projects.</p>
+            </article>
+          </div>
         </section>
       </main>
 
-      <footer class="site-footer">
-        <div class="footer-grid">
-          <div>
-            <strong>KD Studios</strong>
-            <p>Support for account access, requests, quotes, and delivery communication.</p>
-          </div>
-          <div class="footer-links">
-            <a href="./privacy-policy.html">Privacy Policy</a>
-            <a href="./terms-conditions.html">Terms & Conditions</a>
-            <a href="./contact-support.html">Contact Support</a>
-          </div>
+      <footer class="museum-footer">
+        <span>© 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="./privacy-policy.html">Privacy</a>
+          <a href="./terms-conditions.html">Terms</a>
+          <a href="./contact-support.html">Support</a>
         </div>
       </footer>
     </div>
+
     <script src="./config.js"></script>
-    <script src="./app.js"></script>
     <script src="./motion.js"></script>
-    <script src="./kd-tree.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
-
-
-
-
-

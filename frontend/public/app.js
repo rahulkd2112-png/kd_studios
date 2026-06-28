@@ -49,10 +49,154 @@ const projects = [
   }
 ];
 
+/* ============================================================
+   KD STUDIOS — Shared App Logic (Auth, Dashboard, Museum UI)
+   ============================================================ */
+
 const config = window.KD_STUDIOS_CONFIG || {};
 const apiBaseUrl = (config.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
 const socketUrl = apiBaseUrl.replace(/^http/, "ws") + "/ws";
 const storageKey = "kd_studios_auth";
+
+/* ---- MUSEUM APP DATA ---- */
+const museumApps = [
+  {
+    id: "facefix",
+    title: "FaceFix AI",
+    icon: "./logo/facefixai.png",
+    description:
+      "AI-powered photo enhancement for clearer portraits, restored facial details, and cleaner old photos.",
+    tags: ["AI Enhancement", "Photo Editing", "Android"],
+    playStoreUrl:
+      "https://play.google.com/store/apps/details?id=com.kdstudios.facefixai",
+    category: "Photo Editing App"
+  },
+  {
+    id: "scanpro",
+    title: "ScanPro",
+    icon: "./logo/ScanPro.png",
+    description:
+      "Document scanning for quick captures, cleaner pages, PDF export, and everyday productivity.",
+    tags: ["Scanner", "PDF Tools", "Productivity"],
+    playStoreUrl:
+      "https://play.google.com/store/apps/details?id=com.kdstudios.scanpro",
+    category: "Scanner App"
+  },
+  {
+    id: "stacktower",
+    title: "Stack Tower",
+    icon: "./logo/Stack%20Tower.png",
+    description:
+      "Arcade stacking gameplay with simple controls, precise timing, and replay-focused progression.",
+    tags: ["Game App", "Arcade", "Android"],
+    playStoreUrl:
+      "https://play.google.com/store/apps/details?id=com.kdstudios.stacktower",
+    category: "Game App"
+  }
+];
+
+/* ---- MUSEUM UI FUNCTIONS ---- */
+
+function renderMuseumPedestals() {
+  const grid = document.getElementById("pedestalGrid");
+  if (!grid) return;
+
+  grid.innerHTML = museumApps
+    .map(
+      (app) => `
+    <div class="museum-pedestal" data-app-id="${app.id}">
+      <div class="pedestal-base">
+        <div class="pedestal-top">
+          <img src="${app.icon}" alt="${app.title}" loading="lazy" />
+        </div>
+        <div class="pedestal-column"></div>
+        <div class="pedestal-bottom"></div>
+      </div>
+      <div class="pedestal-label">${app.title}</div>
+      <div class="pedestal-sub">${app.category}</div>
+    </div>
+  `
+    )
+    .join("");
+
+  // Click to open overlay
+  grid.querySelectorAll(".museum-pedestal").forEach((el) => {
+    el.addEventListener("click", () => {
+      const app = museumApps.find((a) => a.id === el.dataset.appId);
+      if (app) openAppOverlay(app);
+    });
+  });
+}
+
+function openAppOverlay(app) {
+  const overlay = document.getElementById("appOverlay");
+  const icon = document.getElementById("overlayIcon");
+  const title = document.getElementById("overlayTitle");
+  const tags = document.getElementById("overlayTags");
+  const desc = document.getElementById("overlayDesc");
+  const playBtn = document.getElementById("overlayPlayBtn");
+  if (!overlay) return;
+
+  icon.src = app.icon;
+  icon.alt = app.title;
+  title.textContent = app.title;
+  tags.innerHTML = app.tags.map((t) => `<span class="expanded-tag">${t}</span>`).join("");
+  desc.textContent = app.description;
+  playBtn.href = app.playStoreUrl;
+  overlay.classList.add("open");
+}
+
+// Bridge for museum-3d.js
+window.__KD_OPEN_OVERLAY__ = openAppOverlay;
+
+
+function closeAppOverlay() {
+  const overlay = document.getElementById("appOverlay");
+  if (overlay) overlay.classList.remove("open");
+}
+
+function setupMuseumOverlay() {
+  const overlay = document.getElementById("appOverlay");
+  const closeBtn = document.getElementById("overlayCloseBtn");
+  if (!overlay) return;
+
+  closeBtn?.addEventListener("click", closeAppOverlay);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeAppOverlay();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAppOverlay();
+  });
+}
+
+function setupDotMenu() {
+  const btn = document.getElementById("dotMenuBtn");
+  const dropdown = document.getElementById("dotDropdown");
+  if (!btn || !dropdown) return;
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown.classList.contains("open");
+    dropdown.classList.toggle("open");
+    btn.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+      dropdown.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  dropdown.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      dropdown.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+/* ---- END MUSEUM UI ---- */
 
 document.body?.classList.add("js-enabled");
 
@@ -1209,12 +1353,23 @@ if (page === "admin-login") {
   }
 
   bindEvents();
+} else if (page === "home") {
+  // Museum home page (3D)
+  window.__KD_MUSEUM_APPS__ = museumApps;
+
+  // Keep overlay + menu working
+  setupMuseumOverlay();
+  setupDotMenu();
+  setupRevealAnimations();
+
+  // Don’t render the old 2D grid
+  const grid = document.getElementById("pedestalGrid");
+  if (grid) grid.style.display = "none";
+
+  bindEvents();
 } else {
   renderProjects();
   setupRevealAnimations();
   setupMobileNav();
   bindEvents();
 }
-
-
-
