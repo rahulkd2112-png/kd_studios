@@ -13,49 +13,55 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="login">
-    <div class="site-shell">
-      <div class="sky-mesh"></div>
-      <div class="light-column left"></div>
-      <div class="light-column right"></div>
-      <div class="noise-layer"></div>
-      <header class="topbar">
-        <a class="brand" href="./index.html">
-          <span class="brand-mark">
-            <img src="./logo/kd_logo.png" alt="KD Studios logo" />
-          </span>
-          <span class="brand-text">
+    <div class="museum-shell">
+      <!-- Marble wall background -->
+      <div class="museum-wall"></div>
+
+      <!-- Navbar -->
+      <header class="museum-navbar" aria-label="Primary navigation">
+        <a class="museum-brand" href="./index.html">
+          <img src="./logo/kd_logo.png" alt="KD Studios logo" />
+          <span>
             <strong>KD Studios</strong>
-            <small>Apps | Games | Websites</small>
+            <small>Apps · Games · Websites</small>
           </span>
         </a>
-        <nav class="nav">
-          <a href="./index.html">Home</a>
-          <a href="./work.html">Work</a>
-          <a href="./services.html">Services</a>
-          <a href="./dashboard.html">Dashboard</a>
-          <a href="./request.html">Request</a>
-          <a href="./contact-support.html">Support</a>
-        </nav>
-          <div class="header-actions">
-          <a class="btn btn-secondary header-btn active-header-btn" href="./login.html">Login</a>
-          <a class="btn btn-secondary header-btn" href="./admin-login.html">Admin Login</a>
-          <a class="btn btn-primary header-btn" href="./register.html">Register</a>
+
+        <!-- 3-dot menu -->
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="./index.html">🏛️ Home Gallery</a>
+            <a href="./work.html">🎨 Our Work</a>
+            <a href="./services.html">📋 Services</a>
+            <a href="./dashboard.html">📊 Dashboard</a>
+            <a href="./request.html">✍️ Request</a>
+            <a href="./contact-support.html">📞 Support</a>
+            <div class="dropdown-divider"></div>
+            <a href="./privacy-policy.html">Privacy</a>
+            <a href="./terms-conditions.html">Terms</a>
+          </nav>
         </div>
 
+        <!-- Auth actions -->
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="./login.html">Sign In</a>
+          <a class="museum-btn museum-btn-primary" href="./register.html">Sign Up</a>
+        </div>
       </header>
 
       <main>
-        <section class="section auth-page-section">
-          <article class="glass-card panel-block auth-page-card reveal visible">
-            <div class="panel-header">
-              <div>
-                <span class="chip">Account Access</span>
-                <h3>Login to your KD Studios dashboard</h3>
-              </div>
-              <a class="btn btn-secondary" href="./register.html">Create an Account</a>
-            </div>
+        <section class="museum-page-hero reveal">
+          <div class="museum-page-hero-card auth-glass-card">
+            <span class="section-chip">Account Access</span>
+            <h3>Login to your KD Studios dashboard</h3>
+            <a class="museum-btn museum-btn-outline" href="./register.html">Create an Account</a>
 
-            <form class="auth-form" id="loginForm">
+            <form class="museum-form" id="loginForm">
               <label>
                 <span>Email</span>
                 <input type="email" name="email" autocomplete="username" maxlength="160" placeholder="Enter your email" required />
@@ -65,10 +71,8 @@
                 <input type="password" name="password" autocomplete="current-password" maxlength="128" placeholder="Enter password" required />
               </label>
 
-              <button class="btn btn-primary full-width" type="submit">Login / Request Code</button>
+              <button class="museum-btn museum-btn-primary full-width" type="submit">Login / Request Code</button>
             </form>
-
-
 
             <p class="form-message" id="authMessage"></p>
             <div class="auth-inline-links">
@@ -76,29 +80,26 @@
               <a href="./admin-login.html">Admin Login</a>
               <a href="./reset-password.html">Forgot password?</a>
             </div>
-
-          </article>
+          </div>
         </section>
       </main>
 
-      <footer class="site-footer">
-        <div class="footer-grid">
-          <div>
-            <strong>KD Studios</strong>
-            <p>Secure login for project requests, updates, and admin management.</p>
-          </div>
-          <div class="footer-links">
-            <a href="./privacy-policy.html">Privacy Policy</a>
-            <a href="./terms-conditions.html">Terms & Conditions</a>
-            <a href="./contact-support.html">Contact Support</a>
-          </div>
+      <footer class="museum-footer">
+        <span>© 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="./privacy-policy.html">Privacy</a>
+          <a href="./terms-conditions.html">Terms</a>
+          <a href="./contact-support.html">Support</a>
         </div>
       </footer>
     </div>
+
     <script src="./config.js"></script>
     <script src="./motion.js"></script>
+    <script src="./app-data.js"></script>
+    <script src="./app-museum.js"></script>
+    <script src="./app-core.js"></script>
     <script src="./app.js"></script>
     <script src="./kd-tree.js"></script>
   </body>
 </html>
-

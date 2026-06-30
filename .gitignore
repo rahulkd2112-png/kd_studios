@@ -1,5 +1,5 @@
 node_modules
-# Keep environment variables out of version control
+Keep environment variables out of version control
 .env
 .env.*
 .env.example
@@ -16,4 +16,13 @@ prisma/dev.db-shm
 prisma/cleanup-test.sql
 .chrome-profile
 .chrome-profile-2
+.chrome-profile-cdp
+.chrome-profile-check
+.chrome-profile-check-desktop
+.chrome-profile-check-mobile
+.chrome-profile-check-mobile-2
+.chrome-profile-check-mobile-3
+.chrome-profile-check-mobile-4
 backend-test.log
+home-check.png
+home-mobile-check.png
