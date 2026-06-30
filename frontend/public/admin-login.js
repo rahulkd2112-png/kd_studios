@@ -1,14 +1,12 @@
-const config = window.KD_STUDIOS_CONFIG || {};
-const apiBaseUrl = (config.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
+const adminConfig = window.KD_STUDIOS_CONFIG || {};
+const adminApiBaseUrl = (adminConfig.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
 
 // Auto-fill helper (optional). If you don't want this, remove this block.
 // It helps during testing and prevents admin-password 
 
-const storageKey = "kd_studios_auth";
+const adminStorageKey = "kd_studios_auth";
 
-const adminLoginForm = document.getElementById("adminLoginForm");
-const adminOtpForm = document.getElementById("adminOtpForm");
-const authMessage = document.getElementById("authMessage");
+// DOM elements are already declared in app-core.js
 
 function setMessage(text, type = "") {
   if (!authMessage) return;
@@ -18,9 +16,9 @@ function setMessage(text, type = "") {
 
 function saveAuth(auth) {
   if (auth) {
-    sessionStorage.setItem(storageKey, JSON.stringify(auth));
+    sessionStorage.setItem(adminStorageKey, JSON.stringify(auth));
   } else {
-    sessionStorage.removeItem(storageKey);
+    sessionStorage.removeItem(adminStorageKey);
   }
 }
 
@@ -36,7 +34,7 @@ if (authMessage) {
 }
 
 async function apiFetch(path, options = {}) {
-  const response = await fetch(`${apiBaseUrl}${path}`, {
+  const response = await fetch(`${adminApiBaseUrl}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",

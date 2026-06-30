@@ -5,5 +5,8 @@ window.KD_STUDIOS_CONFIG = {
       ? "http://localhost:4000"
       : "https://kd-studios.onrender.com",
 
+  // Resend OTP Worker for OTP (Cloudflare Worker)
+  otpWorkerUrl: "https://resndotp.your-subdomain.workers.dev",
+
   adminEmail: "rahul2112@gmail.com"
 };

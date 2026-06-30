@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KD Studios | Dashboard</title>
+    <title>KD Studios | Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,6 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   </head>
   <body data-page="dashboard">
     <div class="museum-shell">
@@ -23,7 +24,7 @@
           <img src="./logo/kd_logo.png" alt="KD Studios logo" />
           <span>
             <strong>KD Studios</strong>
-            <small>Apps · Games · Websites</small>
+            <small>Admin Dashboard</small>
           </span>
         </a>
 
@@ -47,188 +48,361 @@
           </nav>
         </div>
 
-        <!-- Auth actions -->
         <div class="museum-auth-actions">
-          <a class="museum-btn museum-btn-outline" href="./login.html">Login</a>
-          <a class="museum-btn museum-btn-primary" href="./register.html">Register</a>
-          <button class="museum-btn museum-btn-outline hidden" id="logoutHeaderButton" type="button">Logout</button>
+          <button class="museum-btn museum-btn-primary hidden" id="logoutHeaderButton" type="button">Logout</button>
         </div>
       </header>
 
-      <main>
-        <!-- Dashboard hero heading -->
-        <div class="museum-page-hero reveal">
-          <div class="dashboard-heading-row">
-            <div>
-              <p class="eyebrow">Dashboard</p>
-              <h2>Unified client dashboard for requests, notifications, and admin operations.</h2>
-              <p>Review activity, monitor project requests, and manage operations in a professional workspace.</p>
+      <!-- Dashboard Hero -->
+      <section class="museum-section">
+        <div class="museum-section-head">
+          <span class="section-chip">Admin Panel</span>
+          <h2>Dashboard Overview</h2>
+          <p>Complete control panel for managing users, requests, and monitoring platform activity</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="admin-stats-grid" id="adminStatsGrid">
+          <article class="admin-stat-card">
+            <div class="stat-icon total-users"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="stat-content">
+              <span class="stat-value" id="statTotalUsers">—</span>
+              <span class="stat-label">Total Users</span>
             </div>
-            <button class="museum-btn museum-btn-outline" id="dashboardHomeButton" type="button">Home</button>
+            <div class="stat-trend positive" id="statUsersTrend">+0% this month</div>
+          </article>
+
+          <article class="admin-stat-card">
+            <div class="stat-icon total-requests"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+            <div class="stat-content">
+              <span class="stat-value" id="statTotalRequests">—</span>
+              <span class="stat-label">Total Requests</span>
+            </div>
+            <div class="stat-trend positive" id="statRequestsTrend">+0% this month</div>
+          </article>
+
+          <article class="admin-stat-card">
+            <div class="stat-icon pending-requests"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="stat-content">
+              <span class="stat-value" id="statPendingRequests">—</span>
+              <span class="stat-label">Pending Requests</span>
+            </div>
+            <div class="stat-trend warning" id="statPendingTrend">Requires attention</div>
+          </article>
+
+          <article class="admin-stat-card">
+            <div class="stat-icon blocked-users"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+            <div class="stat-content">
+              <span class="stat-value" id="statBlockedUsers">—</span>
+              <span class="stat-label">Blocked Users</span>
+            </div>
+            <div class="stat-trend negative" id="statBlockedTrend">0 active blocks</div>
+          </article>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="admin-charts-grid">
+          <article class="admin-chart-card">
+            <div class="chart-header">
+              <h3>Requests Overview</h3>
+              <div class="chart-period">
+                <button class="period-btn active" data-period="7d">7D</button>
+                <button class="period-btn" data-period="30d">30D</button>
+                <button class="period-btn" data-period="90d">90D</button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="requestsChart"></canvas>
+            </div>
+          </article>
+
+          <article class="admin-chart-card">
+            <div class="chart-header">
+              <h3>User Growth</h3>
+              <div class="chart-period">
+                <button class="period-btn active" data-period="7d">7D</button>
+                <button class="period-btn" data-period="30d">30D</button>
+                <button class="period-btn" data-period="90d">90D</button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="usersChart"></canvas>
+            </div>
+          </article>
+
+          <article class="admin-chart-card wide">
+            <div class="chart-header">
+              <h3>Request Status Distribution</h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="statusChart"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Requests Management Section -->
+      <section class="museum-section" id="requestsSection">
+        <div class="section-header-row">
+          <div class="museum-section-head">
+            <span class="section-chip">Requests</span>
+            <h2>Client Requests Management</h2>
+            <p>View, manage, and respond to all incoming project requests</p>
+          </div>
+          <div class="section-actions">
+            <input type="text" id="requestSearch" class="search-input" placeholder="Search requests..." aria-label="Search requests">
+            <select id="requestStatusFilter" class="filter-select" aria-label="Filter by status">
+              <option value="">All Statuses</option>
+              <option value="PENDING">Pending</option>
+              <option value="QUOTED">Quoted</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
+            <button class="museum-btn museum-btn-primary" id="refreshRequestsBtn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
           </div>
         </div>
 
-        <!-- Dashboard grid layout -->
-        <div class="museum-content-grid">
-          <div class="dashboard-grid">
-            <!-- Left column: session + notifications -->
-            <section class="control-stack reveal">
-              <article class="museum-card panel-block session-panel">
-                <div class="panel-header">
-                  <div>
-                    <span class="section-chip">Session</span>
-                    <h3 id="accountTitle">Not logged in</h3>
-                  </div>
-                  <span class="socket-pill" id="socketStatus">Socket standby</span>
-                </div>
-                <p id="accountDescription" class="panel-note">
-                  Login or register to submit project requests and track your briefs.
-                </p>
-                <div class="hero-actions compact">
-                  <a class="museum-btn museum-btn-outline" href="./login.html">Login</a>
-                  <a class="museum-btn museum-btn-outline" href="./register.html">Register</a>
-                  <button class="museum-btn museum-btn-outline hidden" id="logoutButton" type="button">Logout</button>
-                </div>
-              </article>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="requestsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Project Type</th>
+                <th>Client</th>
+                <th>Contact</th>
+                <th>Budget</th>
+                <th>Timeline</th>
+                <th>Status</th>
+                <th>Quote</th>
+                <th>Admin Notes</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTableBody">
+              <tr class="loading-row"><td colspan="11">Loading requests...</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-              <article class="museum-card panel-block">
-                <div class="panel-header">
-                  <div>
-                    <span class="section-chip">Notifications</span>
-                    <h3>Live account updates</h3>
-                  </div>
-                </div>
-                <div class="notification-list" id="notificationList">
-                  <p class="empty-state">Login to see your notifications.</p>
-                </div>
-              </article>
-            </section>
+        <div class="table-pagination" id="requestsPagination">
+          <button class="pagination-btn" id="prevRequestsPage" disabled>Previous</button>
+          <span class="pagination-info" id="requestsPageInfo">Page 1 of 1</span>
+          <button class="pagination-btn" id="nextRequestsPage" disabled>Next</button>
+        </div>
+      </section>
 
-            <!-- Right column: client area + admin panel -->
-            <section class="workspace-stack reveal">
-              <article class="museum-card panel-block client-panel">
-                <div class="panel-header">
-                  <div>
-                    <span class="section-chip">Client Area</span>
-                    <h3>My requests and project history</h3>
-                  </div>
-                </div>
-                <div id="myRequests" class="card-list">
-                  <p class="empty-state">Login to view your submitted requests.</p>
-                </div>
-              </article>
-
-              <!-- Admin panel (hidden by default) -->
-              <article class="museum-card panel-block hidden" id="adminPanel">
-                <div class="panel-header admin-panel-header">
-                  <div>
-                    <span class="section-chip">Admin Control Center</span>
-                    <h3>Manage users, review requests, reply to clients, and monitor activity from one secure workspace.</h3>
-                  </div>
-                  <div class="admin-panel-actions">
-                    <button class="museum-btn museum-btn-outline" id="adminRefreshButton" type="button">Refresh panel</button>
-                    <span class="section-chip chip-success">Admin access verified</span>
-                  </div>
-                </div>
-
-                <div class="admin-summary-grid">
-                  <div class="admin-panel-card admin-info-card">
-                    <div class="panel-header slim">
-                      <h4>Admin overview</h4>
-                    </div>
-                    <p id="adminContactInfo" class="panel-note">
-                      Verified administrative contact details will appear here after secure admin login.
-                    </p>
-                    <div class="admin-stats" id="adminStats">
-                      <p class="empty-state">Login as admin to load dashboard stats.</p>
-                    </div>
-                  </div>
-
-                  <div class="admin-panel-card admin-password-card">
-                    <div class="panel-header slim">
-                      <h4>Secure tools</h4>
-                    </div>
-                    <form class="museum-form compact-form" id="adminPasswordForm">
-                      <label>
-                        <span>Current admin password</span>
-                        <input type="password" name="currentPassword" autocomplete="current-password" maxlength="128" placeholder="Current admin password" required />
-                      </label>
-                      <label>
-                        <span>New admin password</span>
-                        <input type="password" name="newPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="New admin password" required />
-                      </label>
-                      <button class="museum-btn museum-btn-primary full-width" type="submit">Change admin password</button>
-                      <p class="form-message" id="adminPasswordMessage"></p>
-                    </form>
-                  </div>
-                </div>
-
-                <div class="admin-panel-search-grid">
-                  <div class="admin-search-card">
-                    <div class="panel-header slim">
-                      <h4>Filter requests</h4>
-                    </div>
-                    <input id="adminRequestSearch" type="search" placeholder="Search by project, email, status, or notes" />
-                  </div>
-                  <div class="admin-search-card">
-                    <div class="panel-header slim">
-                      <h4>Filter users</h4>
-                    </div>
-                    <input id="adminUserSearch" type="search" placeholder="Search by name, email, phone, or status" />
-                  </div>
-                </div>
-
-                <div class="admin-columns admin-panel-grid">
-                  <div class="admin-panel-card">
-                    <div class="panel-header slim">
-                      <h4>Client request queue</h4>
-                    </div>
-                    <div class="card-list" id="adminRequests">
-                      <p class="empty-state">Admin requests will appear here after login.</p>
-                    </div>
-                  </div>
-
-                  <div class="admin-panel-card">
-                    <div class="panel-header slim">
-                      <h4>User directory</h4>
-                    </div>
-                    <div class="card-list" id="adminUsers">
-                      <p class="empty-state">Admin users list will appear here after login.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="admin-panel-card">
-                  <div class="panel-header slim">
-                    <h4>Activity & notifications</h4>
-                  </div>
-                  <div class="split-feed">
-                    <div class="card-list" id="auditLogList">
-                      <p class="empty-state">Recent audit logs will appear here.</p>
-                    </div>
-                    <div class="card-list" id="adminNotificationList">
-                      <p class="empty-state">Recent admin notifications will appear here.</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </section>
+      <!-- Users Management Section -->
+      <section class="museum-section" id="usersSection">
+        <div class="section-header-row">
+          <div class="museum-section-head">
+            <span class="section-chip">Users</span>
+            <h2>User Management</h2>
+            <p>Manage user accounts, roles, and access permissions</p>
+          </div>
+          <div class="section-actions">
+            <input type="text" id="userSearch" class="search-input" placeholder="Search users..." aria-label="Search users">
+            <select id="userRoleFilter" class="filter-select" aria-label="Filter by role">
+              <option value="">All Roles</option>
+              <option value="CLIENT">Client</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+            <select id="userStatusFilter" class="filter-select" aria-label="Filter by status">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="blocked">Blocked</option>
+            </select>
+            <button class="museum-btn museum-btn-primary" id="refreshUsersBtn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
           </div>
         </div>
-      </main>
 
-      <footer class="museum-footer">
-        <span>© 2026 KD Studios. Crafted digital products.</span>
-        <div class="museum-footer-links">
-          <a href="./privacy-policy.html">Privacy</a>
-          <a href="./terms-conditions.html">Terms</a>
-          <a href="./contact-support.html">Support</a>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Requests</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr class="loading-row"><td colspan="9">Loading users...</td></tr>
+            </tbody>
+          </table>
         </div>
-      </footer>
+
+        <div class="table-pagination" id="usersPagination">
+          <button class="pagination-btn" id="prevUsersPage" disabled>Previous</button>
+          <span class="pagination-info" id="usersPageInfo">Page 1 of 1</span>
+          <button class="pagination-btn" id="nextUsersPage" disabled>Next</button>
+        </div>
+      </section>
+
+      <!-- Audit Logs Section -->
+      <section class="museum-section" id="auditSection">
+        <div class="museum-section-head">
+          <span class="section-chip">Audit</span>
+          <h2>Activity Logs</h2>
+          <p>Track all administrative actions and system events</p>
+        </div>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="auditTable">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Entity</th>
+                <th>Description</th>
+                <th>Actor</th>
+                <th>Target User</th>
+                <th>IP Address</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr class="loading-row"><td colspan="7">Loading audit logs...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-pagination" id="auditPagination">
+          <button class="pagination-btn" id="prevAuditPage" disabled>Previous</button>
+          <span class="pagination-info" id="auditPageInfo">Page 1 of 1</span>
+          <button class="pagination-btn" id="nextAuditPage" disabled>Next</button>
+        </div>
+      </section>
+
+      <!-- Notifications Section -->
+      <section class="museum-section" id="notificationsSection">
+        <div class="museum-section-head">
+          <span class="section-chip">Notifications</span>
+          <h2>System Notifications</h2>
+          <p>Recent system-wide notifications and alerts</p>
+        </div>
+
+        <div class="notifications-list" id="adminNotificationsList">
+          <p class="empty-state">Loading notifications...</p>
+        </div>
+      </section>
+
+      <!-- Modals -->
+      <!-- Request Reply Modal -->
+      <div class="modal-overlay hidden" id="requestReplyModal" role="dialog" aria-modal="true" aria-labelledby="replyModalTitle">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h3 id="replyModalTitle">Reply to Request</h3>
+            <button class="modal-close" id="closeReplyModal" aria-label="Close modal">&times;</button>
+          </div>
+          <form class="modal-form" id="requestReplyForm">
+            <input type="hidden" name="requestId" id="replyRequestId">
+            <div class="form-group">
+              <label for="replyStatus">Status <span class="required">*</span></label>
+              <select name="status" id="replyStatus" required>
+                <option value="PENDING">Pending</option>
+                <option value="QUOTED">Quoted</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="REJECTED">Rejected</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="replyQuoteAmount">Quote Amount (₹)</label>
+              <input type="text" name="quoteAmount" id="replyQuoteAmount" placeholder="e.g., 50,000">
+            </div>
+            <div class="form-group">
+              <label for="replyAdminNotes">Admin Notes / Reply <span class="required">*</span></label>
+              <textarea name="adminNotes" id="replyAdminNotes" rows="4" required placeholder="Enter your response to the client..."></textarea>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="museum-btn museum-btn-outline" id="cancelReplyBtn">Cancel</button>
+              <button type="submit" class="museum-btn museum-btn-primary">Save & Send Reply</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Block User Modal -->
+      <div class="modal-overlay hidden" id="blockUserModal" role="dialog" aria-modal="true" aria-labelledby="blockModalTitle">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h3 id="blockModalTitle">Block User</h3>
+            <button class="modal-close" id="closeBlockModal" aria-label="Close modal">&times;</button>
+          </div>
+          <form class="modal-form" id="blockUserForm">
+            <input type="hidden" name="userId" id="blockUserId">
+            <div class="form-group">
+              <label for="blockReason">Reason for Blocking <span class="required">*</span></label>
+              <textarea name="blockedReason" id="blockReason" rows="3" required placeholder="Enter reason for blocking this user..."></textarea>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="museum-btn museum-btn-outline" id="cancelBlockBtn">Cancel</button>
+              <button type="submit" class="museum-btn museum-btn-primary" style="background: #c62828;">Block User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete User Modal -->
+      <div class="modal-overlay hidden" id="deleteUserModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h3 id="deleteModalTitle">Delete User</h3>
+            <button class="modal-close" id="closeDeleteModal" aria-label="Close modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="warning-text">⚠️ This action is irreversible. The user and all their data will be permanently deleted.</p>
+            <p>User: <strong id="deleteUserName"></strong> (<span id="deleteUserEmail"></span>)</p>
+            <p>Total Requests: <strong id="deleteUserRequests">0</strong></p>
+          </div>
+          <form class="modal-form" id="deleteUserForm">
+            <input type="hidden" name="userId" id="deleteUserId">
+            <div class="form-group">
+              <label for="deleteConfirmation">Type "DELETE" to confirm <span class="required">*</span></label>
+              <input type="text" name="confirmation" id="deleteConfirmation" required placeholder="DELETE">
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="museum-btn museum-btn-outline" id="cancelDeleteBtn">Cancel</button>
+              <button type="submit" class="museum-btn" style="background: #c62828;">Delete Permanently</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- View Request Details Modal -->
+      <div class="modal-overlay hidden" id="viewRequestModal" role="dialog" aria-modal="true" aria-labelledby="viewRequestTitle">
+        <div class="modal-container large">
+          <div class="modal-header">
+            <h3 id="viewRequestTitle">Request Details</h3>
+            <button class="modal-close" id="closeViewRequestModal" aria-label="Close modal">&times;</button>
+          </div>
+          <div class="modal-body" id="viewRequestBody">
+            <!-- Content loaded dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Socket Status -->
+      <div class="socket-status" id="socketStatus">Socket offline</div>
     </div>
 
     <script src="./config.js"></script>
     <script src="./motion.js"></script>
+    <script src="./app-data.js"></script>
+    <script src="./app-museum.js"></script>
+    <script src="./app-core.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
