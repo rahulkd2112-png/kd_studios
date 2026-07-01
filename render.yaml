@@ -16,7 +16,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_ORIGIN
-        value: https://kdstudioslabs.netlify.app
+        value: https://kd-studios.netlify.app,https://kdstudios.in
       - key: TRUST_PROXY
         value: "true"
       - key: EMAIL_USER
