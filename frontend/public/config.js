@@ -3,7 +3,7 @@ window.KD_STUDIOS_CONFIG = {
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
       ? "http://localhost:4000"
-      : "https://kd-studios.onrender.com",
+      : "https://kd-studios-api.onrender.com",
 
   // Resend OTP Worker for OTP (Cloudflare Worker)
   otpWorkerUrl: "https://resndotp.your-subdomain.workers.dev",
