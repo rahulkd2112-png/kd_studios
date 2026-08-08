@@ -92,8 +92,9 @@ const museumApps = [
 
 /* ---- CONFIG ---- */
 const config = window.KD_STUDIOS_CONFIG || {};
-const apiBaseUrlValue = (config.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
-const socketUrlValue = apiBaseUrlValue.replace(/^http/, "ws") + "/ws";
+const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const apiBaseUrlValue = (config.apiBaseUrl || (isLocalhost ? "http://localhost:4000" : "")).replace(/\/$/, "");
+const socketUrlValue = apiBaseUrlValue ? apiBaseUrlValue.replace(/^http/, "ws") + "/ws" : "";
 const storageKeyValue = "kd_studios_auth";
 
 /* ---- EXPORTS ---- */

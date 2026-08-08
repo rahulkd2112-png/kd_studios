@@ -3,7 +3,8 @@
   "use strict";
 
   const appData = window.KD_APP_DATA || {};
-  const apiBaseUrl = (appData.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
+  const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const apiBaseUrl = (appData.apiBaseUrl || (isLocalhost ? "http://localhost:4000" : "")).replace(/\/$/, "");
   const storageKey = appData.storageKey || "kd_studios_auth";
 
   const state = {

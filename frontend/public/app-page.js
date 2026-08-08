@@ -3,7 +3,8 @@
   "use strict";
 
   const config = window.KD_APP_DATA || {};
-  const apiBaseUrl = (config.apiBaseUrl || "http://localhost:4000").replace(/\/$/, "");
+  const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const apiBaseUrl = (config.apiBaseUrl || (isLocalhost ? "http://localhost:4000" : "")).replace(/\/$/, "");
   const state = {
     app: null
   };
