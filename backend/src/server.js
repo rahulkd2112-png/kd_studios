@@ -35,7 +35,7 @@ function validateProductionConfig() {
     errors.push("FRONTEND_ORIGIN must be the exact production frontend origin");
   }
   if (!config.emailUser || !config.emailPass) {
-    errors.push("EMAIL_USER and EMAIL_PASS are required");
+    console.warn("Production email credentials are not configured; continuing without SMTP delivery.");
   }
 
   if (errors.length) {
