@@ -14,6 +14,7 @@ const { initRealtimeServer } = require("./services/realtime-service");
 const { attachRequestContext } = require("./middleware/request-context");
 const { applyRateLimit } = require("./middleware/rate-limit");
 const { handleRouteError } = require("./middleware/error-handler");
+const { runtimeState } = require("./lib/runtime-state");
 
 function validateProductionConfig() {
   if (config.nodeEnv !== "production") {
@@ -89,42 +90,64 @@ async function routeRequest(req, res) {
 
 async function start() {
   validateProductionConfig();
-  await prisma.$connect();
+  try {
+    await prisma.$connect();
+    runtimeState.databaseReady = true;
+    runtimeState.databaseError = null;
+  } catch (error) {
+    runtimeState.databaseReady = false;
+    runtimeState.databaseError = error;
+    console.warn("Database connection failed during startup; continuing to serve health and CORS routes.", error);
+  }
+
   const now = new Date();
   const retentionCutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  await prisma.$transaction([
-    prisma.session.deleteMany({
-      where: {
-        OR: [
-          { expiresAt: { lt: now } },
-          { revokedAt: { not: null }, createdAt: { lt: retentionCutoff } }
-        ]
-      }
-    }),
-    prisma.registrationOtp.deleteMany({
-      where: {
-        OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
-      }
-    }),
-    prisma.passwordResetOtp.deleteMany({
-      where: {
-        OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
-      }
-    }),
-    prisma.adminOtp.deleteMany({
-      where: {
-        OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
-      }
-    })
-  ]);
-  await ensureAdminUser();
-  await ensureDefaultAppPages();
+  if (runtimeState.databaseReady) {
+    try {
+      await prisma.$transaction([
+        prisma.session.deleteMany({
+          where: {
+            OR: [
+              { expiresAt: { lt: now } },
+              { revokedAt: { not: null }, createdAt: { lt: retentionCutoff } }
+            ]
+          }
+        }),
+        prisma.registrationOtp.deleteMany({
+          where: {
+            OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
+          }
+        }),
+        prisma.passwordResetOtp.deleteMany({
+          where: {
+            OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
+          }
+        }),
+        prisma.adminOtp.deleteMany({
+          where: {
+            OR: [{ expiresAt: { lt: now } }, { consumedAt: { lt: retentionCutoff } }]
+          }
+        })
+      ]);
+    } catch (error) {
+      console.warn("Initial Prisma cleanup failed; continuing startup.", error);
+    }
+  }
+
+  try {
+    await ensureAdminUser();
+    await ensureDefaultAppPages();
+  } catch (error) {
+    console.warn("Initial admin/app page bootstrap failed; continuing startup.", error);
+  }
 
   const server = http.createServer((req, res) => {
     routeRequest(req, res).catch((error) => handleRouteError(req, res, error));
   });
 
   initRealtimeServer(server);
+
+  runtimeState.startupComplete = true;
 
   server.listen(config.port, () => {
     console.log(`KD Studios backend is running at http://localhost:${config.port}`);
