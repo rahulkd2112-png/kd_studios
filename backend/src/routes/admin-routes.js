@@ -8,9 +8,10 @@ const {
   unblockUser,
   deleteUser
 } = require("../controllers/admin-controller");
+const { getApiPathname } = require("../lib/http");
 
 async function handleAdminRoutes(req, res) {
-  const { pathname } = new URL(req.url, "http://localhost");
+  const pathname = getApiPathname(req);
 
   if (!pathname.startsWith("/api/admin")) {
     return false;

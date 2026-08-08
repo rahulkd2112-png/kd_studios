@@ -5,9 +5,11 @@ const { sendJson, setSecurityHeaders, setCorsHeaders, notFound } = require("./li
 const { handleAuthRoutes } = require("./routes/auth-routes");
 const { handleRequestRoutes } = require("./routes/request-routes");
 const { handleAdminRoutes } = require("./routes/admin-routes");
+const { handleAppPageRoutes } = require("./routes/app-page-routes");
 const { handleNotificationRoutes } = require("./routes/notification-routes");
 const { handleSystemRoutes } = require("./routes/system-routes");
 const { ensureAdminUser } = require("./services/admin-service");
+const { ensureDefaultAppPages } = require("./services/app-page-service");
 const { initRealtimeServer } = require("./services/realtime-service");
 const { attachRequestContext } = require("./middleware/request-context");
 const { applyRateLimit } = require("./middleware/rate-limit");
@@ -66,6 +68,10 @@ async function routeRequest(req, res) {
     return;
   }
 
+  if (await handleAppPageRoutes(req, res)) {
+    return;
+  }
+
   if (await handleRequestRoutes(req, res)) {
     return;
   }
@@ -112,6 +118,7 @@ async function start() {
     })
   ]);
   await ensureAdminUser();
+  await ensureDefaultAppPages();
 
   const server = http.createServer((req, res) => {
     routeRequest(req, res).catch((error) => handleRouteError(req, res, error));

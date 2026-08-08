@@ -78,7 +78,10 @@ function getAuthHeaders() {
 }
 
 async function apiFetch(path, options = {}) {
-  const response = await fetch(`${apiBaseUrl}${path}`, {
+  const normalizedPath = path.startsWith("/api/")
+    ? path
+    : `/api${path.startsWith("/") ? path : `/${path}`}`;
+  const response = await fetch(`${apiBaseUrl}${normalizedPath}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -266,21 +269,15 @@ async function handleAdminLogin(event) {
   clearMessage(authMessage);
 
   try {
-    const result = await apiFetch("/auth/admin/login", {
+    const result = await apiFetch("/auth/admin/request-otp", {
       method: "POST",
       body: JSON.stringify({ email, password })
     });
-    if (result.requiresOtp) {
-      // Show OTP form
-      adminLoginForm.style.display = "none";
-      adminOtpForm.style.display = "block";
-      adminOtpForm.dataset.email = email;
-      setMessage(authMessage, "OTP sent to your email", "success");
-    } else {
-      saveAuth({ token: result.token, user: result.user });
-      setMessage(authMessage, "Admin login successful! Redirecting...", "success");
-      setTimeout(() => window.location.reload(), 1000);
-    }
+    adminLoginForm.classList.add("hidden");
+    adminOtpForm.classList.remove("hidden");
+    adminOtpForm.dataset.email = email;
+    adminOtpForm.dataset.password = password;
+    setMessage(authMessage, result.message || "OTP sent to your email", "success");
   } catch (err) {
     setMessage(authMessage, err.message, "error");
   }
@@ -291,12 +288,13 @@ async function handleAdminOtp(event) {
   const form = event.target;
   const otp = form.otp.value.trim();
   const email = form.dataset.email;
+  const password = form.dataset.password;
   clearMessage(authMessage);
 
   try {
     const result = await apiFetch("/auth/admin/verify-otp", {
       method: "POST",
-      body: JSON.stringify({ email, otp })
+      body: JSON.stringify({ email, password, otp })
     });
     saveAuth({ token: result.token, user: result.user });
     setMessage(authMessage, "Admin login successful! Redirecting...", "success");
@@ -319,16 +317,18 @@ async function handleRegister(event) {
       method: "POST",
       body: JSON.stringify({ name, email, password })
     });
-    if (result.requiresOtp) {
-      registerForm.style.display = "none";
-      registerOtpForm.style.display = "block";
-      registerOtpForm.dataset.email = email;
-      setMessage(authMessage, "OTP sent to your email", "success");
-    } else {
-      saveAuth({ token: result.token, user: result.user });
-      setMessage(authMessage, "Registration successful! Redirecting...", "success");
-      setTimeout(() => window.location.reload(), 1000);
-    }
+    registerForm.classList.add("hidden");
+    registerOtpForm.classList.remove("hidden");
+    registerOtpForm.dataset.email = email;
+    registerOtpForm.dataset.name = name;
+    registerOtpForm.dataset.password = password;
+    const otpEmailInput = registerOtpForm.elements.email;
+    const otpNameInput = registerOtpForm.elements.name;
+    const otpPasswordInput = registerOtpForm.elements.password;
+    if (otpEmailInput) otpEmailInput.value = email;
+    if (otpNameInput) otpNameInput.value = name;
+    if (otpPasswordInput) otpPasswordInput.value = password;
+    setMessage(authMessage, result.message || "OTP sent to your email", "success");
   } catch (err) {
     setMessage(authMessage, err.message, "error");
   }
@@ -342,9 +342,11 @@ async function handleRegisterOtp(event) {
   clearMessage(authMessage);
 
   try {
-    const result = await apiFetch("/auth/verify-otp", {
+    const name = form.name?.value.trim() || form.dataset.name;
+    const password = form.password?.value || form.dataset.password;
+    const result = await apiFetch("/auth/register/otp/verify", {
       method: "POST",
-      body: JSON.stringify({ email, otp })
+      body: JSON.stringify({ email, otp, name, password })
     });
     saveAuth({ token: result.token, user: result.user });
     setMessage(authMessage, "Registration successful! Redirecting...", "success");
@@ -361,11 +363,16 @@ async function handlePasswordResetRequest(event) {
   clearMessage(authMessage);
 
   try {
-    await apiFetch("/auth/forgot-password", {
+    await apiFetch("/auth/password-reset/request", {
       method: "POST",
       body: JSON.stringify({ email })
     });
-    setMessage(authMessage, "If the email exists, a reset link has been sent.", "success");
+    passwordResetRequestForm.classList.add("hidden");
+    passwordResetConfirmForm.classList.remove("hidden");
+    const resetEmailInput = passwordResetConfirmForm.elements.email;
+    if (resetEmailInput) resetEmailInput.value = email;
+    if (passwordResetBackButton) passwordResetBackButton.classList.remove("hidden");
+    setMessage(authMessage, "If the email exists, a reset code has been sent.", "success");
   } catch (err) {
     setMessage(authMessage, err.message, "error");
   }
@@ -374,14 +381,15 @@ async function handlePasswordResetRequest(event) {
 async function handlePasswordResetConfirm(event) {
   event.preventDefault();
   const form = event.target;
-  const token = form.dataset.token;
-  const password = form.password.value;
+  const email = form.email.value.trim();
+  const otp = form.otp.value.trim();
+  const newPassword = form.newPassword.value;
   clearMessage(authMessage);
 
   try {
-    await apiFetch("/auth/reset-password", {
+    await apiFetch("/auth/password-reset/confirm", {
       method: "POST",
-      body: JSON.stringify({ token, password })
+      body: JSON.stringify({ email, otp, newPassword })
     });
     setMessage(authMessage, "Password reset successful! Redirecting to login...", "success");
     setTimeout(() => (window.location.href = "/login.html"), 2000);
@@ -398,8 +406,8 @@ function handleLogout() {
 /* ---- DASHBOARD ---- */
 async function refreshCurrentUser() {
   try {
-    const user = await apiFetch("/auth/me");
-    state.auth.user = user;
+    const result = await apiFetch("/auth/me");
+    state.auth.user = result.user;
     saveAuth(state.auth);
     renderAuthState();
     renderMyRequests();
@@ -414,7 +422,8 @@ function renderMyRequests() {
     <div class="loading">Loading your requests...</div>
   `;
   apiFetch("/requests/my")
-    .then((requests) => {
+    .then((result) => {
+      const requests = result.requests || [];
       if (!requests.length) {
         myRequests.innerHTML = "<p>No requests yet.</p>";
         return;
@@ -423,8 +432,8 @@ function renderMyRequests() {
         .map(
           (r) => `
         <div class="request-card">
-          <h4>${r.title}</h4>
-          <p>${r.description}</p>
+          <h4>${r.projectType}</h4>
+          <p>${r.details}</p>
           <span class="status status-${r.status}">${r.status}</span>
           <small>${new Date(r.createdAt).toLocaleDateString()}</small>
         </div>
@@ -440,15 +449,16 @@ function renderMyRequests() {
 async function handleRequestSubmit(event) {
   event.preventDefault();
   const form = event.target;
-  const title = form.title.value.trim();
-  const description = form.description.value.trim();
-  const category = form.category.value;
+  const projectType = form.projectType.value.trim();
+  const budget = form.budget.value.trim();
+  const timeline = form.timeline.value.trim();
+  const details = form.details.value.trim();
   clearMessage(formMessage);
 
   try {
     await apiFetch("/requests", {
       method: "POST",
-      body: JSON.stringify({ title, description, category })
+      body: JSON.stringify({ projectType, budget, timeline, details })
     });
     setMessage(formMessage, "Request submitted successfully!", "success");
     form.reset();
@@ -468,25 +478,27 @@ function switchAuthTab(tab) {
   const panel = document.getElementById(`${tab}Panel`);
   if (panel) panel.style.display = "block";
 
-  if (tab === "admin" && state.auth?.user?.role === "admin") {
+  if (tab === "admin" && state.auth?.user?.role === "ADMIN") {
     loadAdminPanel();
   }
 }
 
 async function loadAdminPanel() {
-  if (state.auth?.user?.role !== "admin") return;
+  if (state.auth?.user?.role !== "ADMIN" || !adminPanel) return;
 
-  adminPanel.style.display = "block";
+  adminPanel.classList.remove("hidden");
   await Promise.all([loadAdminStats(), loadAdminRequests(), loadAdminUsers()]);
 }
 
 async function loadAdminStats() {
+  if (!adminStats) return;
   try {
-    const stats = await apiFetch("/admin/stats");
+    const result = await apiFetch("/admin/dashboard");
+    const stats = result.stats || {};
     adminStats.innerHTML = `
-      <div class="stat-card"><h3>${stats.totalUsers}</h3><p>Total Users</p></div>
-      <div class="stat-card"><h3>${stats.totalRequests}</h3><p>Total Requests</p></div>
-      <div class="stat-card"><h3>${stats.pendingRequests}</h3><p>Pending Requests</p></div>
+      <div class="stat-card"><h3>${stats.userCount || 0}</h3><p>Total Users</p></div>
+      <div class="stat-card"><h3>${stats.requestCount || 0}</h3><p>Total Requests</p></div>
+      <div class="stat-card"><h3>${stats.blockedUserCount || 0}</h3><p>Blocked Users</p></div>
     `;
   } catch {
     adminStats.innerHTML = "<p>Failed to load stats.</p>";
@@ -494,16 +506,18 @@ async function loadAdminStats() {
 }
 
 async function loadAdminRequests() {
+  if (!adminRequests) return;
   try {
-    const requests = await apiFetch("/admin/requests");
+    const result = await apiFetch("/admin/requests");
+    const requests = result.requests || [];
     adminRequests.innerHTML = requests
       .map(
         (r) => `
       <div class="admin-request-card">
-        <h4>${r.title}</h4>
-        <p>${r.description}</p>
+        <h4>${r.projectType}</h4>
+        <p>${r.details}</p>
         <div class="request-meta">
-          <span>By: ${r.userName} (${r.userEmail})</span>
+          <span>By: ${r.user?.name || "Unknown"} (${r.user?.email || "No email"})</span>
           <span class="status status-${r.status}">${r.status}</span>
           <span>${new Date(r.createdAt).toLocaleDateString()}</span>
         </div>
@@ -526,8 +540,10 @@ async function loadAdminRequests() {
 }
 
 async function loadAdminUsers() {
+  if (!adminUsers) return;
   try {
-    const users = await apiFetch("/admin/users");
+    const result = await apiFetch("/admin/users");
+    const users = result.users || [];
     adminUsers.innerHTML = users
       .map(
         (u) => `
@@ -556,7 +572,7 @@ async function loadAdminUsers() {
 
 async function blockUser(userId) {
   try {
-    await apiFetch(`/admin/users/${userId}/block`, { method: "POST" });
+    await apiFetch(`/admin/users/${userId}/block`, { method: "PATCH" });
     loadAdminUsers();
   } catch (err) {
     alert(err.message);
@@ -565,7 +581,7 @@ async function blockUser(userId) {
 
 async function unblockUser(userId) {
   try {
-    await apiFetch(`/admin/users/${userId}/unblock`, { method: "POST" });
+    await apiFetch(`/admin/users/${userId}/unblock`, { method: "PATCH" });
     loadAdminUsers();
   } catch (err) {
     alert(err.message);
@@ -623,7 +639,7 @@ async function handleAdminPasswordChange(event) {
 
   try {
     await apiFetch("/admin/change-password", {
-      method: "POST",
+      method: "PATCH",
       body: JSON.stringify({ currentPassword, newPassword })
     });
     setMessage(adminPasswordMessage, "Password changed successfully!", "success");
@@ -685,7 +701,7 @@ function handleSocketMessage(data) {
       break;
     case "request_update":
       renderMyRequests();
-      if (adminPanel.style.display !== "none") loadAdminRequests();
+      if (adminPanel && !adminPanel.classList.contains("hidden")) loadAdminRequests();
       break;
     case "admin_notification":
       addAdminNotification(data.notification);
@@ -757,11 +773,11 @@ if (loginForm) {
   loginForm.addEventListener("submit", handleLogin);
 }
 
-if (adminLoginForm) {
+if (adminLoginForm && document.body?.dataset.page !== "admin-login") {
   adminLoginForm.addEventListener("submit", handleAdminLogin);
 }
 
-if (adminOtpForm) {
+if (adminOtpForm && document.body?.dataset.page !== "admin-login") {
   adminOtpForm.addEventListener("submit", handleAdminOtp);
 }
 
@@ -775,8 +791,8 @@ if (registerOtpForm) {
 
 if (backToRegisterBtn) {
   backToRegisterBtn.addEventListener("click", () => {
-    registerOtpForm.style.display = "none";
-    registerForm.style.display = "block";
+    registerOtpForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
     clearMessage(authMessage);
   });
 }
@@ -797,7 +813,10 @@ if (passwordResetConfirmForm) {
 
 if (passwordResetBackButton) {
   passwordResetBackButton.addEventListener("click", () => {
-    window.location.href = "/login.html";
+    passwordResetConfirmForm.classList.add("hidden");
+    passwordResetRequestForm.classList.remove("hidden");
+    passwordResetBackButton.classList.add("hidden");
+    clearMessage(authMessage);
   });
 }
 

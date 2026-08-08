@@ -129,10 +129,17 @@ Admin panel now includes:
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
 - `GET /api/health`
+- `GET /api/apps`
+- `GET /api/apps/:slug`
 - `POST /api/requests`
 - `GET /api/requests/my`
 - `GET /api/notifications`
 - `GET /api/admin/dashboard`
+- `GET /api/admin/apps`
+- `POST /api/admin/apps`
+- `GET /api/admin/apps/:id`
+- `PATCH /api/admin/apps/:id`
+- `DELETE /api/admin/apps/:id`
 - `GET /api/admin/users`
 - `GET /api/admin/requests`
 - `PATCH /api/admin/requests/:id`

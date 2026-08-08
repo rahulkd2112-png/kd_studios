@@ -41,6 +41,32 @@ model User {
   targetLogs    AuditLog[]        @relation("AuditTarget")
 }
 
+model AppLandingPage {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  category         String
+  tagline          String
+  shortDescription String
+  description      String
+  iconUrl          String
+  heroImageUrl     String?
+  galleryJson      String?
+  tagsJson         String
+  featuresJson     String
+  highlightsJson   String?
+  playStoreUrl     String?
+  websiteUrl       String?
+  accentColor      String?
+  status           String   @default("PUBLISHED")
+  featured         Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([status, sortOrder])
+}
+
 model ProjectRequest {
   id            String         @id @default(cuid())
   projectType   String

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios App</title>
+    <meta name="description" content="Explore a KD Studios app landing page." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="app">
+    <div class="museum-shell" id="appLandingShell">
+      <div class="museum-wall"></div>
+
+      <header class="museum-navbar" aria-label="Primary navigation">
+        <a class="museum-brand" href="/index.html">
+          <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          <span>
+            <strong>KD Studios</strong>
+            <small>Apps and digital products</small>
+          </span>
+        </a>
+
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="/index.html">Home Gallery</a>
+            <a href="/work.html">Our Work</a>
+            <a href="/services.html">Services</a>
+            <a href="/request.html">Request</a>
+            <a href="/contact-support.html">Support</a>
+          </nav>
+        </div>
+
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="/login.html">Sign In</a>
+          <a class="museum-btn museum-btn-primary" href="/request.html">Start Project</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="app-landing-hero">
+          <div class="app-landing-copy">
+            <span class="section-chip" id="appCategory">Loading</span>
+            <div class="app-title-row">
+              <img class="app-title-icon" id="appIcon" src="/logo/kd_logo.png" alt="" />
+              <h1 id="appTitle">Loading app</h1>
+            </div>
+            <p class="app-tagline" id="appTagline">Preparing app details...</p>
+            <div class="app-tags" id="appTags"></div>
+            <div class="app-cta-row">
+              <a class="museum-btn museum-btn-primary" id="appPlayStore" href="#" target="_blank" rel="noreferrer">
+                View on Play Store
+              </a>
+              <a class="museum-btn museum-btn-outline hidden" id="appWebsite" href="#" target="_blank" rel="noreferrer">
+                Visit Website
+              </a>
+            </div>
+          </div>
+
+          <div class="app-landing-visual">
+            <img id="appHeroImage" src="/logo/kd_logo.png" alt="" />
+          </div>
+        </section>
+
+        <section class="museum-section app-summary-band">
+          <p id="appStatus"></p>
+          <div class="app-highlights" id="appHighlights"></div>
+        </section>
+
+        <section class="museum-section app-detail-grid">
+          <div>
+            <span class="section-chip">Why it matters</span>
+            <h2>Built around the user job.</h2>
+            <p id="appDescription"></p>
+          </div>
+          <div class="app-feature-panel">
+            <span class="section-chip">Features</span>
+            <ul id="appFeatures"></ul>
+          </div>
+        </section>
+
+        <section class="museum-section">
+          <div class="museum-section-head">
+            <span class="section-chip">Preview</span>
+            <h2>Product visuals</h2>
+          </div>
+          <div class="app-gallery-grid" id="appGallery"></div>
+        </section>
+      </main>
+
+      <footer class="museum-footer">
+        <span>© 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="/privacy-policy.html">Privacy</a>
+          <a href="/terms-conditions.html">Terms</a>
+          <a href="/contact-support.html">Support</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/config.js"></script>
+    <script src="/motion.js"></script>
+    <script src="/app-data.js"></script>
+    <script src="/app-museum.js"></script>
+    <script src="/app-page.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

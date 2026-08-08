@@ -44,7 +44,11 @@ function serveFile(req, res) {
     return;
   }
 
-  const pagePath = requestPath === "/" ? "/index.html" : requestPath;
+  const pagePath = requestPath === "/"
+    ? "/index.html"
+    : requestPath.startsWith("/apps/")
+      ? "/app.html"
+      : requestPath;
   const safePath = path.normalize(pagePath).replace(/^(\.\.[\/\\])+/, "");
   const isLogoAsset = safePath.startsWith("\\logo\\") || safePath.startsWith("/logo/");
   const relativeSafePath = safePath.replace(/^[/\\]+/, "");

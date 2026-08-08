@@ -26,9 +26,6 @@ function saveAuth(auth) {
 if (adminLoginForm) {
   adminLoginForm.classList.remove("hidden");
 }
-if (adminOtpForm) {
-  adminOtpForm.classList.remove("hidden");
-}
 if (authMessage) {
   authMessage.classList.remove("hidden");
 }

@@ -889,6 +889,351 @@ button, input, textarea { font: inherit; color: inherit; outline: none; }
   display: none !important;
 }
 
+/* ---- APP LANDING PAGES ---- */
+:root {
+  --app-accent: var(--accent);
+}
+
+.app-landing-hero {
+  width: min(calc(100% - 2rem), var(--max-width));
+  min-height: calc(100vh - 8rem);
+  margin: 1.5rem auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+
+.app-landing-copy {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.app-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-title-icon {
+  width: clamp(4rem, 8vw, 6rem);
+  height: clamp(4rem, 8vw, 6rem);
+  border-radius: 22px;
+  object-fit: cover;
+  padding: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-md);
+}
+
+.app-title-row h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(3rem, 8vw, 6.7rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.app-tagline {
+  margin: 0;
+  max-width: 780px;
+  color: var(--text-soft);
+  font-size: clamp(1.15rem, 2.2vw, 1.8rem);
+  line-height: 1.35;
+}
+
+.app-tags,
+.app-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.app-tag,
+.app-highlight {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-round);
+  background: color-mix(in srgb, var(--app-accent) 14%, white);
+  border: 1px solid color-mix(in srgb, var(--app-accent) 28%, var(--border));
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.app-cta-row,
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.app-landing-visual {
+  min-height: clamp(360px, 64vh, 660px);
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 251, 245, 0.42)),
+    color-mix(in srgb, var(--app-accent) 12%, var(--surface));
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+.app-landing-visual img {
+  width: min(76%, 430px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 32px;
+  box-shadow: 0 28px 70px rgba(44, 36, 24, 0.22);
+}
+
+.app-summary-band {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.app-summary-band > p {
+  margin: 0;
+  max-width: 920px;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.app-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.55fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.app-detail-grid h2 {
+  margin: 0.6rem 0 1rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0;
+}
+
+.app-detail-grid p {
+  color: var(--text-soft);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.app-feature-panel {
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-md);
+  padding: 1.3rem;
+}
+
+.app-feature-panel ul {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--text-soft);
+}
+
+.app-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.app-gallery-item {
+  margin: 0;
+  min-height: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.app-error-state {
+  min-height: 60vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+}
+
+/* ---- ADMIN APP MANAGER ---- */
+.app-manager-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.app-manager-head,
+.editor-toolbar,
+.panel-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.app-manager-head h2,
+.editor-toolbar h3,
+.panel-title-row h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0;
+}
+
+.app-manager-head p,
+.panel-title-row span,
+.editor-toolbar a {
+  margin: 0.35rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+}
+
+.app-manager-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin-app-list-panel,
+.app-editor-panel {
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-md);
+}
+
+.admin-app-list-panel {
+  padding: 1rem;
+  position: sticky;
+  top: 7rem;
+}
+
+.admin-app-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.admin-app-list-item {
+  width: 100%;
+  min-height: 72px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--surface-alt);
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.65rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-app-list-item.active,
+.admin-app-list-item:hover {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.admin-app-list-item img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.admin-app-list-item span {
+  display: grid;
+  min-width: 0;
+}
+
+.admin-app-list-item strong,
+.admin-app-list-item small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-app-list-item small {
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.app-editor-panel {
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.app-editor-form {
+  gap: 1rem;
+}
+
+.form-grid-two,
+.form-grid-three {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-grid-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+}
+
+.checkbox-row {
+  min-height: 72px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.museum-btn.danger {
+  color: #9f1239;
+  border-color: rgba(159, 18, 57, 0.3);
+}
+
+@media (max-width: 900px) {
+  .app-landing-hero,
+  .app-detail-grid,
+  .app-manager-grid,
+  .form-grid-two,
+  .form-grid-three {
+    grid-template-columns: 1fr;
+  }
+
+  .app-landing-hero {
+    min-height: auto;
+  }
+
+  .admin-app-list-panel {
+    position: static;
+  }
+}
+
 /* OTP input styling */
 input[name="otp"] {
   letter-spacing: 0.3em;

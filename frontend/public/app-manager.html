@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KD Studios | App Page Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="app-manager">
+    <div class="museum-shell">
+      <div class="museum-wall"></div>
+
+      <header class="museum-navbar" aria-label="Admin navigation">
+        <a class="museum-brand" href="/dashboard.html">
+          <img src="/logo/kd_logo.png" alt="KD Studios logo" />
+          <span>
+            <strong>KD Studios</strong>
+            <small>App Page Manager</small>
+          </span>
+        </a>
+
+        <div class="museum-auth-actions">
+          <a class="museum-btn museum-btn-outline" href="/dashboard.html">Dashboard</a>
+          <button class="museum-btn museum-btn-primary" id="logoutHeaderButton" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="museum-section app-manager-shell">
+          <div class="app-manager-head">
+            <div>
+              <span class="section-chip">Admin CMS</span>
+              <h2>Manage app landing pages</h2>
+              <p>Create, edit, publish, unpublish, and delete public app pages from one place.</p>
+            </div>
+            <button class="museum-btn museum-btn-primary" id="newAppButton" type="button">New App Page</button>
+          </div>
+
+          <div class="app-manager-grid">
+            <aside class="admin-app-list-panel">
+              <div class="panel-title-row">
+                <h3>Pages</h3>
+                <span>Published pages are live for users.</span>
+              </div>
+              <div class="admin-app-list" id="adminAppList"></div>
+            </aside>
+
+            <section class="app-editor-panel">
+              <form class="museum-form app-editor-form" id="appEditorForm">
+                <div class="editor-toolbar">
+                  <div>
+                    <h3>Landing page details</h3>
+                    <a id="publicAppUrl" href="#" target="_blank" rel="noreferrer">Save the page to generate a public URL</a>
+                  </div>
+                  <div class="editor-actions">
+                    <button class="museum-btn museum-btn-outline" id="copyPublicUrlButton" type="button">Copy URL</button>
+                    <button class="museum-btn museum-btn-outline danger" id="deleteAppButton" type="button">Delete</button>
+                    <button class="museum-btn museum-btn-primary" type="submit">Save Page</button>
+                  </div>
+                </div>
+
+                <div class="form-grid-two">
+                  <label>
+                    <span>App name</span>
+                    <input type="text" name="title" maxlength="120" placeholder="FaceFix AI" required />
+                  </label>
+                  <label>
+                    <span>URL slug</span>
+                    <input type="text" name="slug" maxlength="80" placeholder="facefix-ai" />
+                  </label>
+                  <label>
+                    <span>Category</span>
+                    <input type="text" name="category" maxlength="100" placeholder="AI Photo Editing App" required />
+                  </label>
+                  <label>
+                    <span>Accent color</span>
+                    <input type="color" name="accentColor" value="#b8864e" />
+                  </label>
+                </div>
+
+                <label>
+                  <span>Hero tagline</span>
+                  <input type="text" name="tagline" maxlength="180" placeholder="One clear promise for users" required />
+                </label>
+
+                <label>
+                  <span>Short description</span>
+                  <textarea name="shortDescription" rows="2" maxlength="260" placeholder="Short user-facing summary" required></textarea>
+                </label>
+
+                <label>
+                  <span>Full description</span>
+                  <textarea name="description" rows="5" maxlength="1800" placeholder="Explain what the app does and why users should care" required></textarea>
+                </label>
+
+                <div class="form-grid-two">
+                  <label>
+                    <span>Icon image URL</span>
+                    <input type="url" name="iconUrl" placeholder="/logo/app.png or https://..." required />
+                  </label>
+                  <label>
+                    <span>Hero image URL</span>
+                    <input type="url" name="heroImageUrl" placeholder="/logo/app-preview.png or https://..." />
+                  </label>
+                  <label>
+                    <span>Play Store link</span>
+                    <input type="url" name="playStoreUrl" placeholder="https://play.google.com/store/apps/details?id=..." />
+                  </label>
+                  <label>
+                    <span>Website link</span>
+                    <input type="url" name="websiteUrl" placeholder="Optional website or support page" />
+                  </label>
+                </div>
+
+                <div class="form-grid-two">
+                  <label>
+                    <span>Tags</span>
+                    <textarea name="tags" rows="4" placeholder="One per line"></textarea>
+                  </label>
+                  <label>
+                    <span>Features</span>
+                    <textarea name="features" rows="4" placeholder="One per line"></textarea>
+                  </label>
+                  <label>
+                    <span>Highlights</span>
+                    <textarea name="highlights" rows="4" placeholder="One per line"></textarea>
+                  </label>
+                  <label>
+                    <span>Gallery image URLs</span>
+                    <textarea name="gallery" rows="4" placeholder="One image URL per line"></textarea>
+                  </label>
+                </div>
+
+                <div class="form-grid-three">
+                  <label>
+                    <span>Status</span>
+                    <select name="status">
+                      <option value="PUBLISHED">Published</option>
+                      <option value="DRAFT">Draft</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Sort order</span>
+                    <input type="number" name="sortOrder" value="0" />
+                  </label>
+                  <label class="checkbox-row">
+                    <input type="checkbox" name="featured" checked />
+                    <span>Show as featured</span>
+                  </label>
+                </div>
+
+                <p class="form-message" id="appEditorMessage"></p>
+              </form>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/config.js"></script>
+    <script src="/motion.js"></script>
+    <script src="/app-data.js"></script>
+    <script src="/app-manager.js"></script>
+  </body>
+</html>

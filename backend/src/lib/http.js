@@ -80,6 +80,24 @@ function parseJsonBody(req) {
   });
 }
 
+function getApiPathname(req) {
+  const { pathname } = new URL(req.url, "http://localhost");
+  if (pathname === "/api" || pathname.startsWith("/api/")) {
+    return pathname;
+  }
+  if (
+    pathname === "/health" ||
+    pathname.startsWith("/apps") ||
+    pathname.startsWith("/auth/") ||
+    pathname.startsWith("/requests") ||
+    pathname.startsWith("/notifications") ||
+    pathname.startsWith("/admin/")
+  ) {
+    return `/api${pathname}`;
+  }
+  return pathname;
+}
+
 function notFound(res) {
   sendJson(res, 404, { error: "Route not found." });
 }
@@ -88,6 +106,7 @@ module.exports = {
   sendJson,
   setSecurityHeaders,
   setCorsHeaders,
+  getApiPathname,
   parseJsonBody,
   notFound
 };

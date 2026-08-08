@@ -1,7 +1,8 @@
 const { health } = require("../controllers/system-controller");
+const { getApiPathname } = require("../lib/http");
 
 async function handleSystemRoutes(req, res) {
-  const { pathname } = new URL(req.url, "http://localhost");
+  const pathname = getApiPathname(req);
 
   if (req.method === "GET" && pathname === "/api/health") {
     health(req, res);

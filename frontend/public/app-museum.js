@@ -50,7 +50,8 @@ function openAppOverlay(app) {
   title.textContent = app.title;
   tags.innerHTML = app.tags.map((t) => `<span class="expanded-tag">${t}</span>`).join("");
   desc.textContent = app.description;
-  playBtn.href = app.playStoreUrl;
+  playBtn.href = app.landingUrl || app.playStoreUrl;
+  playBtn.textContent = app.landingUrl ? "View App Page" : "View on Play Store";
   overlay.classList.add("open");
 }
 

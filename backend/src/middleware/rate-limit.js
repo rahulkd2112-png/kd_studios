@@ -1,10 +1,10 @@
 const config = require("../config");
-const { sendJson } = require("../lib/http");
+const { getApiPathname, sendJson } = require("../lib/http");
 
 const store = new Map();
 
 function getPolicy(req) {
-  const pathname = new URL(req.url, "http://localhost").pathname;
+  const pathname = getApiPathname(req);
   if (
     pathname === "/api/auth/login" ||
     pathname.startsWith("/api/auth/admin/") ||

@@ -10,9 +10,10 @@ const {
   requestPasswordResetController,
   confirmPasswordResetController
 } = require("../controllers/auth-controller");
+const { getApiPathname } = require("../lib/http");
 
 async function handleAuthRoutes(req, res) {
-  const { pathname } = new URL(req.url, "http://localhost");
+  const pathname = getApiPathname(req);
 
   if (req.method === "POST" && pathname === "/api/auth/register") {
     // Starts OTP registration flow (frontend will show OTP screen)

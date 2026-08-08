@@ -1,7 +1,8 @@
 const { createRequest, listMyRequests } = require("../controllers/request-controller");
+const { getApiPathname } = require("../lib/http");
 
 async function handleRequestRoutes(req, res) {
-  const { pathname } = new URL(req.url, "http://localhost");
+  const pathname = getApiPathname(req);
 
   if (req.method === "POST" && pathname === "/api/requests") {
     await createRequest(req, res);
