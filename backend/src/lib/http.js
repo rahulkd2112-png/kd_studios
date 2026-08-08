@@ -28,17 +28,42 @@ function setSecurityHeaders(res) {
 }
 
 function setCorsHeaders(req, res) {
-  const origin = req.headers.origin || "";
-  const allowedOrigins = config.frontendOrigin
+  const origin = (req.headers.origin || "").trim();
+  const configuredOrigins = config.frontendOrigin
     .split(",")
     .map((value) => value.trim())
     .filter(Boolean);
+  const fallbackOrigins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "https://kd-studios.netlify.app",
+    "https://kdstudios.in",
+    "https://www.kdstudios.in"
+  ];
+  const allowedOrigins = [...new Set([...configuredOrigins, ...fallbackOrigins])];
   const allowAll = allowedOrigins.includes("*");
-  const isAllowed = !origin || allowAll || allowedOrigins.includes(origin);
+
+  let isAllowed = !origin || allowAll || allowedOrigins.includes(origin);
+
+  if (!isAllowed && origin) {
+    try {
+      const { hostname, protocol } = new URL(origin);
+      const isKdstudiosHost = hostname === "kdstudios.in" || hostname === "www.kdstudios.in";
+      const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
+      const isNetlifyHost = hostname.endsWith(".netlify.app") || hostname === "netlify.app";
+      const isRenderHost = hostname === "kd-studios-api.onrender.com";
+      isAllowed = isKdstudiosHost || isLocalhost || isNetlifyHost || isRenderHost;
+    } catch {
+      isAllowed = false;
+    }
+  }
+
   if (!isAllowed) {
     return false;
   }
-  res.setHeader("Access-Control-Allow-Origin", allowAll ? "*" : origin || allowedOrigins[0]);
+
+  const responseOrigin = allowAll ? "*" : origin || allowedOrigins[0];
+  res.setHeader("Access-Control-Allow-Origin", responseOrigin);
   res.setHeader("Vary", "Origin");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,OPTIONS");
   res.setHeader(
