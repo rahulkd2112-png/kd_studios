@@ -36,6 +36,7 @@ async function apiFetch(path, options = {}) {
     ...options,
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
       ...(options.headers || {})
     }
   });
