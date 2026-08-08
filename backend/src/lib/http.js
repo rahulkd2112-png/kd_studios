@@ -51,7 +51,7 @@ function setCorsHeaders(req, res) {
       const isKdstudiosHost = hostname === "kdstudios.in" || hostname === "www.kdstudios.in";
       const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
       const isNetlifyHost = hostname.endsWith(".netlify.app") || hostname === "netlify.app";
-      const isRenderHost = hostname === "kd-studios-api.onrender.com";
+      const isRenderHost = hostname === "kd-studios.onrender.com" || hostname === "kd-studios-api.onrender.com";
       isAllowed = isKdstudiosHost || isLocalhost || isNetlifyHost || isRenderHost;
     } catch {
       isAllowed = false;
