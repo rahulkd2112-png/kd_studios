@@ -68,9 +68,10 @@ async function handleAdminLogin(event) {
       adminOtpForm.password.value = payload.password;
     }
 
-    setMessage(result.message, "success");
+    setMessage(result.message || "Admin verification code sent.", "success");
   } catch (error) {
-    setMessage(error.message, "error");
+    const message = error.message || "Unable to request admin verification code.";
+    setMessage(message, "error");
   }
 }
 

@@ -101,9 +101,9 @@ async function requestAdminOtp(payload) {
   const expiresAt = new Date(now.getTime() + config.otpTtlMinutes * 60 * 1000);
 
   // Resend rate limit: prevent spamming OTP emails.
-  // Allow at most 1 fresh admin OTP per user within ADMIN_OTP_RESEND_COOLDOWN_MINUTES.
-  const resendCooldownMin = Number(process.env.ADMIN_OTP_RESEND_COOLDOWN_MINUTES || 2);
-  const cooldownMs = Number.isFinite(resendCooldownMin) ? resendCooldownMin * 60 * 1000 : 2 * 60 * 1000;
+  // Allow a fresh admin OTP after a short cooldown, but avoid blocking the current login flow.
+  const resendCooldownMin = Number(process.env.ADMIN_OTP_RESEND_COOLDOWN_MINUTES || 0);
+  const cooldownMs = Number.isFinite(resendCooldownMin) ? resendCooldownMin * 60 * 1000 : 0;
   const recentExists = await prisma.adminOtp.findFirst({
     where: {
       userId: user.id,
@@ -113,7 +113,7 @@ async function requestAdminOtp(payload) {
     orderBy: { createdAt: "desc" }
   });
 
-  if (recentExists) {
+  if (recentExists && cooldownMs > 0) {
     throw new Error("OTP already sent recently. Please wait and try again.");
   }
 
