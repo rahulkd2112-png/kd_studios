@@ -62,6 +62,15 @@ async function handleAdminLogin(event) {
       body: JSON.stringify(payload)
     });
 
+    if (result.skipOtp) {
+      saveAuth({ token: result.token, user: result.user });
+      if (adminOtpForm) adminOtpForm.reset();
+      if (adminLoginForm) adminLoginForm.reset();
+      setMessage("Admin login successful.", "success");
+      window.location.href = "/dashboard.html";
+      return;
+    }
+
     if (adminOtpForm) {
       adminOtpForm.classList.remove("hidden");
       adminOtpForm.email.value = payload.email;

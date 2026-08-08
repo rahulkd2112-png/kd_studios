@@ -101,7 +101,6 @@ async function requestAdminOtp(payload) {
   const expiresAt = new Date(now.getTime() + config.otpTtlMinutes * 60 * 1000);
 
   // Resend rate limit: prevent spamming OTP emails.
-  // Allow a fresh admin OTP after a short cooldown, but avoid blocking the current login flow.
   const resendCooldownMin = Number(process.env.ADMIN_OTP_RESEND_COOLDOWN_MINUTES || 0);
   const cooldownMs = Number.isFinite(resendCooldownMin) ? resendCooldownMin * 60 * 1000 : 0;
   const recentExists = await prisma.adminOtp.findFirst({
@@ -131,6 +130,15 @@ async function requestAdminOtp(payload) {
     }
   });
 
+  if (!config.emailUser || !config.emailPass) {
+    const session = await createSessionResponse(user);
+    return {
+      message: "Email delivery is not configured, so the admin session was created directly.",
+      skipOtp: true,
+      ...session
+    };
+  }
+
   try {
     await sendEmailOtp({ toEmail: user.email, otp: code });
   } catch (error) {
@@ -142,7 +150,8 @@ async function requestAdminOtp(payload) {
   }
 
   return {
-    message: "A one-time admin verification code has been sent to the admin email."
+    message: "A one-time admin verification code has been sent to the admin email.",
+    skipOtp: false
   };
 }
 
