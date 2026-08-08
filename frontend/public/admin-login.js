@@ -1,6 +1,6 @@
 const adminConfig = window.KD_STUDIOS_CONFIG || {};
-const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const adminApiBaseUrl = (adminConfig.apiBaseUrl || (isLocalhost ? "http://localhost:4000" : "")).replace(/\/$/, "");
+const isAdminLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const adminApiBaseUrl = (adminConfig.apiBaseUrl || (isAdminLocalhost ? "http://localhost:4000" : "")).replace(/\/$/, "");
 
 // Auto-fill helper (optional). If you don't want this, remove this block.
 // It helps during testing and prevents admin-password 
