@@ -16,6 +16,20 @@ const { requestPasswordReset, confirmPasswordReset } = require("../services/pass
 const { logAuditEvent } = require("../services/audit-service");
 const config = require("../config");
 
+const { isDatabaseUnavailableError } = require("../lib/error-detection");
+
+function sendAuthError(res, error, fallbackStatus = 400) {
+  const message = String(error?.message || error?.stack || "");
+  if (isDatabaseUnavailableError(error)) {
+    sendJson(res, 503, {
+      error: "Account services are temporarily unavailable. Please try again shortly."
+    });
+    return;
+  }
+
+  sendJson(res, fallbackStatus, { error: message || "Unable to complete this account request." });
+}
+
 async function register(req, res) {
   const body = await parseJsonBody(req);
   const missing = requireFields(["name", "email", "password"], body);
@@ -39,7 +53,7 @@ async function register(req, res) {
     // Frontend will show OTP screen. No auth token yet.
     sendJson(res, 200, result);
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 
@@ -57,7 +71,7 @@ async function requestRegistrationOtpController(req, res) {
     });
     sendJson(res, 200, result);
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 
@@ -83,7 +97,7 @@ async function verifyRegistrationOtpController(req, res) {
 
     sendJson(res, 201, session);
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 
@@ -114,7 +128,7 @@ async function login(req, res) {
       ...session
     });
   } catch (error) {
-    sendJson(res, 401, { error: error.message });
+    sendAuthError(res, error, 401);
   }
 }
 
@@ -132,12 +146,7 @@ async function requestAdminOtpController(req, res) {
     sendJson(res, 200, result);
   } catch (error) {
     console.error("Admin OTP request failed", error);
-    sendJson(res, 200, {
-      message: "Admin login is available without OTP delivery for now.",
-      skipOtp: true,
-      token: "",
-      user: null
-    });
+    sendAuthError(res, error);
   }
 }
 
@@ -159,7 +168,7 @@ async function verifyAdminOtpController(req, res) {
       ...session
     });
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 
@@ -196,7 +205,7 @@ async function requestPasswordResetController(req, res) {
     const result = await requestPasswordReset(body);
     sendJson(res, 200, result);
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 
@@ -206,7 +215,7 @@ async function confirmPasswordResetController(req, res) {
     const result = await confirmPasswordReset(body);
     sendJson(res, 200, result);
   } catch (error) {
-    sendJson(res, 400, { error: error.message });
+    sendAuthError(res, error);
   }
 }
 

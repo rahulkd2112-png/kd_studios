@@ -1216,6 +1216,18 @@ button, input, textarea { font: inherit; color: inherit; outline: none; }
   border-color: rgba(159, 18, 57, 0.3);
 }
 
+.museum-btn.danger-action {
+  background: #c62828;
+  color: #fff;
+  border-color: #c62828;
+}
+
+.museum-btn.danger-action:hover {
+  background: #b71c1c;
+  border-color: #b71c1c;
+  color: #fff;
+}
+
 @media (max-width: 900px) {
   .app-landing-hero,
   .app-detail-grid,
