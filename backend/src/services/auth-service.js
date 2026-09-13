@@ -15,7 +15,33 @@ const { sanitizeText, isValidEmail, validatePassword } = require("../lib/validat
 const { sendEmailOtp } = require("../lib/email");
 const config = require("../config");
 const { isDatabaseUnavailableError } = require("../lib/error-detection");
-const localDevStore = require("./local-dev-store");
+
+let localDevStore = {
+  isActive: () => false,
+  matchesAdminCredentials: () => false,
+  getAdminUser: () => null,
+  issueOtp: () => "000000",
+  verifyOtpForAdmin: () => false,
+  createSession: () => ({ tokenId: null, expiresAt: null }),
+  getSession: () => null,
+  revokeSession: () => {}
+};
+
+try {
+  localDevStore = require("./local-dev-store");
+} catch (error) {
+  localDevStore = {
+    isActive: () => false,
+    matchesAdminCredentials: () => false,
+    getAdminUser: () => null,
+    issueOtp: () => "000000",
+    verifyOtpForAdmin: () => false,
+    createSession: () => ({ tokenId: null, expiresAt: null }),
+    getSession: () => null,
+    revokeSession: () => {}
+  };
+}
+
 const DUMMY_PASSWORD_HASH =
   "$2b$12$wjpNzQ2.rs1.ghqEaBBEl./PPjvMGZ6jVEc23v6Y7HSO4lH7rXE/u";
 

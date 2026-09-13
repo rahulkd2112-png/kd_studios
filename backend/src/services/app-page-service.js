@@ -1,6 +1,32 @@
 const { prisma } = require("../lib/prisma");
 const { sanitizeText } = require("../lib/validation");
 
+let localDevStore = {
+  isActive: () => false,
+  ensureApps: () => [],
+  listApps: () => [],
+  findAppBySlug: () => null,
+  findAppById: () => null,
+  createApp: () => null,
+  updateApp: () => null,
+  deleteApp: () => null
+};
+
+try {
+  localDevStore = require("./local-dev-store");
+} catch (error) {
+  localDevStore = {
+    isActive: () => false,
+    ensureApps: () => [],
+    listApps: () => [],
+    findAppBySlug: () => null,
+    findAppById: () => null,
+    createApp: () => null,
+    updateApp: () => null,
+    deleteApp: () => null
+  };
+}
+
 const DEFAULT_APP_PAGES = [
   {
     slug: "facefix-ai",
@@ -110,7 +136,9 @@ async function ensureUniqueSlug(slug, existingId) {
   let index = 2;
 
   while (true) {
-    const existing = await prisma.appLandingPage.findUnique({ where: { slug: candidate } });
+    const existing = localDevStore.isActive()
+      ? localDevStore.ensureApps().find((app) => app.slug === candidate)
+      : await prisma.appLandingPage.findUnique({ where: { slug: candidate } });
     if (!existing || existing.id === existingId) {
       return candidate;
     }
@@ -188,6 +216,10 @@ async function buildData(payload, existingId) {
 }
 
 async function ensureDefaultAppPages() {
+  if (localDevStore.isActive()) {
+    localDevStore.ensureApps();
+    return;
+  }
   const count = await prisma.appLandingPage.count();
   if (count > 0) return;
 
@@ -216,6 +248,9 @@ async function ensureDefaultAppPages() {
 }
 
 async function listPublishedAppPages() {
+  if (localDevStore.isActive()) {
+    return localDevStore.listApps(true).map(serializeAppPage);
+  }
   const records = await prisma.appLandingPage.findMany({
     where: { status: "PUBLISHED" },
     orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }]
@@ -224,6 +259,10 @@ async function listPublishedAppPages() {
 }
 
 async function getPublishedAppPage(slug) {
+  if (localDevStore.isActive()) {
+    const record = localDevStore.findAppBySlug(makeSlug(slug));
+    return record ? serializeAppPage(record) : null;
+  }
   const record = await prisma.appLandingPage.findFirst({
     where: { slug: makeSlug(slug), status: "PUBLISHED" }
   });
@@ -231,6 +270,9 @@ async function getPublishedAppPage(slug) {
 }
 
 async function listAllAppPages() {
+  if (localDevStore.isActive()) {
+    return localDevStore.listApps().map(serializeAppPage);
+  }
   const records = await prisma.appLandingPage.findMany({
     orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }]
   });
@@ -238,18 +280,28 @@ async function listAllAppPages() {
 }
 
 async function getAppPageById(id) {
+  if (localDevStore.isActive()) {
+    const record = localDevStore.findAppById(id);
+    return record ? serializeAppPage(record) : null;
+  }
   const record = await prisma.appLandingPage.findUnique({ where: { id } });
   return record ? serializeAppPage(record) : null;
 }
 
 async function createAppPage(payload) {
   const data = await buildData(payload);
+  if (localDevStore.isActive()) {
+    return serializeAppPage(localDevStore.createApp(data));
+  }
   const record = await prisma.appLandingPage.create({ data });
   return serializeAppPage(record);
 }
 
 async function updateAppPage(id, payload) {
   const data = await buildData(payload, id);
+  if (localDevStore.isActive()) {
+    return serializeAppPage(localDevStore.updateApp(id, data));
+  }
   const record = await prisma.appLandingPage.update({
     where: { id },
     data
@@ -258,6 +310,9 @@ async function updateAppPage(id, payload) {
 }
 
 async function deleteAppPage(id) {
+  if (localDevStore.isActive()) {
+    return serializeAppPage(localDevStore.deleteApp(id));
+  }
   const record = await prisma.appLandingPage.delete({ where: { id } });
   return serializeAppPage(record);
 }
