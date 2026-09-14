@@ -174,7 +174,10 @@
 
     mapCategoryToSchema(category) {
       const categoryMap = {
-        'AI Photo Editing App': 'PhotoEditingSoftware',
+        'AI Food Scanner App': 'SoftwareApplication',
+        'AI Interview App': 'SoftwareApplication',
+        'AI Image Resizer App': 'SoftwareApplication',
+        'PDF Scanner & Editor App': 'SoftwareApplication',
         'Document Scanner App': 'BusinessApplication',
         'Arcade Game': 'Game',
         'Productivity': 'BusinessApplication',
