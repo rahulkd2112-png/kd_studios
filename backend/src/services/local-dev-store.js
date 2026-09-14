@@ -20,9 +20,12 @@ function now() {
 function defaultApps() {
   const createdAt = now();
   return [
-    ["local-facefix", "facefix-ai", "FaceFix AI", "AI Photo Editing App", "Restore faces, sharpen portraits, and make old photos clear again.", "/logo/facefixai.png", "#3b82f6", 10],
-    ["local-scanpro", "scanpro", "ScanPro", "Document Scanner App", "Capture cleaner documents and export useful scans in seconds.", "/logo/ScanPro.png", "#0f766e", 20],
-    ["local-stacktower", "stack-tower", "Stack Tower", "Arcade Game", "A precise one-tap stacking game built for quick replay sessions.", "/logo/Stack%20Tower.png", "#dc2626", 30]
+    ["local-foodscanai", "foodscan-ai", "FoodScan AI", "AI Food Scanner App", "Scan meals and ingredients with a confident AI food understanding workflow.", "/logo/foodscanai.png", "#8b5cf6", 10],
+    ["local-interviewerlyai", "interviewerly-ai", "Interviewerly AI", "AI Interview App", "Practice interviews, sharpen answers, and prepare with guided coaching.", "/logo/interviewerlyai.png", "#0891b2", 20],
+    ["local-imagelyresizer", "imagely-resizer", "ImageLy Resizer", "AI Image Resizer App", "Resize images quickly and prepare visual assets for modern creative workflows.", "/logo/imagelyresizer.png", "#16a34a", 30],
+    ["local-doclypdfreadereditorscanner", "docly-pdf-reader-editor-scanner", "Docly PDF Reader Editor Scanner", "PDF Scanner & Editor App", "Read, scan, edit, and organize documents from one clean mobile workflow.", "/logo/doclypdfreadereditorscanner.png", "#f97316", 40],
+    ["local-scanpro", "scanpro", "ScanPro", "Document Scanner App", "Capture cleaner documents and export useful scans in seconds.", "/logo/ScanPro.png", "#0f766e", 50],
+    ["local-stacktower", "stack-tower", "Stack Tower", "Arcade Game", "A precise one-tap stacking game built for quick replay sessions.", "/logo/Stack%20Tower.png", "#dc2626", 60]
   ].map(([id, slug, title, category, tagline, iconUrl, accentColor, sortOrder]) => ({
     id,
     slug,

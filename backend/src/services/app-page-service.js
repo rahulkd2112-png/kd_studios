@@ -29,27 +29,96 @@ try {
 
 const DEFAULT_APP_PAGES = [
   {
-    slug: "facefix-ai",
-    title: "FaceFix AI",
-    category: "AI Photo Editing App",
-    tagline: "Restore faces, sharpen portraits, and make old photos feel clear again.",
+    slug: "foodscan-ai",
+    title: "FoodScan AI",
+    category: "AI Food Scanner App",
+    tagline: "Scan meals and ingredients with a confident AI food understanding workflow.",
     shortDescription:
-      "AI-powered face enhancement for blurry portraits, restored facial details, and cleaner old photos.",
+      "FoodScan AI scans meals and ingredient details with a guided AI food learning workflow.",
     description:
-      "FaceFix AI is built for people who want fast, clean portrait enhancement without complicated editing tools. It focuses on face clarity, old-photo restoration, and everyday image improvement for Android users.",
-    iconUrl: "/logo/facefixai.png",
-    heroImageUrl: "/logo/facefixai.png",
-    tags: ["AI Enhancement", "Photo Editing", "Android"],
+      "FoodScan AI helps users understand what they eat by identifying food items, ingredients, labels, and meal context with a clean AI-powered scanning experience.",
+    iconUrl: "/logo/foodscanai.png",
+    heroImageUrl: "/logo/foodscanai.png",
+    tags: ["Food Recognition", "Nutrition", "AI Assistant"],
     features: [
-      "Enhance blurry face details",
-      "Improve old and low-quality portraits",
-      "Simple Android-first workflow",
-      "Clean output for sharing and personal memories"
+      "Scan food and ingredient details",
+      "Understand meals with AI guidance",
+      "Improve nutrition awareness",
+      "Simple food insight workflow"
     ],
-    highlights: ["AI face restoration", "Portrait clarity", "Old photo support"],
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.facefixai",
-    accentColor: "#3b82f6",
+    highlights: ["Food scan", "Label awareness", "Smart nutrition"],
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.foodscanai",
+    accentColor: "#8b5cf6",
     sortOrder: 10
+  },
+  {
+    slug: "interviewerly-ai",
+    title: "Interviewerly AI",
+    category: "AI Interview App",
+    tagline: "Practice interviews, sharpen answers, and prepare with guided coaching.",
+    shortDescription:
+      "Interviewerly AI gives users guided mock interview practice and answer feedback.",
+    description:
+      "Interviewerly AI is a career interview practice assistant that helps candidates rehearse answers, improve conversation clarity, and prepare for real interviews with confidence.",
+    iconUrl: "/logo/interviewerlyai.png",
+    heroImageUrl: "/logo/interviewerlyai.png",
+    tags: ["Interview Practice", "Career Coaching", "AI Assistant"],
+    features: [
+      "Mock interview workflow",
+      "Answer preparation guidance",
+      "Confidence-oriented practice",
+      "Career-focused feedback"
+    ],
+    highlights: ["Mock interviews", "AI coaching", "Career prep"],
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.interviewerlyai",
+    accentColor: "#0891b2",
+    sortOrder: 20
+  },
+  {
+    slug: "imagely-resizer",
+    title: "ImageLy Resizer",
+    category: "AI Image Resizer App",
+    tagline: "Resize images quickly and prepare visual assets for modern creative workflows.",
+    shortDescription:
+      "ImageLy Resizer helps users resize and optimize images for publishing and sharing.",
+    description:
+      "ImageLy Resizer is a focused image handling tool for resizing, adapting, and preparing photos or content assets for social media, websites, and creative delivery workflows.",
+    iconUrl: "/logo/imagelyresizer.png",
+    heroImageUrl: "/logo/imagelyresizer.png",
+    tags: ["Image Tools", "Resize", "Creator Workflow"],
+    features: [
+      "Fast image resizing",
+      "Creator-ready asset preparation",
+      "Clean export workflow",
+      "Simple publishing workflow"
+    ],
+    highlights: ["Image resizing", "Asset prep", "Creative tools"],
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.imagelyresizer",
+    accentColor: "#16a34a",
+    sortOrder: 30
+  },
+  {
+    slug: "docly-pdf-reader-editor-scanner",
+    title: "Docly PDF Reader Editor Scanner",
+    category: "PDF Scanner & Editor App",
+    tagline: "Read, scan, edit, and organize documents from one clean mobile workflow.",
+    shortDescription:
+      "Docly PDF Reader Editor Scanner manages PDF reading, scanning, editing, and organization.",
+    description:
+      "Docly PDF Reader Editor Scanner gives users a focused workspace for reading PDF files, scanning physical papers, editing content, and keeping documents organized for everyday productivity.",
+    iconUrl: "/logo/doclypdfreadereditorscanner.png",
+    heroImageUrl: "/logo/doclypdfreadereditorscanner.png",
+    tags: ["PDF", "Scanner", "Document Editing"],
+    features: [
+      "Scan and digitize documents",
+      "Read and edit PDF content",
+      "Organize document flow",
+      "Simple document productivity workflow"
+    ],
+    highlights: ["PDF scanner", "Reader", "Document editor"],
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.doclypdfreadereditorscanner",
+    accentColor: "#f97316",
+    sortOrder: 40
   },
   {
     slug: "scanpro",
@@ -72,7 +141,7 @@ const DEFAULT_APP_PAGES = [
     highlights: ["Document scanning", "PDF export", "Productivity"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.scanpro",
     accentColor: "#0f766e",
-    sortOrder: 20
+    sortOrder: 50
   },
   {
     slug: "stack-tower",
@@ -95,7 +164,7 @@ const DEFAULT_APP_PAGES = [
     highlights: ["One-tap play", "Arcade challenge", "Replay loop"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.kdstudios.stacktower",
     accentColor: "#dc2626",
-    sortOrder: 30
+    sortOrder: 60
   }
 ];
 
