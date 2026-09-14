@@ -3,169 +3,269 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KD Studios | App Page Manager</title>
+    <title>App Manager | KD Studios Admin</title>
+    <meta name="description" content="Manage app landing pages" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="app-manager">
     <div class="museum-shell">
       <div class="museum-wall"></div>
 
-      <header class="museum-navbar" aria-label="Admin navigation">
+      <header class="museum-navbar" aria-label="Primary navigation">
         <a class="museum-brand" href="/dashboard.html">
           <img src="/logo/kd_logo.png" alt="KD Studios logo" />
           <span>
             <strong>KD Studios</strong>
-            <small>App Page Manager</small>
+            <small>Admin Panel</small>
           </span>
         </a>
 
+        <div class="museum-dot-menu" id="dotMenu">
+          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </button>
+          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/app-manager.html" class="active">App Manager</a>
+            <a href="/request.html">Requests</a>
+            <a href="/contact-support.html">Support</a>
+          </nav>
+        </div>
+
         <div class="museum-auth-actions">
-          <a class="museum-btn museum-btn-outline" href="/dashboard.html">Dashboard</a>
-          <button class="museum-btn museum-btn-primary" id="logoutHeaderButton" type="button">Logout</button>
+          <span class="user-badge" id="userBadge"></span>
+          <button class="museum-btn museum-btn-outline" id="logoutBtn">Logout</button>
         </div>
       </header>
 
-      <main>
-        <section class="museum-section app-manager-shell">
-          <div class="app-manager-head">
+      <main class="admin-main">
+        <div class="admin-container">
+          <!-- Header -->
+          <div class="admin-header">
             <div>
-              <span class="section-chip">Admin CMS</span>
-              <h2>Manage app landing pages</h2>
-              <p>Create, edit, publish, unpublish, and delete public app pages from one place.</p>
+              <h1 class="admin-title">App Manager</h1>
+              <p class="admin-subtitle">Create and manage app landing pages</p>
             </div>
-            <button class="museum-btn museum-btn-primary" id="newAppButton" type="button">New App Page</button>
+            <button class="museum-btn primary" id="addAppBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add App
+            </button>
           </div>
 
-          <div class="app-manager-grid">
-            <aside class="admin-app-list-panel">
-              <div class="panel-title-row">
-                <h3>Pages</h3>
-                <span>Published pages are live for users.</span>
-              </div>
-              <div class="admin-app-list" id="adminAppList"></div>
-            </aside>
-
-            <section class="app-editor-panel">
-              <form class="museum-form app-editor-form" id="appEditorForm">
-                <div class="editor-toolbar">
-                  <div>
-                    <h3>Landing page details</h3>
-                    <a id="publicAppUrl" href="#" target="_blank" rel="noreferrer">Save the page to generate a public URL</a>
-                  </div>
-                  <div class="editor-actions">
-                    <button class="museum-btn museum-btn-outline" id="copyPublicUrlButton" type="button">Copy URL</button>
-                    <button class="museum-btn museum-btn-outline danger" id="deleteAppButton" type="button">Delete</button>
-                    <button class="museum-btn museum-btn-primary" type="submit">Save Page</button>
-                  </div>
-                </div>
-
-                <div class="form-grid-two">
-                  <label>
-                    <span>App name</span>
-                    <input type="text" name="title" maxlength="120" placeholder="FaceFix AI" required />
-                  </label>
-                  <label>
-                    <span>URL slug</span>
-                    <input type="text" name="slug" maxlength="80" placeholder="facefix-ai" />
-                  </label>
-                  <label>
-                    <span>Category</span>
-                    <input type="text" name="category" maxlength="100" placeholder="AI Photo Editing App" required />
-                  </label>
-                  <label>
-                    <span>Accent color</span>
-                    <input type="color" name="accentColor" value="#b8864e" />
-                  </label>
-                </div>
-
-                <label>
-                  <span>Hero tagline</span>
-                  <input type="text" name="tagline" maxlength="180" placeholder="One clear promise for users" required />
-                </label>
-
-                <label>
-                  <span>Short description</span>
-                  <textarea name="shortDescription" rows="2" maxlength="260" placeholder="Short user-facing summary" required></textarea>
-                </label>
-
-                <label>
-                  <span>Full description</span>
-                  <textarea name="description" rows="5" maxlength="1800" placeholder="Explain what the app does and why users should care" required></textarea>
-                </label>
-
-                <div class="form-grid-two">
-                  <label>
-                    <span>Icon image URL</span>
-                    <input type="url" name="iconUrl" placeholder="/logo/app.png or https://..." required />
-                  </label>
-                  <label>
-                    <span>Hero image URL</span>
-                    <input type="url" name="heroImageUrl" placeholder="/logo/app-preview.png or https://..." />
-                  </label>
-                  <label>
-                    <span>Play Store link</span>
-                    <input type="url" name="playStoreUrl" placeholder="https://play.google.com/store/apps/details?id=..." />
-                  </label>
-                  <label>
-                    <span>Website link</span>
-                    <input type="url" name="websiteUrl" placeholder="Optional website or support page" />
-                  </label>
-                </div>
-
-                <div class="form-grid-two">
-                  <label>
-                    <span>Tags</span>
-                    <textarea name="tags" rows="4" placeholder="One per line"></textarea>
-                  </label>
-                  <label>
-                    <span>Features</span>
-                    <textarea name="features" rows="4" placeholder="One per line"></textarea>
-                  </label>
-                  <label>
-                    <span>Highlights</span>
-                    <textarea name="highlights" rows="4" placeholder="One per line"></textarea>
-                  </label>
-                  <label>
-                    <span>Gallery image URLs</span>
-                    <textarea name="gallery" rows="4" placeholder="One image URL per line"></textarea>
-                  </label>
-                </div>
-
-                <div class="form-grid-three">
-                  <label>
-                    <span>Status</span>
-                    <select name="status">
-                      <option value="PUBLISHED">Published</option>
-                      <option value="DRAFT">Draft</option>
-                    </select>
-                  </label>
-                  <label>
-                    <span>Sort order</span>
-                    <input type="number" name="sortOrder" value="0" />
-                  </label>
-                  <label class="checkbox-row">
-                    <input type="checkbox" name="featured" checked />
-                    <span>Show as featured</span>
-                  </label>
-                </div>
-
-                <p class="form-message" id="appEditorMessage"></p>
-              </form>
-            </section>
+          <!-- Stats Cards -->
+          <div class="admin-stats" id="adminStats">
+            <div class="stat-card">
+              <span class="stat-value" id="statTotal">0</span>
+              <span class="stat-label">Total Apps</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="statPublished">0</span>
+              <span class="stat-label">Published</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="statDraft">0</span>
+              <span class="stat-label">Drafts</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="statFeatured">0</span>
+              <span class="stat-label">Featured</span>
+            </div>
           </div>
-        </section>
+
+          <!-- Apps Table -->
+          <div class="admin-table-container">
+            <div class="table-header">
+              <input type="text" class="search-input" id="searchInput" placeholder="Search apps..." />
+              <select class="filter-select" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="PUBLISHED">Published</option>
+                <option value="DRAFT">Draft</option>
+              </select>
+            </div>
+            <div class="table-wrapper">
+              <table class="admin-table" id="appsTable">
+                <thead>
+                  <tr>
+                    <th>App</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Featured</th>
+                    <th>Order</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="appsTableBody">
+                  <tr class="loading-row">
+                    <td colspan="7">Loading apps...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer" id="tableFooter">
+              <div class="pagination" id="pagination"></div>
+            </div>
+          </div>
+        </div>
       </main>
+
+      <!-- Add/Edit Modal -->
+      <div class="modal-overlay" id="appModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modalTitle">Add New App</h2>
+            <button class="modal-close" id="modalClose" aria-label="Close modal">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <form class="modal-form" id="appForm">
+            <input type="hidden" name="id" id="appId" />
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="appTitle">Title *</label>
+                <input type="text" name="title" id="appTitle" required placeholder="e.g., FaceFix AI" />
+              </div>
+              <div class="form-group">
+                <label for="appSlug">Slug *</label>
+                <input type="text" name="slug" id="appSlug" required placeholder="e.g., facefix-ai" />
+                <small class="form-hint">Auto-generated from title if empty</small>
+              </div>
+              <div class="form-group">
+                <label for="appCategory">Category *</label>
+                <input type="text" name="category" id="appCategory" required placeholder="e.g., AI Photo Editing App" />
+              </div>
+              <div class="form-group">
+                <label for="appTagline">Tagline *</label>
+                <input type="text" name="tagline" id="appTagline" required placeholder="Short catchy description" />
+              </div>
+              <div class="form-group">
+                <label for="appShortDesc">Short Description *</label>
+                <textarea name="shortDescription" id="appShortDesc" required rows="2" placeholder="Brief description for cards/previews"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="appDescription">Full Description *</label>
+                <textarea name="description" id="appDescription" required rows="4" placeholder="Detailed description with features..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="appIconUrl">Icon URL *</label>
+                <input type="url" name="iconUrl" id="appIconUrl" required placeholder="/logo/app-icon.png" />
+              </div>
+              <div class="form-group">
+                <label for="appHeroImageUrl">Hero Image URL</label>
+                <input type="url" name="heroImageUrl" id="appHeroImageUrl" placeholder="/logo/app-hero.png" />
+              </div>
+              <div class="form-group">
+                <label for="appPlayStoreUrl">Play Store URL</label>
+                <input type="url" name="playStoreUrl" id="appPlayStoreUrl" placeholder="https://play.google.com/store/apps/details?id=..." />
+              </div>
+              <div class="form-group">
+                <label for="appWebsiteUrl">Website URL</label>
+                <input type="url" name="websiteUrl" id="appWebsiteUrl" placeholder="https://example.com" />
+              </div>
+              <div class="form-group">
+                <label for="appAccentColor">Accent Color</label>
+                <input type="color" name="accentColor" id="appAccentColor" value="#b8864e" />
+              </div>
+              <div class="form-group">
+                <label for="appSortOrder">Sort Order</label>
+                <input type="number" name="sortOrder" id="appSortOrder" value="0" min="0" />
+              </div>
+              <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="featured" id="appFeatured" />
+                  <span class="checkmark"></span>
+                  Featured
+                </label>
+              </div>
+              <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="status" id="appStatus" value="PUBLISHED" />
+                  <span class="checkmark"></span>
+                  Published (uncheck for Draft)
+                </label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Tags (comma-separated)</h3>
+              <input type="text" name="tags" id="appTags" placeholder="AI Enhancement, Photo Editing, Android" />
+            </div>
+
+            <div class="form-section">
+              <h3>Features (one per line)</h3>
+              <textarea name="features" id="appFeatures" rows="4" placeholder="Enhance blurry face details&#10;Improve old and low-quality portraits&#10;Simple Android-first workflow"></textarea>
+            </div>
+
+            <div class="form-section">
+              <h3>Highlights (one per line)</h3>
+              <textarea name="highlights" id="appHighlights" rows="3" placeholder="AI face restoration&#10;Portrait clarity&#10;Old photo support"></textarea>
+            </div>
+
+            <div class="form-section">
+              <h3>Gallery Images (one URL per line)</h3>
+              <textarea name="gallery" id="appGallery" rows="3" placeholder="/logo/screenshot1.png&#10;/logo/screenshot2.png"></textarea>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="museum-btn secondary" id="modalCancel">Cancel</button>
+              <button type="submit" class="museum-btn primary" id="modalSubmit">
+                <span id="submitText">Create App</span>
+                <span class="spinner" id="submitSpinner" style="display:none;"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Modal -->
+      <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+        <div class="modal-content modal-small">
+          <div class="modal-header">
+            <h2 id="deleteModalTitle">Delete App</h2>
+            <button class="modal-close" id="deleteModalClose" aria-label="Close modal">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <p>Are you sure you want to delete <strong id="deleteAppName"></strong>? This action cannot be undone.</p>
+          <div class="modal-actions">
+            <button type="button" class="museum-btn secondary" id="deleteCancel">Cancel</button>
+            <button type="button" class="museum-btn danger" id="deleteConfirm">
+              <span id="deleteSubmitText">Delete</span>
+              <span class="spinner" id="deleteSpinner" style="display:none;"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Container -->
+      <div class="toast-container" id="toastContainer"></div>
     </div>
 
     <script src="/config.js"></script>
     <script src="/motion.js"></script>
     <script src="/app-data.js"></script>
+    <script src="/auth-core.js"></script>
+    <script src="/dashboard-admin.js"></script>
     <script src="/app-manager.js"></script>
+    <script src="/app.js"></script>
+    <script src="./site-ui.js"></script>
   </body>
 </html>

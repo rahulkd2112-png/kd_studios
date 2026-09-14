@@ -47,6 +47,8 @@
   function renderCard(app) {
     const tags = (app.tags || []).slice(0, 3).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
     const href = app.landingUrl || app.playStoreUrl || `/apps/${app.slug || app.id}`;
+    const playStoreUrl = app.playStoreUrl || app.websiteUrl || "";
+    const playStoreLink = playStoreUrl ? `<a href="${escapeHtml(playStoreUrl)}" class="project-link project-play-link" target="_blank" rel="noopener noreferrer">Play Store</a>` : "";
     return `
       <article class="project-card">
         <img src="${escapeHtml(app.icon)}" alt="${escapeHtml(app.title)}" loading="lazy" />
@@ -54,7 +56,10 @@
           <h3>${escapeHtml(app.title)}</h3>
           <p>${escapeHtml(app.description)}</p>
           <div class="project-tags">${tags}</div>
-          <a href="${escapeHtml(href)}" class="project-link">View App Page</a>
+          <div class="project-card-actions">
+            <a href="${escapeHtml(href)}" class="project-link">View App Page</a>
+            ${playStoreLink}
+          </div>
         </div>
       </article>
     `;

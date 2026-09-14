@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KD Studios | Admin Dashboard</title>
+    <title>KD Studios | Dashboard</title>
+    <meta
+      name="description"
+      content="View KD Studios apps, track client requests, and manage admin operations from the role-aware dashboard."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,24 +15,20 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   </head>
   <body data-page="dashboard">
     <div class="museum-shell">
-      <!-- Marble wall background -->
       <div class="museum-wall"></div>
 
-      <!-- Navbar -->
       <header class="museum-navbar" aria-label="Primary navigation">
         <a class="museum-brand" href="./index.html">
           <img src="./logo/kd_logo.png" alt="KD Studios logo" />
           <span>
             <strong>KD Studios</strong>
-            <small>Admin Dashboard</small>
+            <small>Role-aware dashboard</small>
           </span>
         </a>
 
-        <!-- 3-dot menu -->
         <div class="museum-dot-menu" id="dotMenu">
           <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
             <span class="dot"></span>
@@ -36,12 +36,12 @@
             <span class="dot"></span>
           </button>
           <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
-            <a href="./index.html">🏛️ Home Gallery</a>
-            <a href="./work.html">🎨 Our Work</a>
-            <a href="./services.html">📋 Services</a>
-            <a href="./dashboard.html">📊 Dashboard</a>
-            <a href="./request.html">✍️ Request</a>
-            <a href="./contact-support.html">📞 Support</a>
+            <a href="./index.html">Home Gallery</a>
+            <a href="./work.html">Our Work</a>
+            <a href="./services.html">Services</a>
+            <a href="./dashboard.html">Dashboard</a>
+            <a href="./request.html">Request</a>
+            <a href="./contact-support.html">Support</a>
             <div class="dropdown-divider"></div>
             <a href="./privacy-policy.html">Privacy</a>
             <a href="./terms-conditions.html">Terms</a>
@@ -49,258 +49,291 @@
         </div>
 
         <div class="museum-auth-actions">
-          <a class="museum-btn museum-btn-outline" href="./app-manager.html">App Pages</a>
-          <button class="museum-btn museum-btn-primary hidden" id="logoutHeaderButton" type="button">Logout</button>
+          <a class="museum-btn museum-btn-outline hidden" id="adminAppManagerLink" href="./app-manager.html">App Pages</a>
+          <a class="museum-btn museum-btn-outline" href="./login.html">Sign In</a>
+          <a class="museum-btn museum-btn-primary" href="./register.html">Sign Up</a>
         </div>
       </header>
 
-      <!-- Dashboard Hero -->
-      <section class="museum-section">
-        <div class="museum-section-head">
-          <span class="section-chip">Admin Panel</span>
-          <h2>Dashboard Overview</h2>
-          <p>Complete control panel for managing users, requests, and monitoring platform activity</p>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="admin-stats-grid" id="adminStatsGrid">
-          <article class="admin-stat-card">
-            <div class="stat-icon total-users"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-            <div class="stat-content">
-              <span class="stat-value" id="statTotalUsers">—</span>
-              <span class="stat-label">Total Users</span>
+      <main class="dashboard-shell" id="dashboardShell">
+        <section class="museum-section dashboard-state" id="publicDashboard" data-dashboard-state="public">
+          <div class="dashboard-hero-band">
+            <div>
+              <span class="section-chip">Public Dashboard</span>
+              <h1>KD Studios apps, ready to explore.</h1>
+              <p>
+                Browse published apps and product pages. Sign in only when you want to request a project or track existing work.
+              </p>
             </div>
-            <div class="stat-trend positive" id="statUsersTrend">+0% this month</div>
-          </article>
-
-          <article class="admin-stat-card">
-            <div class="stat-icon total-requests"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-            <div class="stat-content">
-              <span class="stat-value" id="statTotalRequests">—</span>
-              <span class="stat-label">Total Requests</span>
-            </div>
-            <div class="stat-trend positive" id="statRequestsTrend">+0% this month</div>
-          </article>
-
-          <article class="admin-stat-card">
-            <div class="stat-icon pending-requests"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="stat-content">
-              <span class="stat-value" id="statPendingRequests">—</span>
-              <span class="stat-label">Pending Requests</span>
-            </div>
-            <div class="stat-trend warning" id="statPendingTrend">Requires attention</div>
-          </article>
-
-          <article class="admin-stat-card">
-            <div class="stat-icon blocked-users"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
-            <div class="stat-content">
-              <span class="stat-value" id="statBlockedUsers">—</span>
-              <span class="stat-label">Blocked Users</span>
-            </div>
-            <div class="stat-trend negative" id="statBlockedTrend">0 active blocks</div>
-          </article>
-        </div>
-
-        <!-- Charts Row -->
-        <div class="admin-charts-grid">
-          <article class="admin-chart-card">
-            <div class="chart-header">
-              <h3>Requests Overview</h3>
-              <div class="chart-period">
-                <button class="period-btn active" data-period="7d">7D</button>
-                <button class="period-btn" data-period="30d">30D</button>
-                <button class="period-btn" data-period="90d">90D</button>
+            <div class="dashboard-action-panel">
+              <span>Client access</span>
+              <strong>Project requests stay private after login.</strong>
+              <div class="app-cta-row">
+                <a class="museum-btn museum-btn-primary" href="./login.html">Sign In</a>
+                <a class="museum-btn museum-btn-outline" href="./request.html">Request Project</a>
               </div>
             </div>
-            <div class="chart-wrapper">
-              <canvas id="requestsChart"></canvas>
-            </div>
-          </article>
+          </div>
 
-          <article class="admin-chart-card">
-            <div class="chart-header">
-              <h3>User Growth</h3>
-              <div class="chart-period">
-                <button class="period-btn active" data-period="7d">7D</button>
-                <button class="period-btn" data-period="30d">30D</button>
-                <button class="period-btn" data-period="90d">90D</button>
+          <div class="dashboard-section-head">
+            <div>
+              <span class="section-chip">Published Apps</span>
+              <h2>Live app pages</h2>
+            </div>
+            <p>Public visitors can inspect each app without seeing admin metrics, users, audit logs, or request tables.</p>
+          </div>
+          <div class="dashboard-app-grid" id="publicAppsGrid" aria-live="polite">
+            <p class="empty-state">Loading published apps...</p>
+          </div>
+        </section>
+
+        <section class="museum-section dashboard-state hidden" id="userDashboard" data-dashboard-state="user">
+          <div class="dashboard-hero-band">
+            <div>
+              <span class="section-chip">Client Dashboard</span>
+              <h1 id="accountTitle">Welcome back.</h1>
+              <p id="accountDescription">Track your KD Studios project requests and browse published apps.</p>
+            </div>
+            <div class="dashboard-action-panel">
+              <span>Next step</span>
+              <strong>Send a new project brief when you are ready.</strong>
+              <a class="museum-btn museum-btn-primary" href="./request.html">Request Project</a>
+            </div>
+          </div>
+
+          <div class="dashboard-two-column">
+            <section class="dashboard-panel" aria-labelledby="myRequestsTitle">
+              <div class="panel-title-row">
+                <div>
+                  <span class="section-chip">Requests</span>
+                  <h2 id="myRequestsTitle">Your project requests</h2>
+                </div>
+              </div>
+              <div class="request-list" id="myRequests" aria-live="polite">
+                <p class="empty-state">Loading your requests...</p>
+              </div>
+            </section>
+
+            <section class="dashboard-panel" aria-labelledby="clientAppsTitle">
+              <div class="panel-title-row">
+                <div>
+                  <span class="section-chip">Apps</span>
+                  <h2 id="clientAppsTitle">Published apps</h2>
+                </div>
+              </div>
+              <div class="dashboard-app-grid compact" id="userPublicAppsGrid" aria-live="polite">
+                <p class="empty-state">Loading published apps...</p>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="dashboard-state hidden" id="adminDashboard" data-dashboard-state="admin">
+          <section class="museum-section">
+            <div class="dashboard-section-head admin">
+              <div>
+                <span class="section-chip">Admin Panel</span>
+                <h1>Operational overview</h1>
+                <p>Manage project requests, users, audit history, notifications, and published app pages.</p>
+              </div>
+              <a class="museum-btn museum-btn-primary" href="./app-manager.html">Manage App Pages</a>
+            </div>
+
+            <div class="admin-stats-grid" id="adminStatsGrid" aria-live="polite">
+              <article class="admin-stat-card">
+                <div class="stat-icon total-users" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value" id="statTotalUsers">--</span>
+                  <span class="stat-label">Total Users</span>
+                </div>
+                <div class="stat-trend positive" id="statUsersTrend">Verified admin view</div>
+              </article>
+
+              <article class="admin-stat-card">
+                <div class="stat-icon total-requests" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value" id="statTotalRequests">--</span>
+                  <span class="stat-label">Total Requests</span>
+                </div>
+                <div class="stat-trend positive" id="statRequestsTrend">All requests</div>
+              </article>
+
+              <article class="admin-stat-card">
+                <div class="stat-icon pending-requests" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value" id="statPendingRequests">--</span>
+                  <span class="stat-label">Pending Requests</span>
+                </div>
+                <div class="stat-trend warning" id="statPendingTrend">Needs review</div>
+              </article>
+
+              <article class="admin-stat-card">
+                <div class="stat-icon blocked-users" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value" id="statBlockedUsers">--</span>
+                  <span class="stat-label">Blocked Users</span>
+                </div>
+                <div class="stat-trend negative" id="statBlockedTrend">Access controls</div>
+              </article>
+            </div>
+          </section>
+
+          <section class="museum-section" id="requestsSection">
+            <div class="section-header-row">
+              <div class="museum-section-head">
+                <span class="section-chip">Requests</span>
+                <h2>Client Requests</h2>
+                <p>Review, quote, and update incoming project work.</p>
+              </div>
+              <div class="section-actions">
+                <input type="text" id="requestSearch" class="search-input" placeholder="Search requests..." aria-label="Search requests" />
+                <select id="requestStatusFilter" class="filter-select" aria-label="Filter by status">
+                  <option value="">All Statuses</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="QUOTED">Quoted</option>
+                  <option value="IN_PROGRESS">In Progress</option>
+                  <option value="COMPLETED">Completed</option>
+                  <option value="REJECTED">Rejected</option>
+                </select>
+                <button class="museum-btn museum-btn-primary" id="refreshRequestsBtn" type="button">Refresh</button>
               </div>
             </div>
-            <div class="chart-wrapper">
-              <canvas id="usersChart"></canvas>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="requestsTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Project Type</th>
+                    <th>Client</th>
+                    <th>Contact</th>
+                    <th>Budget</th>
+                    <th>Timeline</th>
+                    <th>Status</th>
+                    <th>Quote</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="requestsTableBody">
+                  <tr class="loading-row"><td colspan="10">Loading requests...</td></tr>
+                </tbody>
+              </table>
             </div>
-          </article>
 
-          <article class="admin-chart-card wide">
-            <div class="chart-header">
-              <h3>Request Status Distribution</h3>
+            <div class="table-pagination" id="requestsPagination">
+              <button class="pagination-btn" id="prevRequestsPage" disabled>Previous</button>
+              <span class="pagination-info" id="requestsPageInfo">Loading requests</span>
+              <button class="pagination-btn" id="nextRequestsPage" disabled>Next</button>
             </div>
-            <div class="chart-wrapper">
-              <canvas id="statusChart"></canvas>
+          </section>
+
+          <section class="museum-section" id="usersSection">
+            <div class="section-header-row">
+              <div class="museum-section-head">
+                <span class="section-chip">Users</span>
+                <h2>User Management</h2>
+                <p>Manage user accounts, roles, and access permissions.</p>
+              </div>
+              <div class="section-actions">
+                <input type="text" id="userSearch" class="search-input" placeholder="Search users..." aria-label="Search users" />
+                <select id="userRoleFilter" class="filter-select" aria-label="Filter by role">
+                  <option value="">All Roles</option>
+                  <option value="CLIENT">Client</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
+                <select id="userStatusFilter" class="filter-select" aria-label="Filter by status">
+                  <option value="">All Status</option>
+                  <option value="active">Active</option>
+                  <option value="blocked">Blocked</option>
+                </select>
+                <button class="museum-btn museum-btn-primary" id="refreshUsersBtn" type="button">Refresh</button>
+              </div>
             </div>
-          </article>
-        </div>
-      </section>
 
-      <!-- Requests Management Section -->
-      <section class="museum-section" id="requestsSection">
-        <div class="section-header-row">
-          <div class="museum-section-head">
-            <span class="section-chip">Requests</span>
-            <h2>Client Requests Management</h2>
-            <p>View, manage, and respond to all incoming project requests</p>
-          </div>
-          <div class="section-actions">
-            <input type="text" id="requestSearch" class="search-input" placeholder="Search requests..." aria-label="Search requests">
-            <select id="requestStatusFilter" class="filter-select" aria-label="Filter by status">
-              <option value="">All Statuses</option>
-              <option value="PENDING">Pending</option>
-              <option value="QUOTED">Quoted</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="COMPLETED">Completed</option>
-              <option value="REJECTED">Rejected</option>
-            </select>
-            <button class="museum-btn museum-btn-primary" id="refreshRequestsBtn" type="button">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-              Refresh
-            </button>
-          </div>
-        </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="usersTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Requests</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                  <tr class="loading-row"><td colspan="9">Loading users...</td></tr>
+                </tbody>
+              </table>
+            </div>
 
-        <div class="admin-table-wrapper">
-          <table class="admin-table" id="requestsTable">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Project Type</th>
-                <th>Client</th>
-                <th>Contact</th>
-                <th>Budget</th>
-                <th>Timeline</th>
-                <th>Status</th>
-                <th>Quote</th>
-                <th>Admin Notes</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="requestsTableBody">
-              <tr class="loading-row"><td colspan="11">Loading requests...</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="table-pagination" id="usersPagination">
+              <button class="pagination-btn" id="prevUsersPage" disabled>Previous</button>
+              <span class="pagination-info" id="usersPageInfo">Loading users</span>
+              <button class="pagination-btn" id="nextUsersPage" disabled>Next</button>
+            </div>
+          </section>
 
-        <div class="table-pagination" id="requestsPagination">
-          <button class="pagination-btn" id="prevRequestsPage" disabled>Previous</button>
-          <span class="pagination-info" id="requestsPageInfo">Page 1 of 1</span>
-          <button class="pagination-btn" id="nextRequestsPage" disabled>Next</button>
-        </div>
-      </section>
+          <section class="museum-section" id="auditSection">
+            <div class="museum-section-head">
+              <span class="section-chip">Audit</span>
+              <h2>Activity Logs</h2>
+              <p>Track administrative actions and system events.</p>
+            </div>
 
-      <!-- Users Management Section -->
-      <section class="museum-section" id="usersSection">
-        <div class="section-header-row">
-          <div class="museum-section-head">
-            <span class="section-chip">Users</span>
-            <h2>User Management</h2>
-            <p>Manage user accounts, roles, and access permissions</p>
-          </div>
-          <div class="section-actions">
-            <input type="text" id="userSearch" class="search-input" placeholder="Search users..." aria-label="Search users">
-            <select id="userRoleFilter" class="filter-select" aria-label="Filter by role">
-              <option value="">All Roles</option>
-              <option value="CLIENT">Client</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-            <select id="userStatusFilter" class="filter-select" aria-label="Filter by status">
-              <option value="">All Status</option>
-              <option value="active">Active</option>
-              <option value="blocked">Blocked</option>
-            </select>
-            <button class="museum-btn museum-btn-primary" id="refreshUsersBtn" type="button">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-              Refresh
-            </button>
-          </div>
-        </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="auditTable">
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>Entity</th>
+                    <th>Description</th>
+                    <th>Actor</th>
+                    <th>Target User</th>
+                    <th>IP Address</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTableBody">
+                  <tr class="loading-row"><td colspan="7">Loading audit logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
 
-        <div class="admin-table-wrapper">
-          <table class="admin-table" id="usersTable">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Requests</th>
-                <th>Joined</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="usersTableBody">
-              <tr class="loading-row"><td colspan="9">Loading users...</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="table-pagination" id="auditPagination">
+              <button class="pagination-btn" id="prevAuditPage" disabled>Previous</button>
+              <span class="pagination-info" id="auditPageInfo">Loading audit logs</span>
+              <button class="pagination-btn" id="nextAuditPage" disabled>Next</button>
+            </div>
+          </section>
 
-        <div class="table-pagination" id="usersPagination">
-          <button class="pagination-btn" id="prevUsersPage" disabled>Previous</button>
-          <span class="pagination-info" id="usersPageInfo">Page 1 of 1</span>
-          <button class="pagination-btn" id="nextUsersPage" disabled>Next</button>
-        </div>
-      </section>
+          <section class="museum-section" id="notificationsSection">
+            <div class="museum-section-head">
+              <span class="section-chip">Notifications</span>
+              <h2>System Notifications</h2>
+              <p>Recent system-wide notifications and alerts.</p>
+            </div>
 
-      <!-- Audit Logs Section -->
-      <section class="museum-section" id="auditSection">
-        <div class="museum-section-head">
-          <span class="section-chip">Audit</span>
-          <h2>Activity Logs</h2>
-          <p>Track all administrative actions and system events</p>
-        </div>
+            <div class="notifications-list" id="adminNotificationsList" aria-live="polite">
+              <p class="empty-state">Loading notifications...</p>
+            </div>
+          </section>
+        </section>
+      </main>
 
-        <div class="admin-table-wrapper">
-          <table class="admin-table" id="auditTable">
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Entity</th>
-                <th>Description</th>
-                <th>Actor</th>
-                <th>Target User</th>
-                <th>IP Address</th>
-                <th>Timestamp</th>
-              </tr>
-            </thead>
-            <tbody id="auditTableBody">
-              <tr class="loading-row"><td colspan="7">Loading audit logs...</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-pagination" id="auditPagination">
-          <button class="pagination-btn" id="prevAuditPage" disabled>Previous</button>
-          <span class="pagination-info" id="auditPageInfo">Page 1 of 1</span>
-          <button class="pagination-btn" id="nextAuditPage" disabled>Next</button>
-        </div>
-      </section>
-
-      <!-- Notifications Section -->
-      <section class="museum-section" id="notificationsSection">
-        <div class="museum-section-head">
-          <span class="section-chip">Notifications</span>
-          <h2>System Notifications</h2>
-          <p>Recent system-wide notifications and alerts</p>
-        </div>
-
-        <div class="notifications-list" id="adminNotificationsList">
-          <p class="empty-state">Loading notifications...</p>
-        </div>
-      </section>
-
-      <!-- Modals -->
-      <!-- Request Reply Modal -->
       <div class="modal-overlay hidden" id="requestReplyModal" role="dialog" aria-modal="true" aria-labelledby="replyModalTitle">
         <div class="modal-container">
           <div class="modal-header">
@@ -308,7 +341,7 @@
             <button class="modal-close" id="closeReplyModal" aria-label="Close modal">&times;</button>
           </div>
           <form class="modal-form" id="requestReplyForm">
-            <input type="hidden" name="requestId" id="replyRequestId">
+            <input type="hidden" name="requestId" id="replyRequestId" />
             <div class="form-group">
               <label for="replyStatus">Status <span class="required">*</span></label>
               <select name="status" id="replyStatus" required>
@@ -320,8 +353,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="replyQuoteAmount">Quote Amount (₹)</label>
-              <input type="text" name="quoteAmount" id="replyQuoteAmount" placeholder="e.g., 50,000">
+              <label for="replyQuoteAmount">Quote Amount</label>
+              <input type="text" name="quoteAmount" id="replyQuoteAmount" placeholder="e.g., 50000" />
             </div>
             <div class="form-group">
               <label for="replyAdminNotes">Admin Notes / Reply <span class="required">*</span></label>
@@ -329,13 +362,12 @@
             </div>
             <div class="modal-actions">
               <button type="button" class="museum-btn museum-btn-outline" id="cancelReplyBtn">Cancel</button>
-              <button type="submit" class="museum-btn museum-btn-primary">Save & Send Reply</button>
+              <button type="submit" class="museum-btn museum-btn-primary">Save Reply</button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Block User Modal -->
       <div class="modal-overlay hidden" id="blockUserModal" role="dialog" aria-modal="true" aria-labelledby="blockModalTitle">
         <div class="modal-container">
           <div class="modal-header">
@@ -343,7 +375,7 @@
             <button class="modal-close" id="closeBlockModal" aria-label="Close modal">&times;</button>
           </div>
           <form class="modal-form" id="blockUserForm">
-            <input type="hidden" name="userId" id="blockUserId">
+            <input type="hidden" name="userId" id="blockUserId" />
             <div class="form-group">
               <label for="blockReason">Reason for Blocking <span class="required">*</span></label>
               <textarea name="blockedReason" id="blockReason" rows="3" required placeholder="Enter reason for blocking this user..."></textarea>
@@ -356,7 +388,6 @@
         </div>
       </div>
 
-      <!-- Delete User Modal -->
       <div class="modal-overlay hidden" id="deleteUserModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
         <div class="modal-container">
           <div class="modal-header">
@@ -364,15 +395,15 @@
             <button class="modal-close" id="closeDeleteModal" aria-label="Close modal">&times;</button>
           </div>
           <div class="modal-body">
-            <p class="warning-text">⚠️ This action is irreversible. The user and all their data will be permanently deleted.</p>
+            <p class="warning-text">This action is irreversible. The user and all their data will be permanently deleted.</p>
             <p>User: <strong id="deleteUserName"></strong> (<span id="deleteUserEmail"></span>)</p>
             <p>Total Requests: <strong id="deleteUserRequests">0</strong></p>
           </div>
           <form class="modal-form" id="deleteUserForm">
-            <input type="hidden" name="userId" id="deleteUserId">
+            <input type="hidden" name="userId" id="deleteUserId" />
             <div class="form-group">
               <label for="deleteConfirmation">Type "DELETE" to confirm <span class="required">*</span></label>
-              <input type="text" name="confirmation" id="deleteConfirmation" required placeholder="DELETE">
+              <input type="text" name="confirmation" id="deleteConfirmation" required placeholder="DELETE" />
             </div>
             <div class="modal-actions">
               <button type="button" class="museum-btn museum-btn-outline" id="cancelDeleteBtn">Cancel</button>
@@ -382,28 +413,37 @@
         </div>
       </div>
 
-      <!-- View Request Details Modal -->
       <div class="modal-overlay hidden" id="viewRequestModal" role="dialog" aria-modal="true" aria-labelledby="viewRequestTitle">
         <div class="modal-container large">
           <div class="modal-header">
             <h3 id="viewRequestTitle">Request Details</h3>
             <button class="modal-close" id="closeViewRequestModal" aria-label="Close modal">&times;</button>
           </div>
-          <div class="modal-body" id="viewRequestBody">
-            <!-- Content loaded dynamically -->
-          </div>
+          <div class="modal-body" id="viewRequestBody"></div>
         </div>
       </div>
 
-      <!-- Socket Status -->
-      <div class="socket-status" id="socketStatus">Socket offline</div>
+      <div class="socket-status hidden" id="socketStatus">Socket offline</div>
+
+      <footer class="museum-footer">
+        <span>Copyright 2026 KD Studios. Crafted digital products.</span>
+        <div class="museum-footer-links">
+          <a href="./privacy-policy.html">Privacy</a>
+          <a href="./terms-conditions.html">Terms</a>
+          <a href="./contact-support.html">Support</a>
+        </div>
+      </footer>
     </div>
 
     <script src="./config.js"></script>
     <script src="./motion.js"></script>
     <script src="./app-data.js"></script>
+    <script src="./app-pages.js"></script>
     <script src="./app-museum.js"></script>
+    <script src="./auth-core.js"></script>
+    <script src="./dashboard-admin.js"></script>
     <script src="./app-core.js"></script>
     <script src="./app.js"></script>
+    <script src="./site-ui.js"></script>
   </body>
 </html>

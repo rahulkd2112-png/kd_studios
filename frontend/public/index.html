@@ -3,138 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KD Studios | App Gallery — Museum Collection</title>
-    <meta
-      name="description"
-      content="KD Studios builds polished mobile apps, games, business websites, and secure client dashboards."
-    />
+    <title>KD Studios | Digital Products With Momentum</title>
+    <meta name="description" content="KD Studios designs memorable apps, games, websites, and digital systems." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css?v=1719602462" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-page="home">
     <div class="museum-shell">
-      <!-- Marble wall background -->
       <div class="museum-wall"></div>
-
-      <!-- Navbar -->
-      <header class="museum-navbar" aria-label="Primary navigation">
-        <a class="museum-brand" href="./index.html">
-          <img src="./logo/kd_logo.png" alt="KD Studios logo" />
-          <span>
-            <strong>KD Studios</strong>
-            <small>Apps · Games · Websites</small>
-          </span>
-        </a>
-
-        <!-- 3-dot menu -->
-        <div class="museum-dot-menu" id="dotMenu">
-          <button class="museum-dot-btn" id="dotMenuBtn" aria-label="Navigation menu" aria-expanded="false">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </button>
-          <nav class="museum-dropdown" id="dotDropdown" aria-label="Quick navigation">
-            <a href="./index.html">🏛️ Home Gallery</a>
-            <a href="./work.html">🎨 Our Work</a>
-            <a href="./services.html">📋 Services</a>
-            <a href="./dashboard.html">📊 Dashboard</a>
-            <a href="./request.html">✍️ Request</a>
-            <a href="./contact-support.html">📞 Support</a>
-            <div class="dropdown-divider"></div>
-            <a href="./privacy-policy.html">Privacy</a>
-            <a href="./terms-conditions.html">Terms</a>
-          </nav>
-        </div>
-
-        <!-- Auth actions -->
-        <div class="museum-auth-actions">
-          <a class="museum-btn museum-btn-outline" href="./login.html">Sign In</a>
-          <a class="museum-btn museum-btn-primary" href="./register.html">Sign Up</a>
-        </div>
-      </header>
+      <header class="museum-navbar" aria-label="Primary navigation"></header>
 
       <main>
-        <!-- Hero -->
-        <section class="museum-hero reveal">
-          <span class="museum-hero-eyebrow">KD Studios Collection</span>
-          <h1>Our <em>App Gallery</em> — curated for you.</h1>
-          <p>Browse our live apps displayed on pedestals, just like a museum exhibition. Click any app to view details and get it from the Play Store.</p>
-        </section>
-
-        <!-- Gallery (3D replaces the old 2D grid) -->
-        <section class="museum-gallery" id="apps">
-          <div class="museum-3d-wrap">
-            <canvas id="museumCanvas" aria-label="3D museum canvas" role="img"></canvas>
+        <section class="studio-hero">
+          <div class="studio-hero-copy">
+            <span class="signal-label">Independent digital studio</span>
+            <h1>Products that feel<br /><em>ahead of their time.</em></h1>
+            <p>KD Studios turns useful ideas into considered apps, sharp websites, and digital systems people genuinely enjoy using.</p>
+            <div class="hero-actions">
+              <a class="museum-btn museum-btn-primary" href="/request.html">Start a project <span aria-hidden="true">&rarr;</span></a>
+              <a class="museum-btn museum-btn-outline" href="/work.html">See selected work</a>
+            </div>
+          </div>
+          <div class="studio-hero-stage" aria-hidden="true">
+            <div class="stage-axis axis-one"></div><div class="stage-axis axis-two"></div><div class="stage-axis axis-three"></div>
+            <div class="stage-card stage-card-main"><img src="/logo/facefixai.png" alt="" /><span>FaceFix AI</span></div>
+            <div class="stage-card stage-card-side"><img src="/logo/ScanPro.png" alt="" /><span>ScanPro</span></div>
+            <div class="stage-card stage-card-mini"><img src="/logo/Stack%20Tower.png" alt="" /><span>Stack Tower</span></div>
+            <p class="stage-caption">Designed in motion<br />Built with purpose</p>
           </div>
         </section>
 
+        <section class="studio-metrics" aria-label="Studio highlights">
+          <div><strong>01</strong><span>Studio, not a template factory</span></div>
+          <div><strong>Apps</strong><span>Mobile experiences with a point of view</span></div>
+          <div><strong>Web</strong><span>Fast, focused digital presence</span></div>
+          <div><strong>Systems</strong><span>Portals and workflows that make work lighter</span></div>
+        </section>
 
-        <!-- Service Summary -->
-        <section class="museum-section reveal">
-          <div class="museum-section-head">
-            <span class="section-chip">Beyond Apps</span>
-            <h2>What we build</h2>
-            <p>Mobile apps, games, business websites, admin panels, and client dashboards — all crafted with focused product thinking.</p>
+        <section class="product-showcase" id="apps">
+          <div class="section-intro">
+            <span class="signal-label">Selected products</span>
+            <h2>Made to be useful.<br />Built to be remembered.</h2>
+            <a href="/work.html">View all work <span aria-hidden="true">&rarr;</span></a>
           </div>
-          <div class="museum-content-grid">
-            <article class="museum-card">
-              <h3>📱 Mobile Apps</h3>
-              <p>Android apps with clean UI, real utility, and Play Store listing. FaceFix AI and ScanPro are live examples.</p>
-            </article>
-            <article class="museum-card">
-              <h3>🎮 Games</h3>
-              <p>Arcade experiences built for replayability. Stack Tower is our latest release with stacking gameplay.</p>
-            </article>
-            <article class="museum-card">
-              <h3>🌐 Websites & Dashboards</h3>
-              <p>Business websites, client portals, admin panels, — full-stack systems with request workflows and secure access.</p>
-            </article>
+          <div class="studio-app-grid" id="studioAppGrid" aria-live="polite"></div>
+        </section>
+
+        <section class="studio-services">
+          <div class="section-intro"><span class="signal-label">What we do</span><h2>From first signal<br />to finished system.</h2></div>
+          <div class="service-rail">
+            <article><span>01</span><h3>Digital products</h3><p>Native-feeling mobile apps and web tools shaped around real habits.</p></article>
+            <article><span>02</span><h3>Brand websites</h3><p>Precise, expressive sites that communicate value before a meeting starts.</p></article>
+            <article><span>03</span><h3>Client systems</h3><p>Account areas, operational dashboards, and thoughtful admin workflows.</p></article>
           </div>
+        </section>
+
+        <section class="studio-closing">
+          <span class="signal-label">Have an idea?</span>
+          <h2>Make it feel inevitable.</h2>
+          <a class="museum-btn museum-btn-primary" href="/request.html">Talk to KD Studios <span aria-hidden="true">&rarr;</span></a>
         </section>
       </main>
 
       <footer class="museum-footer">
-        <span>© 2026 KD Studios. Crafted digital products.</span>
-        <div class="museum-footer-links">
-          <a href="./privacy-policy.html">Privacy</a>
-          <a href="./terms-conditions.html">Terms</a>
-          <a href="./contact-support.html">Support</a>
-        </div>
+        <span>Copyright 2026 KD Studios. Built with intention.</span>
+        <div class="museum-footer-links"><a href="/privacy-policy.html">Privacy</a><a href="/terms-conditions.html">Terms</a><a href="/contact-support.html">Support</a></div>
       </footer>
     </div>
 
-    <!-- App detail overlay -->
-    <div class="museum-overlay" id="appOverlay">
-      <div class="museum-expanded-card">
-        <button class="close-btn" id="overlayCloseBtn" aria-label="Close details">✕</button>
-        <img class="expanded-icon" id="overlayIcon" src="" alt="" />
-        <h2 class="expanded-title" id="overlayTitle"></h2>
-        <div class="expanded-tags" id="overlayTags"></div>
-        <p class="expanded-desc" id="overlayDesc"></p>
-        <a class="expanded-play-btn" id="overlayPlayBtn" href="#" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M3 2l18 10L3 22V2z"/></svg>
-          View on Play Store
-        </a>
-      </div>
-    </div>
-
-    <script src="./config.js?v=1719602462"></script>
-    <script src="./motion.js?v=1719602462"></script>
-    <script src="./app-data.js?v=1719602462"></script>
-    <script src="./museum-app-data.js?v=1719602462"></script>
-    <script src="./app-pages.js?v=1719602462"></script>
-    <script src="./app-museum.js?v=1719602462"></script>
-    <script src="./app-core.js?v=1719602462"></script>
-    <script src="./app.js?v=1719602462"></script>
-    <script src="./museum-boot.js?v=1719602462"></script>
-
+    <script src="./config.js"></script>
+    <script src="./motion.js"></script>
+    <script src="./app-data.js"></script>
+    <script src="./museum-app-data.js"></script>
+    <script src="./app-pages.js"></script>
+    <script src="./app-museum.js"></script>
+    <script src="./auth-core.js"></script>
+    <script src="./dashboard-admin.js"></script>
+    <script src="./app-core.js"></script>
+    <script src="./app.js"></script>
+    <script src="./site-ui.js"></script>
   </body>
 </html>
-
-
-

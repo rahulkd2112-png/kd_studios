@@ -55,7 +55,7 @@ function openAppOverlay(app) {
   overlay.classList.add("open");
 }
 
-// Bridge for museum-3d.js
+// Backward-compatible bridge for older product detail links.
 window.__KD_OPEN_OVERLAY__ = openAppOverlay;
 
 function closeAppOverlay() {

@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
   </head>
   <body data-page="app">
     <div class="museum-shell" id="appLandingShell">
@@ -48,54 +49,81 @@
       </header>
 
       <main>
+        <!-- HERO SECTION -->
         <section class="app-landing-hero">
           <div class="app-landing-copy">
-            <span class="section-chip" id="appCategory">Loading</span>
+            <span class="section-chip app-category-badge" id="appCategory">Loading</span>
             <div class="app-title-row">
-              <img class="app-title-icon" id="appIcon" src="/logo/kd_logo.png" alt="" />
+              <div class="app-icon-large">
+                <img class="app-title-icon" id="appIcon" src="/logo/kd_logo.png" alt="" />
+              </div>
               <h1 id="appTitle">Loading app</h1>
             </div>
             <p class="app-tagline" id="appTagline">Preparing app details...</p>
+            <p class="app-description" id="appDescription"></p>
             <div class="app-tags" id="appTags"></div>
-            <div class="app-cta-row">
-              <a class="museum-btn museum-btn-primary" id="appPlayStore" href="#" target="_blank" rel="noreferrer">
-                View on Play Store
-              </a>
-              <a class="museum-btn museum-btn-outline hidden" id="appWebsite" href="#" target="_blank" rel="noreferrer">
-                Visit Website
-              </a>
-            </div>
+            
+            <!-- Rating -->
+            <div class="app-rating" id="appRating"></div>
+            
+            <!-- CTA Buttons -->
+            <div class="app-hero-ctas" id="appHeroCTAs"></div>
           </div>
 
           <div class="app-landing-visual">
-            <img id="appHeroImage" src="/logo/kd_logo.png" alt="" />
+            <div class="app-hero-image">
+              <img id="appHeroImage" src="/logo/kd_logo.png" alt="" />
+            </div>
           </div>
         </section>
 
-        <section class="museum-section app-summary-band">
-          <p id="appStatus"></p>
-          <div class="app-highlights" id="appHighlights"></div>
-        </section>
-
-        <section class="museum-section app-detail-grid">
-          <div>
-            <span class="section-chip">Why it matters</span>
-            <h2>Built around the user job.</h2>
-            <p id="appDescription"></p>
-          </div>
-          <div class="app-feature-panel">
+        <!-- FEATURES SECTION -->
+        <section class="museum-section app-features-section">
+          <div class="museum-section-head">
             <span class="section-chip">Features</span>
-            <ul id="appFeatures"></ul>
+            <h2>What makes it special</h2>
           </div>
+          <div class="app-features-grid" id="appFeaturesGrid"></div>
         </section>
 
-        <section class="museum-section">
+        <!-- TECHNICAL SPECS SECTION -->
+        <section class="museum-section app-specs-section">
+          <div class="museum-section-head">
+            <span class="section-chip">Technical Details</span>
+            <h2>Specifications</h2>
+          </div>
+          <div class="app-specs-table" id="appSpecsTable"></div>
+        </section>
+
+        <!-- FULL DESCRIPTION SECTION -->
+        <section class="museum-section app-description-section">
+          <div class="museum-section-head">
+            <span class="section-chip">About</span>
+            <h2>Full Description</h2>
+          </div>
+          <div class="app-full-description" id="appFullDescription"></div>
+        </section>
+
+        <!-- SCREENSHOT GALLERY SECTION -->
+        <section class="museum-section app-gallery-section" id="appGallerySection">
           <div class="museum-section-head">
             <span class="section-chip">Preview</span>
-            <h2>Product visuals</h2>
+            <h2>Screenshots</h2>
           </div>
-          <div class="app-gallery-grid" id="appGallery"></div>
+          <div class="app-gallery-container" id="appGalleryContainer"></div>
         </section>
+
+        <!-- RELATED APPS SECTION -->
+        <section class="museum-section related-apps-section">
+          <div class="museum-section-head">
+            <span class="section-chip">More from KD Studios</span>
+            <h2>You might also like</h2>
+          </div>
+          <div class="related-apps-grid" id="relatedAppsGrid"></div>
+        </section>
+
+        <!-- FOOTER CTA -->
+        <section class="museum-section app-footer-cta" id="appFooterCTA"></section>
       </main>
 
       <footer class="museum-footer">
@@ -112,7 +140,11 @@
     <script src="/motion.js"></script>
     <script src="/app-data.js"></script>
     <script src="/app-museum.js"></script>
+    <script src="/app-gallery.js"></script>
+    <script src="/app-seo.js"></script>
+    <script src="/app-detail.js"></script>
     <script src="/app-page.js"></script>
     <script src="/app.js"></script>
+    <script src="/site-ui.js"></script>
   </body>
 </html>
